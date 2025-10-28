@@ -725,18 +725,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gamepark/avataaars@npm:~3.0.0":
-  version: 3.0.0
-  resolution: "@gamepark/avataaars@npm:3.0.0"
-  peerDependencies:
-    react: ">=18"
-  checksum: 10c0/52b8ba5c804908f61f9b7a12bce44d9e1c55025c290a327d103b70549f0fe4ed0332a4a0ed9a10b3c93543c58194b80534fb743b7ad515fd2fee53c5cb422ba1
-  languageName: node
-  linkType: hard
-
-"@gamepark/game-template-app@workspace:app":
+"@gamepark/amanite-app@workspace:app":
   version: 0.0.0-use.local
-  resolution: "@gamepark/game-template-app@workspace:app"
+  resolution: "@gamepark/amanite-app@workspace:app"
   dependencies:
     "@dnd-kit/core": "npm:~6.3.1"
     "@emotion/react": "npm:^11.14.0"
@@ -768,9 +759,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@gamepark/game-template@workspace:rules":
+"@gamepark/amanite@workspace:rules":
   version: 0.0.0-use.local
-  resolution: "@gamepark/game-template@workspace:rules"
+  resolution: "@gamepark/amanite@workspace:rules"
   dependencies:
     "@gamepark/rules-api": "npm:~7.1.0"
     es-toolkit: "npm:^1.39.10"
@@ -779,6 +770,15 @@ __metadata:
     es-toolkit: ^1.39.10
   languageName: unknown
   linkType: soft
+
+"@gamepark/avataaars@npm:~3.0.0":
+  version: 3.0.0
+  resolution: "@gamepark/avataaars@npm:3.0.0"
+  peerDependencies:
+    react: ">=18"
+  checksum: 10c0/52b8ba5c804908f61f9b7a12bce44d9e1c55025c290a327d103b70549f0fe4ed0332a4a0ed9a10b3c93543c58194b80534fb743b7ad515fd2fee53c5cb422ba1
+  languageName: node
+  linkType: hard
 
 "@gamepark/react-client@npm:~7.1.0":
   version: 7.1.0

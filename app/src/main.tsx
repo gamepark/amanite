@@ -1,6 +1,6 @@
-import { GameTemplateOptionsSpec } from '@gamepark/game-template/GameTemplateOptions'
-import { GameTemplateRules } from '@gamepark/game-template/GameTemplateRules'
-import { GameTemplateSetup } from '@gamepark/game-template/GameTemplateSetup'
+import { AmaniteOptionsSpec } from '@gamepark/amanite/AmaniteOptions'
+import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
+import { AmaniteSetup } from '@gamepark/amanite/AmaniteSetup'
 import { GameProvider, setupTranslation } from '@gamepark/react-game'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -15,10 +15,10 @@ setupTranslation(translations, { debug: false })
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <GameProvider
-      game="game-template"
-      Rules={GameTemplateRules}
-      optionsSpec={GameTemplateOptionsSpec}
-      GameSetup={GameTemplateSetup}
+      game="amanite"
+      Rules={AmaniteRules}
+      optionsSpec={AmaniteOptionsSpec}
+      GameSetup={AmaniteSetup}
       material={Material}
       locators={Locators}
       animations={gameAnimations}

@@ -1,3 +1,3 @@
-export { GameTemplateRules } from './GameTemplateRules'
-export { GameTemplateOptionsSpec } from './GameTemplateOptions'
-export { GameTemplateSetup } from './GameTemplateSetup'
+export { AmaniteRules } from './AmaniteRules'
+export { AmaniteOptionsSpec } from './AmaniteOptions'
+export { AmaniteSetup } from './AmaniteSetup'

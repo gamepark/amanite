@@ -18,12 +18,12 @@
     "typescript-eslint": "^8.44.0"
   },
   "scripts": {
-    "dev": "yarn workspace @gamepark/game-template-app run dev",
-    "preview": "yarn workspace @gamepark/game-template-app run preview",
-    "build": "yarn workspace @gamepark/game-template-app run build",
-    "deploy": "yarn workspace @gamepark/game-template-app run deploy",
+    "dev": "yarn workspace @gamepark/amanite-app run dev",
+    "preview": "yarn workspace @gamepark/amanite-app run preview",
+    "build": "yarn workspace @gamepark/amanite-app run build",
+    "deploy": "yarn workspace @gamepark/amanite-app run deploy",
     "publish": "lerna publish",
-    "lint": "yarn workspace @gamepark/game-template run lint && yarn workspace @gamepark/game-template-app run lint",
+    "lint": "yarn workspace @gamepark/amanite run lint && yarn workspace @gamepark/amanite-app run lint",
     "linkgp": "yarn link ../rules-api ../react-client ../react-game -r",
     "unlinkgp": "yarn unlink ../react-game ../react-client ../rules-api"
   },
