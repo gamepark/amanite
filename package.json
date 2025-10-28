@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "workspaces": [
+    "rules",
+    "app"
+  ],
+  "author": "Romain Fromi <romain@game-park.com> (https://game-park.com/)",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.4.0",
+    "lerna": "^9.0.0",
+    "prettier": "3.6.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.44.0"
+  },
+  "scripts": {
+    "dev": "yarn workspace @gamepark/game-template-app run dev",
+    "preview": "yarn workspace @gamepark/game-template-app run preview",
+    "build": "yarn workspace @gamepark/game-template-app run build",
+    "deploy": "yarn workspace @gamepark/game-template-app run deploy",
+    "publish": "lerna publish",
+    "lint": "yarn workspace @gamepark/game-template run lint && yarn workspace @gamepark/game-template-app run lint",
+    "linkgp": "yarn link ../rules-api ../react-client ../react-game -r",
+    "unlinkgp": "yarn unlink ../react-game ../react-client ../rules-api"
+  },
+  "packageManager": "yarn@4.9.4"
+}
