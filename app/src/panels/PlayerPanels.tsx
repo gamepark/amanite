@@ -1,10 +1,10 @@
 import { css } from '@emotion/react'
-import { PlayerColor } from '@gamepark/amanite/PlayerColor'
+import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal.ts'
 import { StyledPlayerPanel, usePlayers } from '@gamepark/react-game'
 import { createPortal } from 'react-dom'
 
 export const PlayerPanels = () => {
-  const players = usePlayers<PlayerColor>({ sortFromMe: true })
+  const players = usePlayers<PlayerAnimal>({ sortFromMe: true })
   const root = document.getElementById('root')
   if (!root) {
     return null

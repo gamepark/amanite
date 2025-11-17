@@ -1,10 +1,10 @@
 import { getEnumValues, OptionsSpec } from '@gamepark/rules-api'
-import { PlayerColor } from './PlayerColor'
+import { PlayerAnimal } from './PlayerAnimal'
 
 /**
  * This is the options for each player in the game.
  */
-type PlayerOptions = { id: PlayerColor }
+type PlayerOptions = { id: PlayerAnimal }
 
 /**
  * This is the type of object that the game receives when a new game is started.
@@ -22,7 +22,7 @@ export const AmaniteOptionsSpec: OptionsSpec<AmaniteOptions> = {
   players: {
     id: {
       label: (t) => t('player.id'),
-      values: getEnumValues(PlayerColor),
+      values: getEnumValues(PlayerAnimal),
       valueSpec: (id) => ({ label: (t) => t(`player.${id}`) })
     }
   }
