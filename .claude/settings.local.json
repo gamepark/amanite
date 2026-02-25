@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:gamepark.github.io)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(echo NOT FOUND:*)",
+      "Bash(gh api:*)",
+      "Bash(find:*)",
+      "Bash(head:*)",
+      "WebFetch(domain:media.play-in.com)",
+      "Bash(cd:*)",
+      "Bash(echo Python PIL not available, trying identify...:*)",
+      "Bash(cd /c/Users/pbeau/Documents/GamePark/amanite/app && npx tsc --noEmit 2>&1)",
+      "Bash(node:*)",
+      "Bash(echo EXIT CODE: $?:*)",
+      "Bash(tail:*)",
+      "Bash(python3:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(cd \"C:/Users/pbeau/Documents/GamePark/amanite/app\" && npx tsc --noEmit 2>&1)",
+      "mcp__ide__getDiagnostics",
+      "Bash(true:*)",
+      "Bash(xxd:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(git add:*)"
+    ]
+  }
+}

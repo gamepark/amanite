@@ -1,0 +1,21 @@
+import { ItemContext, ListLocator } from '@gamepark/react-game'
+import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
+import { isPlayerViewed } from './ViewHelper'
+import { panelLocator } from './PanelLocator'
+
+export class PlayerNotebookStockLocator extends ListLocator {
+  gap: Partial<Coordinates> = { x: 2.5 }
+
+  getCoordinates(_location: Location) {
+    return { x: -25, y: 27 }
+  }
+
+  placeItem(item: MaterialItem, context: ItemContext): string[] {
+    if (!isPlayerViewed(item.location.player, context)) {
+      return panelLocator.placeItem(item, context)
+    }
+    return super.placeItem(item, context)
+  }
+}
+
+export const playerNotebookStockLocator = new PlayerNotebookStockLocator()

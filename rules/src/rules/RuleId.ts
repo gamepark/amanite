@@ -1,3 +1,15 @@
 export enum RuleId {
-  TheFirstStep = 1
+  ChooseStartCardSide = 1,
+  DealInitialClues,
+  PlaceNewTokens,
+  PlaceMeeple,
+  SplitTokens,
+  Harvest,
+  ChooseLot,
+  ChooseTokens,
+  DiscardForPig,
+  PlaceNotebook,
+  EndRound,
+  FinalScoring,
+  AcknowledgeClues
 }
