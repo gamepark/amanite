@@ -11,7 +11,7 @@ import { Avatar, PlayerTimer, SpeechBubbleDirection, useMaterialContext, usePlay
 import { LocalMoveType, MoveKind } from '@gamepark/rules-api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
-import { FC, useRef } from 'react'
+import { FC, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import BlueToken from '../images/tokens/round/BlueMushroomToken.jpg'
 import GreenToken from '../images/tokens/round/GreenMushroomToken.jpg'
@@ -66,7 +66,13 @@ export const PlayerPanels = () => {
   const rules = useRules<AmaniteRules>()
   const context = useMaterialContext()
   const play = usePlay()
-  useDndMonitor({ onDragStart: () => play({ kind: MoveKind.LocalMove, type: LocalMoveType.ChangeView, view: undefined }, { transient: true }) })
+  const defaultPlayer = players[0]?.id
+  const resetView = useCallback(() => {
+    if (rules?.game.view !== undefined && rules?.game.view !== defaultPlayer) {
+      play({ kind: MoveKind.LocalMove, type: LocalMoveType.ChangeView, view: defaultPlayer }, { transient: true })
+    }
+  }, [defaultPlayer, play, rules])
+  useDndMonitor({ onDragStart: resetView })
   const root = document.getElementById('root')
   if (!root) return null
 
@@ -151,7 +157,8 @@ const PlayerPanel: FC<PlayerPanelProps> = ({
   const panelRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div ref={panelRef} css={[panelCss, positionCss(index), isViewActive && activeGlowCss(colors.main), isTurnToPlay && turnToPlayCss]} onClick={onClick}>
+    <div ref={panelRef} css={[panelCss, positionCss(index), isViewActive && !isTurnToPlay && activeGlowCss(colors.main)]} onClick={onClick}>
+      <div css={turnBorderCss} style={{ opacity: isTurnToPlay ? 1 : 0 }} />
       {/* Banner: art background + avatar + name + timer */}
       <div css={bannerCss}>
         <div css={bannerBgCss(bannerImages[playerId])} />
@@ -266,17 +273,16 @@ const borderTravel = keyframes`
   100% { background-position: 200% 0%; }
 `
 
-const turnToPlayCss = css`
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -0.25em;
-    z-index: -1;
-    border-radius: 0.8em;
-    background: linear-gradient(90deg, transparent, gold, rgb(40, 184, 206), transparent, gold, rgb(40, 184, 206), transparent);
-    background-size: 200% 100%;
-    animation: ${borderTravel} 2s linear infinite;
-  }
+const turnBorderCss = css`
+  position: absolute;
+  inset: -0.25em;
+  z-index: -1;
+  border-radius: 0.8em;
+  background: linear-gradient(90deg, transparent, gold, rgb(40, 184, 206), transparent, gold, rgb(40, 184, 206), transparent);
+  background-size: 200% 100%;
+  animation: ${borderTravel} 2s linear infinite;
+  pointer-events: none;
+  transition: opacity 0.3s;
 `
 
 const avatarWrapperCss = css`
@@ -408,9 +414,8 @@ const footBadgeCss = css`
 
 const cardIconCss = css`
   width: 1.4em;
-  height: 2em;
+  height: auto;
   border-radius: 0.15em;
-  object-fit: cover;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 `
 
