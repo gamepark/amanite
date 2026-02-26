@@ -8,7 +8,7 @@ export class PlayerClueCardsLocator extends HandLocator {
   gapMaxAngle = 2
 
   getCoordinates(_location: Location) {
-    return { x: 20, y: 23 }
+    return { x: 20, y: 21 }
   }
 
   getHoverTransform(item: MaterialItem, context: ItemContext): string[] {

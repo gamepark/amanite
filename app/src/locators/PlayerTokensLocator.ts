@@ -8,7 +8,7 @@ import { isPlayerViewed } from './ViewHelper'
 import { panelLocator } from './PanelLocator'
 
 const colorOrder = [...mushroomColors, Pig]
-const baseX = -15
+const baseX = -19
 const baseY = 19
 const columnGap = 3.5
 
@@ -17,7 +17,7 @@ export class PlayerTokensLocator extends Locator {
 
   getLocationCoordinates(location: Location, context: ItemContext): Partial<Coordinates> {
     if (!isPlayerViewed(location.player, context)) return { x: -100, y: -100 }
-    return { x: -4.5, y: 22 }
+    return { x: -8.5, y: 22 }
   }
 
   getItemCoordinates(item: MaterialItem, context: ItemContext): Partial<Coordinates> {

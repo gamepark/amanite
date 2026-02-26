@@ -17,7 +17,7 @@ export class ForestTileTokensLocator extends Locator {
 
   getLocationCoordinates(location: Location): Partial<Coordinates> {
     // Drop area position relative to parent tile
-    if (location.id === LotZone.Bottom) return { x: 0, y: 5 }
+    if (location.id === LotZone.Bottom) return { x: 0, y: 4 }
     return { x: 0, y: -5 }
   }
 
@@ -25,7 +25,7 @@ export class ForestTileTokensLocator extends Locator {
     const index = item.location.x ?? 0
     const col = index % 4
     const row = Math.floor(index / 4)
-    const yOffset = item.location.id === LotZone.Bottom ? 5 : -5
+    const yOffset = item.location.id === LotZone.Bottom ? 4 : -5
     return { x: -4.6 + col * 3.05, y: yOffset + row * 1.5, z: row }
   }
 }
