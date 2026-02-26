@@ -8,7 +8,9 @@ import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
 import { Locators } from './locators/Locators'
 import { Material } from './material/Material'
+import { ai } from './tutorial/TutorialAi'
 import { Tutorial } from './tutorial/Tutorial'
+import { AmaniteScoring } from './scoring/AmaniteScoring'
 import translations from './translations.json'
 
 setupTranslation(translations, { debug: false })
@@ -23,7 +25,9 @@ createRoot(document.getElementById('root')!).render(
       material={Material}
       locators={Locators}
       animations={gameAnimations}
+      scoring={new AmaniteScoring()}
       tutorial={new Tutorial()}
+      ai={ai}
     >
       <App />
     </GameProvider>
