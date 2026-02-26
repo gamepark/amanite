@@ -5,8 +5,9 @@ import { MaterialHelpProps } from '@gamepark/react-game'
 import { ValueType } from '@gamepark/amanite/material/ValueType'
 import {
   helpContainerCss, helpHeaderCss, helpTitleCss, helpBodyCss,
-  helpDescCss, helpScoringPanelCss
+  helpDescCss
 } from './HelpUtils'
+import { ValueScoringDisplay } from './ValueScoringDisplay'
 
 function getValueName(value: ValueType): string {
   switch (value) {
@@ -35,9 +36,7 @@ export const ValueCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       </div>
       <div css={helpBodyCss}>
         <p css={helpDescCss}>{t('help.value.card.desc')}</p>
-        <div css={helpScoringPanelCss}>
-          {t(`help.value.scoring.${value}`)}
-        </div>
+        <ValueScoringDisplay value={value} />
       </div>
     </div>
   )
