@@ -6,7 +6,7 @@ import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { mushroomColors } from './material/MushroomColor'
 import { Pig, MUSHROOM_TOKENS_PER_COLOR, PIG_TOKEN_COUNT } from './material/RoundTokenId'
-import { defaultValueCards } from './material/ValueType'
+import { defaultValueCards, mandatoryValueCards, ValueType } from './material/ValueType'
 import { PlayerAnimal } from './PlayerAnimal'
 import { Memory } from './rules/Memory'
 import { RuleId } from './rules/RuleId'
@@ -14,10 +14,11 @@ import { RuleId } from './rules/RuleId'
 export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, LocationType, AmaniteOptions> {
   Rules = AmaniteRules
 
-  setupMaterial(_options: AmaniteOptions) {
+  setupMaterial(options: AmaniteOptions) {
+    const beginner = options.beginner !== false
     this.setupForestTiles()
     this.setupMushroomCards()
-    this.setupValueCardsAndClues()
+    this.setupValueCardsAndClues(beginner)
     this.setupTokenBag()
     this.setupPlayers()
     this.memorize(Memory.Round, 1)
@@ -50,8 +51,8 @@ export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, 
   }
 
   /** Steps 3-9: Setup value cards (face up line), clue decks (random on mushrooms) */
-  setupValueCardsAndClues() {
-    const selectedValues = defaultValueCards
+  setupValueCardsAndClues(beginner: boolean) {
+    const selectedValues = beginner ? defaultValueCards : this.randomValueCards()
 
     // Place value cards face up in a line (shows which values are in play)
     for (let i = 0; i < selectedValues.length; i++) {
@@ -133,5 +134,13 @@ export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, 
         })
       }
     }
+  }
+
+  /** Pick 6 random value cards: Antidote + Poison mandatory, 4 random from remaining 8 */
+  randomValueCards(): ValueType[] {
+    const allValues = Object.values(ValueType).filter((v): v is ValueType => typeof v === 'number')
+    const optional = allValues.filter(v => !mandatoryValueCards.includes(v))
+    const picked = shuffle(optional).slice(0, 4)
+    return [...mandatoryValueCards, ...picked]
   }
 }
