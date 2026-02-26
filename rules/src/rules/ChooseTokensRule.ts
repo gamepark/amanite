@@ -32,6 +32,13 @@ export class ChooseTokensRule extends PlayerTurnRule {
     const picked = (this.remind<number>(Memory.TokensChosen) ?? 0) + 1
     this.memorize(Memory.TokensChosen, picked)
 
+    // Track if the picked token is a pig
+    const movedItem = this.material(MaterialType.RoundToken).index(move.itemIndex).getItem()
+    if (movedItem && isPig(movedItem.id)) {
+      const pigsPicked = (this.remind<number>(Memory.PigsPicked) ?? 0) + 1
+      this.memorize(Memory.PigsPicked, pigsPicked)
+    }
+
     if (picked >= 2) {
       const moves: MaterialMove[] = []
       const tileIndex = this.tileIndex
@@ -45,13 +52,10 @@ export class ChooseTokensRule extends PlayerTurnRule {
       const player = this.player as PlayerAnimal
       moves.push(...meeple.moveItems({ type: LocationType.PlayerMeepleStock, player }))
 
-      // Clean up counter
+      // Clean up counters
+      const pigCount = this.remind<number>(Memory.PigsPicked) ?? 0
       this.forget(Memory.TokensChosen)
-
-      // Check for pigs
-      const pigCount = this.helper.getPlayerTokens(player)
-        .filter(item => isPig(item.id))
-        .length
+      this.forget(Memory.PigsPicked)
 
       if (pigCount > 0) {
         this.memorize(Memory.PigsToDiscard, pigCount)

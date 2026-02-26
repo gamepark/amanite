@@ -4,5 +4,8 @@ export enum Memory {
   MeeplePlacementRound,
   CurrentForestTile,
   PigsToDiscard,
-  TokensChosen
+  TokensChosen,
+  NextPigPlayer,
+  NextPigsToDiscard,
+  PigsPicked
 }

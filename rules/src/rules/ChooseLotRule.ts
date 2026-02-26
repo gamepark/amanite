@@ -51,12 +51,18 @@ export class ChooseLotRule extends PlayerTurnRule {
     moves.push(...firstMeeple.moveItems({ type: LocationType.PlayerMeepleStock, player: firstPlayer }))
     moves.push(...secondMeeple.moveItems({ type: LocationType.PlayerMeepleStock, player: secondPlayer }))
 
-    // Check for pigs in both players' newly collected tokens
-    const firstPlayerPigs = this.countNewPigs(firstPlayer)
-    const secondPlayerPigs = this.countNewPigs(secondPlayer)
+    // Count pigs in the lots (before moves are applied)
+    const firstPlayerLot = chosenSide === 'top' ? lotTop : lotBottom
+    const secondPlayerLot = chosenSide === 'top' ? lotBottom : lotTop
+    const firstPlayerPigs = firstPlayerLot.filter(item => isPig(item.id)).length
+    const secondPlayerPigs = secondPlayerLot.filter(item => isPig(item.id)).length
 
     if (firstPlayerPigs > 0) {
       this.memorize(Memory.PigsToDiscard, firstPlayerPigs)
+      if (secondPlayerPigs > 0) {
+        this.memorize(Memory.NextPigPlayer, secondPlayer)
+        this.memorize(Memory.NextPigsToDiscard, secondPlayerPigs)
+      }
       moves.push(this.startPlayerTurn(RuleId.DiscardForPig, firstPlayer))
       return moves
     }
@@ -70,11 +76,5 @@ export class ChooseLotRule extends PlayerTurnRule {
     // Continue harvest
     moves.push(this.startRule(RuleId.Harvest))
     return moves
-  }
-
-  private countNewPigs(player: PlayerAnimal): number {
-    return this.helper.getPlayerTokens(player)
-      .filter(item => isPig(item.id))
-      .length
   }
 }
