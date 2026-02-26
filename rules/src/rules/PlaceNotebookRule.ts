@@ -35,7 +35,7 @@ export class PlaceNotebookRule extends PlayerTurnRule {
       // Count notebooks already on this mushroom
       const existingNotebooks = this.material(MaterialType.NotebookToken)
         .location(LocationType.NotebookSlot)
-        .id(id => id === mushroomIndex)
+        .filter(item => item.location.id === mushroomIndex)
 
       if (existingNotebooks.length < maxSlots) {
         // Check if this mushroom still has clue cards
