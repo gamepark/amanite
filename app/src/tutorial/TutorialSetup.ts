@@ -1,6 +1,7 @@
 import { AmaniteSetup } from '@gamepark/amanite/AmaniteSetup'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
+import { LotZone } from '@gamepark/amanite/material/LotZone'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { MushroomColor, mushroomColors } from '@gamepark/amanite/material/MushroomColor'
 import { Pig, MUSHROOM_TOKENS_PER_COLOR, PIG_TOKEN_COUNT } from '@gamepark/amanite/material/RoundTokenId'
@@ -8,6 +9,7 @@ import { getStartCardMushrooms } from '@gamepark/amanite/material/StartCard'
 import { ValueType } from '@gamepark/amanite/material/ValueType'
 import { Memory } from '@gamepark/amanite/rules/Memory'
 import { RuleId } from '@gamepark/amanite/rules/RuleId'
+
 
 export const me = PlayerAnimal.Fox
 export const opponent = PlayerAnimal.Squirrel
@@ -25,14 +27,12 @@ export class TutorialSetup extends AmaniteSetup {
       [MushroomColor.Green, ValueType.Poison],
     ]
 
-    const mapping: Record<number, ValueType> = {}
     const foxClues = getStartCardMushrooms(me, 0)         // [Blue, Yellow, Red]
     const squirrelClues = getStartCardMushrooms(opponent, 0) // [Blue, Purple, White]
 
     for (let i = 0; i < fixedMapping.length; i++) {
       const [color, value] = fixedMapping[i]
 
-      mapping[color] = value
       const mushroomIndex = this.material(MaterialType.MushroomCard).id(color).getIndex()
 
       this.material(MaterialType.ValueCard).createItem({
@@ -55,18 +55,16 @@ export class TutorialSetup extends AmaniteSetup {
       if (foxClues.includes(color)) {
         this.material(MaterialType.ClueCard).createItem({
           id: value,
-          location: { type: LocationType.PlayerClueCards, player: me }
+          location: { type: LocationType.PlayerClueCards, player: me, rotation: true }
         })
       }
       if (squirrelClues.includes(color)) {
         this.material(MaterialType.ClueCard).createItem({
           id: value,
-          location: { type: LocationType.PlayerClueCards, player: opponent }
+          location: { type: LocationType.PlayerClueCards, player: opponent, rotation: true }
         })
       }
     }
-
-    this.memorize(Memory.MushroomValueMapping, mapping)
 
     // Shuffle each player's clue cards so the order doesn't reveal which mushroom each came from
     this.material(MaterialType.ClueCard).location(LocationType.PlayerClueCards).player(me).shuffle()
@@ -89,7 +87,7 @@ export class TutorialSetup extends AmaniteSetup {
         const color = tileTokens[t][i]
         this.material(MaterialType.RoundToken).createItem({
           id: color,
-          location: { type: LocationType.ForestTileTokens, parent: tileIndex, x: i }
+          location: { type: LocationType.ForestTileTokens, parent: tileIndex, x: i, id: LotZone.Top }
         })
         placedCounts[color] = (placedCounts[color] ?? 0) + 1
       }

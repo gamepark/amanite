@@ -2,6 +2,7 @@
 import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
+import { LotZone } from '@gamepark/amanite/material/LotZone'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { CustomMoveType } from '@gamepark/amanite/rules/CustomMoveType'
 import { isCustomMoveType, isMoveItemType, MaterialGame, MaterialMove, MaterialRules } from '@gamepark/rules-api'
@@ -212,14 +213,14 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       move: {
         player: opponent,
         filter: (move: MaterialMove) =>
-          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.ForestTileLotRight
+          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.ForestTileTokens && move.location.id === LotZone.Bottom
       }
     },
     {
       move: {
         player: opponent,
         filter: (move: MaterialMove) =>
-          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.ForestTileLotRight
+          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.ForestTileTokens && move.location.id === LotZone.Bottom
       }
     },
     {
@@ -245,8 +246,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0),
-          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileLotLeft),
-          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileLotRight)
+          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens)
         ],
         margin: { top: 2, bottom: 5, left: 2, right: 25 }
       }),
