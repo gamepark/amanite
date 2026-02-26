@@ -11,6 +11,12 @@ const playerColors: Record<number, string> = {
   [PlayerAnimal.Jay]: '#3B7BB5'
 }
 
+const meepleCss = (color: string) => css`
+  background-color: ${color};
+  clip-path: polygon(50% 0%, 68% 3%, 78% 14%, 80% 28%, 76% 42%, 65% 52%, 85% 60%, 97% 70%, 100% 85%, 100% 100%, 0% 100%, 0% 85%, 3% 70%, 15% 60%, 35% 52%, 24% 42%, 20% 28%, 22% 14%, 32% 3%);
+  filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.5));
+`
+
 class MeepleDescription extends TokenDescription {
   width = 1.5
   height = 2.2
@@ -18,12 +24,11 @@ class MeepleDescription extends TokenDescription {
   help = MeepleHelp
 
   getItemExtraCss(item: MaterialItem) {
-    const color = playerColors[item.id as number] ?? '#888'
-    return css`
-      background-color: ${color};
-      clip-path: polygon(50% 0%, 68% 3%, 78% 14%, 80% 28%, 76% 42%, 65% 52%, 85% 60%, 97% 70%, 100% 85%, 100% 100%, 0% 100%, 0% 85%, 3% 70%, 15% 60%, 35% 52%, 24% 42%, 20% 28%, 22% 14%, 32% 3%);
-      filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.5));
-    `
+    return meepleCss(playerColors[item.id as number] ?? '#888')
+  }
+
+  getHelpDisplayExtraCss(item: Partial<MaterialItem>) {
+    return meepleCss(playerColors[item.id as number] ?? '#888')
   }
 }
 
