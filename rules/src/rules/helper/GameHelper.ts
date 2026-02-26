@@ -1,5 +1,6 @@
 import { Material, MaterialRulesPart } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
+import { LotZone } from '../../material/LotZone'
 import { MaterialType } from '../../material/MaterialType'
 import { PlayerAnimal } from '../../PlayerAnimal'
 import { Memory } from '../Memory'
@@ -60,11 +61,19 @@ export class GameHelper extends MaterialRulesPart {
     return this.material(MaterialType.ForestTile).location(LocationType.ForestTileRow)
   }
 
-  /** Get tokens on a forest tile */
+  /** Get all tokens on a forest tile (both lots) */
+  getAllForestTileTokens(tileIndex: number): Material {
+    return this.material(MaterialType.RoundToken)
+      .location(LocationType.ForestTileTokens)
+      .parent(tileIndex)
+  }
+
+  /** Get tokens on a forest tile (top lot = main pile before split) */
   getForestTileTokens(tileIndex: number): Material {
     return this.material(MaterialType.RoundToken)
       .location(LocationType.ForestTileTokens)
       .parent(tileIndex)
+      .filter(item => item.location.id === LotZone.Top)
   }
 
   /** Get meeples on a forest tile */
@@ -102,17 +111,16 @@ export class GameHelper extends MaterialRulesPart {
       .player(player)
   }
 
-  /** Get the lot left tokens on a forest tile */
-  getLotLeft(tileIndex: number): Material {
-    return this.material(MaterialType.RoundToken)
-      .location(LocationType.ForestTileLotLeft)
-      .parent(tileIndex)
+  /** Get the top lot tokens on a forest tile */
+  getLotTop(tileIndex: number): Material {
+    return this.getForestTileTokens(tileIndex)
   }
 
-  /** Get the lot right tokens on a forest tile */
-  getLotRight(tileIndex: number): Material {
+  /** Get the bottom lot tokens on a forest tile */
+  getLotBottom(tileIndex: number): Material {
     return this.material(MaterialType.RoundToken)
-      .location(LocationType.ForestTileLotRight)
+      .location(LocationType.ForestTileTokens)
       .parent(tileIndex)
+      .filter(item => item.location.id === LotZone.Bottom)
   }
 }

@@ -6,7 +6,7 @@ import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { mushroomColors } from './material/MushroomColor'
 import { Pig, MUSHROOM_TOKENS_PER_COLOR, PIG_TOKEN_COUNT } from './material/RoundTokenId'
-import { defaultValueCards, ValueType } from './material/ValueType'
+import { defaultValueCards } from './material/ValueType'
 import { PlayerAnimal } from './PlayerAnimal'
 import { Memory } from './rules/Memory'
 import { RuleId } from './rules/RuleId'
@@ -39,13 +39,12 @@ export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, 
     }
   }
 
-  /** Step 2: Place 6 mushroom cards (rotation depends on player count) */
+  /** Step 2: Place 6 mushroom cards */
   setupMushroomCards() {
-    const rotation = this.players.length <= 2 ? 0 : 1 // 0 = 1 notebook slot, 1 = 2 slots
     for (let i = 0; i < mushroomColors.length; i++) {
       this.material(MaterialType.MushroomCard).createItem({
         id: mushroomColors[i],
-        location: { type: LocationType.MushroomCardRow, x: i, rotation }
+        location: { type: LocationType.MushroomCardRow, x: i, rotation: this.players.length > 2 }
       })
     }
   }
@@ -64,11 +63,8 @@ export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, 
 
     // Shuffle assignment: which value goes to which mushroom
     const shuffledColors = shuffle([...mushroomColors])
-    const mapping: Record<number, ValueType> = {}
 
     for (let i = 0; i < selectedValues.length; i++) {
-      mapping[shuffledColors[i]] = selectedValues[i]
-
       // Find the mushroom card for this color
       const mushroomIndex = this.material(MaterialType.MushroomCard)
         .id(shuffledColors[i])
@@ -86,8 +82,6 @@ export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, 
         })
       }
     }
-
-    this.memorize(Memory.MushroomValueMapping, mapping)
   }
 
   /** Step 6: All 64 round tokens in the bag */

@@ -15,10 +15,10 @@ export class ChooseLotRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    // Player chooses left lot or right lot
+    // Player chooses top lot or bottom lot
     return [
-      this.customMove(CustomMoveType.Pass, 'left'),
-      this.customMove(CustomMoveType.Pass, 'right')
+      this.customMove(CustomMoveType.Pass, 'top'),
+      this.customMove(CustomMoveType.Pass, 'bottom')
     ]
   }
 
@@ -35,16 +35,16 @@ export class ChooseLotRule extends PlayerTurnRule {
     const firstPlayer = firstMeeple.getItem()?.id as PlayerAnimal
     const secondPlayer = secondMeeple.getItem()?.id as PlayerAnimal
 
-    const lotLeft = this.helper.getLotLeft(tileIndex)
-    const lotRight = this.helper.getLotRight(tileIndex)
+    const lotTop = this.helper.getLotTop(tileIndex)
+    const lotBottom = this.helper.getLotBottom(tileIndex)
 
     // First player gets chosen lot, second player gets the other
-    if (chosenSide === 'left') {
-      moves.push(...lotLeft.moveItems({ type: LocationType.PlayerTokens, player: firstPlayer }))
-      moves.push(...lotRight.moveItems({ type: LocationType.PlayerTokens, player: secondPlayer }))
+    if (chosenSide === 'top') {
+      moves.push(lotTop.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: firstPlayer }))
+      moves.push(lotBottom.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: secondPlayer }))
     } else {
-      moves.push(...lotRight.moveItems({ type: LocationType.PlayerTokens, player: firstPlayer }))
-      moves.push(...lotLeft.moveItems({ type: LocationType.PlayerTokens, player: secondPlayer }))
+      moves.push(lotBottom.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: firstPlayer }))
+      moves.push(lotTop.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: secondPlayer }))
     }
 
     // Return meeples to stock

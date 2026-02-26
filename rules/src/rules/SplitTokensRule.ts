@@ -1,5 +1,6 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
+import { LotZone } from '../material/LotZone'
 import { MaterialType } from '../material/MaterialType'
 import { CustomMoveType } from './CustomMoveType'
 import { Memory } from './Memory'
@@ -18,28 +19,30 @@ export class SplitTokensRule extends PlayerTurnRule {
     const moves: MaterialMove[] = []
     const tileIndex = this.tileIndex
 
-    // Move tokens from main pile to right lot
-    const mainTokens = this.helper.getForestTileTokens(tileIndex)
+    // Move tokens from top lot to bottom lot
+    const topLot = this.helper.getLotTop(tileIndex)
     moves.push(
-      ...mainTokens.moveItems({
-        type: LocationType.ForestTileLotRight,
-        parent: tileIndex
+      ...topLot.moveItems({
+        type: LocationType.ForestTileTokens,
+        parent: tileIndex,
+        id: LotZone.Bottom
       })
     )
 
-    // Move tokens back from right lot to main pile
-    const rightLot = this.helper.getLotRight(tileIndex)
+    // Move tokens back from bottom lot to top lot
+    const bottomLot = this.helper.getLotBottom(tileIndex)
     moves.push(
-      ...rightLot.moveItems({
+      ...bottomLot.moveItems({
         type: LocationType.ForestTileTokens,
-        parent: tileIndex
+        parent: tileIndex,
+        id: LotZone.Top
       })
     )
 
     // Confirm split button (only if both lots have at least 1)
-    const mainCount = mainTokens.length
-    const rightCount = rightLot.length
-    if (mainCount >= 1 && rightCount >= 1) {
+    const topCount = topLot.length
+    const bottomCount = bottomLot.length
+    if (topCount >= 1 && bottomCount >= 1) {
       moves.push(this.customMove(CustomMoveType.ConfirmSplit))
     }
 
@@ -55,21 +58,9 @@ export class SplitTokensRule extends PlayerTurnRule {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.ConfirmSplit)(move)) {
-      const tileIndex = this.tileIndex
-      const moves: MaterialMove[] = []
-
-      // Move remaining main pile tokens to left lot
-      const mainTokens = this.helper.getForestTileTokens(tileIndex)
-      moves.push(
-        ...mainTokens.moveItems({
-          type: LocationType.ForestTileLotLeft,
-          parent: tileIndex
-        })
-      )
-
-      // Return to meeple placement (next player)
-      moves.push(...this.getNextPlayerMoves())
-      return moves
+      // Tokens are already split: top lot (id=LotZone.Top) and bottom lot (id=LotZone.Bottom)
+      // No move needed — return to meeple placement (next player)
+      return this.getNextPlayerMoves()
     }
     return []
   }

@@ -11,5 +11,5 @@ export enum RuleId {
   PlaceNotebook,
   EndRound,
   FinalScoring,
-  AcknowledgeClues
+  RevealClues
 }

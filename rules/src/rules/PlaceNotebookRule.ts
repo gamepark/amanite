@@ -35,7 +35,7 @@ export class PlaceNotebookRule extends PlayerTurnRule {
       // Count notebooks already on this mushroom
       const existingNotebooks = this.material(MaterialType.NotebookToken)
         .location(LocationType.NotebookSlot)
-        .parent(mushroomIndex)
+        .id(id => id === mushroomIndex)
 
       if (existingNotebooks.length < maxSlots) {
         // Check if this mushroom still has clue cards
@@ -45,9 +45,9 @@ export class PlaceNotebookRule extends PlayerTurnRule {
 
         if (clueDeck.length > 0) {
           moves.push(
-            ...notebooks.limit(1).moveItems({
+            ...notebooks.moveItems({
               type: LocationType.NotebookSlot,
-              parent: mushroomIndex,
+              id: mushroomIndex,
               x: existingNotebooks.length
             })
           )
@@ -62,7 +62,7 @@ export class PlaceNotebookRule extends PlayerTurnRule {
     if (!isMoveItemType(MaterialType.NotebookToken)(move)) return []
 
     const moves: MaterialMove[] = []
-    const mushroomIndex = move.location.parent!
+    const mushroomIndex = move.location.id!
 
     // Draw 1 clue card from this mushroom's deck
     const clueDeck = this.material(MaterialType.ClueCard)
@@ -74,7 +74,8 @@ export class PlaceNotebookRule extends PlayerTurnRule {
       moves.push(
         ...topCard.moveItems({
           type: LocationType.PlayerClueCards,
-          player: this.player
+          player: this.player,
+          rotation: true
         })
       )
     }

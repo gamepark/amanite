@@ -3,7 +3,6 @@ import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { getStartCardMushrooms } from '../material/StartCard'
 import { PlayerAnimal } from '../PlayerAnimal'
-import { Memory } from './Memory'
 import { RuleId } from './RuleId'
 
 export class DealInitialCluesRule extends MaterialRulesPart {
@@ -23,7 +22,7 @@ export class DealInitialCluesRule extends MaterialRulesPart {
       this.dealInitialClues(player, moves, clueDecks)
     }
 
-    moves.push(this.startSimultaneousRule(RuleId.AcknowledgeClues))
+    moves.push(this.startRule(RuleId.RevealClues))
     return moves
   }
 
@@ -47,11 +46,9 @@ export class DealInitialCluesRule extends MaterialRulesPart {
 
       const deck = clueDecks.get(mushroomCardIndex)
       if (deck && deck.length > 0) {
-        moves.push(deck.dealOne({ type: LocationType.PlayerClueCards, player }))
+        moves.push(deck.dealOne({ type: LocationType.PlayerClueCards, player, rotation: false }))
       }
     }
 
-    // Shuffle so the player doesn't know which clue came from which mushroom
-    moves.push(...this.material(MaterialType.ClueCard).location(LocationType.PlayerClueCards).player(player).shuffle())
   }
 }

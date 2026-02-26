@@ -6,7 +6,7 @@ export class FinalScoringRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
 
-    // Reveal the 1st clue card of each deck on mushroom cards (rotation = 1)
+    // Reveal the 1st clue card of each deck on mushroom cards (rotation = true)
     const mushrooms = this.material(MaterialType.MushroomCard).location(LocationType.MushroomCardRow)
     for (const mushroomIndex of mushrooms.getIndexes()) {
       const clueDeck = this.material(MaterialType.ClueCard)
@@ -15,7 +15,7 @@ export class FinalScoringRule extends PlayerTurnRule {
 
       if (clueDeck.length > 0) {
         const topCard = clueDeck.maxBy(item => item.location.x!)
-        moves.push(...topCard.rotateItems(() => 1))
+        moves.push(...topCard.rotateItems(true))
       }
     }
 

@@ -9,8 +9,8 @@ export enum LocationType {
   // Token zones
   Bag,
   ForestTileTokens,
-  ForestTileLotLeft,
-  ForestTileLotRight,
+  ForestTileLotTop,   // @deprecated — use ForestTileTokens with id=LotZone.Top
+  ForestTileLotBottom, // @deprecated — use ForestTileTokens with id=LotZone.Bottom
 
   // Meeple spots
   ForestTileMeepleSpot,

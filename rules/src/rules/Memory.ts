@@ -4,6 +4,5 @@ export enum Memory {
   MeeplePlacementRound,
   CurrentForestTile,
   PigsToDiscard,
-  TokensChosen,
-  MushroomValueMapping
+  TokensChosen
 }

@@ -1,9 +1,9 @@
 import {
   CompetitiveScore,
   hideItemId,
-  hideItemIdToOthers,
   MaterialGame,
   MaterialMove,
+  FillGapStrategy,
   PositiveSequenceStrategy,
   SecretMaterialRules,
   TimeLimit
@@ -25,7 +25,7 @@ import { DiscardForPigRule } from './rules/DiscardForPigRule'
 import { PlaceNotebookRule } from './rules/PlaceNotebookRule'
 import { EndRoundRule } from './rules/EndRoundRule'
 import { FinalScoringRule } from './rules/FinalScoringRule'
-import { AcknowledgeCluesRule } from './rules/AcknowledgeCluesRule'
+import { RevealCluesRule } from './rules/RevealCluesRule'
 
 export class AmaniteRules
   extends SecretMaterialRules<PlayerAnimal, MaterialType, LocationType>
@@ -46,15 +46,13 @@ export class AmaniteRules
     [RuleId.PlaceNotebook]: PlaceNotebookRule,
     [RuleId.EndRound]: EndRoundRule,
     [RuleId.FinalScoring]: FinalScoringRule,
-    [RuleId.AcknowledgeClues]: AcknowledgeCluesRule
+    [RuleId.RevealClues]: RevealCluesRule,
   }
 
   locationsStrategies = {
     [MaterialType.RoundToken]: {
       [LocationType.Bag]: new PositiveSequenceStrategy(),
       [LocationType.ForestTileTokens]: new PositiveSequenceStrategy(),
-      [LocationType.ForestTileLotLeft]: new PositiveSequenceStrategy(),
-      [LocationType.ForestTileLotRight]: new PositiveSequenceStrategy(),
       [LocationType.PlayerTokens]: new PositiveSequenceStrategy(),
       [LocationType.TokenDiscard]: new PositiveSequenceStrategy()
     },
@@ -72,8 +70,9 @@ export class AmaniteRules
 
   hidingStrategies = {
     [MaterialType.ClueCard]: {
-      [LocationType.ClueDeck]: (item) => item.location?.rotation === 1 ? [] : ['id'],
-      [LocationType.PlayerClueCards]: hideItemIdToOthers
+      [LocationType.ClueDeck]: (item: any) => item.location?.rotation === true ? [] : ['id'],
+      [LocationType.PlayerClueCards]: (item: any, player: any) =>
+        item.location?.rotation === true ? (item.location?.player === player ? [] : ['id']) : ['id']
     },
     [MaterialType.RoundToken]: {
       [LocationType.Bag]: hideItemId
@@ -85,13 +84,13 @@ export class AmaniteRules
   }
 
   getScore(playerId: PlayerAnimal): number {
-    return new ScoringHelper(this.game).getScore(playerId)
+    const helper = new ScoringHelper(this.game, playerId)
+    return helper.isEliminated ? 0 : helper.score
   }
 
   getTieBreaker(tieBreaker: number, playerId: PlayerAnimal): number | undefined {
     if (tieBreaker === 1) {
-      // Fewest mushroom tokens wins tiebreaker (excluding pigs)
-      return new ScoringHelper(this.game).getTotalMushroomCount(playerId)
+      return new ScoringHelper(this.game, playerId).totalMushroomCount
     }
     return undefined
   }

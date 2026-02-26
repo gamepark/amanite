@@ -1,5 +1,6 @@
 import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
+import { LotZone } from '../material/LotZone'
 import { MaterialType } from '../material/MaterialType'
 import { TOKENS_PER_TILE_PER_ROUND } from '../material/RoundTokenId'
 import { Memory } from './Memory'
@@ -21,9 +22,10 @@ export class PlaceNewTokensRule extends PlayerTurnRule {
 
     for (const tile of forestTiles.getIndexes()) {
       moves.push(
-        ...bagDeck.deal({
+        bagDeck.dealAtOnce({
           type: LocationType.ForestTileTokens,
-          parent: tile
+          parent: tile,
+          id: LotZone.Top
         }, tokensPerTile)
       )
     }

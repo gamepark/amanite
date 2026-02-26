@@ -19,10 +19,12 @@ export class ChooseStartCardSideRule extends SimultaneousRule {
     const startCard = this.material(MaterialType.StartCard)
       .location(LocationType.PlayerStartCard)
       .player(player)
-    return [
-      ...startCard.moveItems({ type: LocationType.PlayerStartCard, player, rotation: side }),
-      this.endPlayerTurn(player)
-    ]
+    const moves: MaterialMove[] = []
+    if (startCard.getItem()?.location.rotation !== side) {
+      moves.push(...startCard.moveItems({ type: LocationType.PlayerStartCard, player, rotation: side }))
+    }
+    moves.push(this.endPlayerTurn(player))
+    return moves
   }
 
   getMovesAfterPlayersDone(): MaterialMove[] {

@@ -30,7 +30,7 @@ export class PlaceMeepleRule extends PlayerTurnRule {
       if (meepleCount === 0) {
         // Empty tile: must place on first spot (x=0)
         moves.push(
-          ...playerMeeples.limit(1).moveItems({
+          ...playerMeeples.moveItems({
             type: LocationType.ForestTileMeepleSpot,
             parent: tileIndex,
             x: 0
@@ -39,7 +39,7 @@ export class PlaceMeepleRule extends PlayerTurnRule {
       } else if (meepleCount === 1) {
         // One meeple already: must place on second spot (x=1)
         moves.push(
-          ...playerMeeples.limit(1).moveItems({
+          ...playerMeeples.moveItems({
             type: LocationType.ForestTileMeepleSpot,
             parent: tileIndex,
             x: 1

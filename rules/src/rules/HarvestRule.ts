@@ -18,30 +18,21 @@ export class HarvestRule extends PlayerTurnRule {
   }
 
   resolveNextTile(): MaterialMove[] {
+    const moves: MaterialMove[] = []
     const forestTiles = this.helper.forestTiles
       .sort(item => item.location.x!)
 
     for (const tileIndex of forestTiles.getIndexes()) {
-      const tile = this.material(MaterialType.ForestTile).index(tileIndex).getItem()!
-      const tileX = tile.location.x!
-
       // Check if this tile has already been resolved (no tokens and no meeples)
       const meeples = this.helper.getForestTileMeeples(tileIndex)
-      const tokensMain = this.helper.getForestTileTokens(tileIndex)
-      const lotLeft = this.helper.getLotLeft(tileIndex)
-      const lotRight = this.helper.getLotRight(tileIndex)
-      const totalTokens = tokensMain.length + lotLeft.length + lotRight.length
+      const allTokens = this.helper.getAllForestTileTokens(tileIndex)
 
-      if (meeples.length === 0 && totalTokens === 0) continue
+      if (meeples.length === 0 && allTokens.length === 0) continue
 
-      if (meeples.length === 0 && totalTokens > 0) {
-        // No meeples: return all tokens to bag
-        const moves: MaterialMove[] = []
-        moves.push(...tokensMain.moveItems({ type: LocationType.Bag }))
-        moves.push(...lotLeft.moveItems({ type: LocationType.Bag }))
-        moves.push(...lotRight.moveItems({ type: LocationType.Bag }))
-        // Continue to next tile
-        return [...moves, ...this.resolveNextTileAfter(tileX)]
+      if (meeples.length === 0 && allTokens.length > 0) {
+        // No meeples: return all tokens to bag at once, then continue loop
+        moves.push(allTokens.moveItemsAtOnce({ type: LocationType.Bag }))
+        continue
       }
 
       if (meeples.length === 2) {
@@ -49,24 +40,22 @@ export class HarvestRule extends PlayerTurnRule {
         const firstMeeple = meeples.filter(item => item.location.x === 0)
         const firstPlayer = firstMeeple.getItem()?.id as PlayerAnimal
         this.memorize(Memory.CurrentForestTile, tileIndex)
-        return [this.startPlayerTurn(RuleId.ChooseLot, firstPlayer)]
+        moves.push(this.startPlayerTurn(RuleId.ChooseLot, firstPlayer))
+        return moves
       }
 
       if (meeples.length === 1) {
         // 1 meeple: player picks 2 tokens
         const meeplePlayer = meeples.getItem()?.id as PlayerAnimal
         this.memorize(Memory.CurrentForestTile, tileIndex)
-        return [this.startPlayerTurn(RuleId.ChooseTokens, meeplePlayer)]
+        moves.push(this.startPlayerTurn(RuleId.ChooseTokens, meeplePlayer))
+        return moves
       }
     }
 
     // All tiles resolved: go to notebook phase
-    return this.startNotebookPhase()
-  }
-
-  resolveNextTileAfter(_tileX: number): MaterialMove[] {
-    // Recursively check next tile
-    return this.resolveNextTile()
+    moves.push(...this.startNotebookPhase())
+    return moves
   }
 
   startNotebookPhase(): MaterialMove[] {
