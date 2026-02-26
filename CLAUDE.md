@@ -84,13 +84,14 @@ Piocher du sac vers chaque tuile : 4 (manche 1), 5 (manche 2), 6 (manche 3)
 
 ### Enums clés
 - `MaterialType` : ForestTile, MushroomCard, StartCard, ValueCard, ClueCard, RoundToken, NotebookToken, Meeple, FirstPlayerToken
-- `LocationType` : ForestTileRow, MushroomCardRow, ValueCardSlot, ClueDeck, NotebookSlot, Bag, ForestTileTokens, ForestTileLotLeft/Right, ForestTileMeepleSpot, PlayerStartCard, PlayerClueCards, PlayerTokens, PlayerMeepleStock, PlayerNotebookStock, FirstPlayerArea, TokenDiscard
+- `LocationType` : ForestTileRow, MushroomCardRow, ValueCardSlot, ClueDeck, NotebookSlot, Bag, ForestTileTokens (id=LotZone.Top/Bottom), ForestTileMeepleSpot, PlayerStartCard, PlayerClueCards, PlayerTokens, PlayerMeepleStock, PlayerNotebookStock, FirstPlayerArea, TokenDiscard
 - `RuleId` : ChooseStartCardSide, DealInitialClues, AcknowledgeClues, PlaceNewTokens, PlaceMeeple, SplitTokens, Harvest, ChooseLot, ChooseTokens, DiscardForPig, PlaceNotebook, EndRound, FinalScoring
 
 ### Points d'attention
 - `SecretMaterialRules` avec hiding strategies pour ClueCard (ClueDeck: cachées sauf rotation=1 pour révélation, PlayerClueCards: cachées aux autres) et RoundToken (Bag: cachés)
 - Value cards sont **toujours face visible** (pas de hiding strategy)
-- Le mapping secret MushroomColor → ValueType est stocké dans `Memory.MushroomValueMapping`
+- Le mapping MushroomColor → ValueType est déduit des cartes indices sur les ClueDeck (pas stocké en mémoire = anti-triche)
+- **Anti-triche** : ne JAMAIS stocker d'information secrète dans `Memory` (visible côté client). Utiliser le matériel caché (hiding strategies) comme source de vérité
 - Les cartes indices initiales sont mélangées avant d'être vues (déduction incertaine)
 - ForestTileMeepleSpotLocator : `getLocationCoordinates` pour la drop area (coordonnées absolues), `getItemCoordinates` pour le meeple (offset em du centre parent)
 - ForestTileTokensLocator : `parentItemType` nécessaire pour éviter crash `isPlacedOnItem`, mais `placeItemOnParent` override à `[]` pour garder les coordonnées absolues
