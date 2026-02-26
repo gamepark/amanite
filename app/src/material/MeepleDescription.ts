@@ -21,7 +21,8 @@ class MeepleDescription extends TokenDescription {
     const color = playerColors[item.id as number] ?? '#888'
     return css`
       background-color: ${color};
-      clip-path: polygon(50% 0%, 30% 35%, 0% 40%, 15% 60%, 0% 100%, 35% 85%, 50% 100%, 65% 85%, 100% 100%, 85% 60%, 100% 40%, 70% 35%);
+      clip-path: polygon(50% 0%, 68% 3%, 78% 14%, 80% 28%, 76% 42%, 65% 52%, 85% 60%, 97% 70%, 100% 85%, 100% 100%, 0% 100%, 0% 85%, 3% 70%, 15% 60%, 35% 52%, 24% 42%, 20% 28%, 22% 14%, 32% 3%);
+      filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.5));
     `
   }
 }

@@ -96,6 +96,13 @@ Piocher du sac vers chaque tuile : 4 (manche 1), 5 (manche 2), 6 (manche 3)
 - ForestTileMeepleSpotLocator : `getLocationCoordinates` pour la drop area (coordonnées absolues), `getItemCoordinates` pour le meeple (offset em du centre parent)
 - ForestTileTokensLocator : `parentItemType` nécessaire pour éviter crash `isPlacedOnItem`, mais `placeItemOnParent` override à `[]` pour garder les coordonnées absolues
 
+### Logs et information cachée
+- **Les logs ne doivent JAMAIS révéler d'information secrète** : pas de valeur d'indice, pas de contenu de main, pas d'indication sur l'origine des cartes indices initiales
+- Tout ce qui est dans `PlayerClueCards` est secret pour les autres joueurs
+- Les logs doivent être à la **3ème personne** avec le nom du joueur
+- Les actions publiques (placement meeple, split, pioche notebook, collecte jetons) peuvent être loguées car visibles sur le plateau
+- Mais la VALEUR de l'indice pioché via un carnet = secrète, ne pas la mentionner dans le log
+
 ### Règles de collaboration
 - **Ne pas prendre les directives utilisateur pour vérité absolue** : challenger et vérifier avant d'appliquer, surtout si ça contredit les règles du jeu ou la logique technique
 - Quand on est sûr d'un point, ne pas hésiter à le défendre

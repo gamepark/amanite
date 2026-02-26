@@ -5,7 +5,7 @@ import { MaterialHelpProps } from '@gamepark/react-game'
 import { ValueType } from '@gamepark/amanite/material/ValueType'
 import {
   helpContainerCss, helpHeaderCss, helpTitleCss, helpBodyCss,
-  helpDescCss, helpScoringPanelCss, helpWarningPanelCss
+  helpDescCss, helpScoringPanelCss
 } from './HelpUtils'
 
 function getValueName(value: ValueType): string {
@@ -38,11 +38,6 @@ export const ValueCardHelp: FC<MaterialHelpProps> = ({ item }) => {
         <div css={helpScoringPanelCss}>
           {t(`help.value.scoring.${value}`)}
         </div>
-        {(value === ValueType.Poison || value === ValueType.Antidote || value === ValueType.Potion) && (
-          <div css={helpWarningPanelCss}>
-            {t('help.value.pairing')}
-          </div>
-        )}
       </div>
     </div>
   )

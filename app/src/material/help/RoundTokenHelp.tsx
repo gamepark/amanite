@@ -6,8 +6,7 @@ import { MaterialHelpProps } from '@gamepark/react-game'
 import { isPig } from '@gamepark/amanite/material/RoundTokenId'
 import {
   helpContainerCss, helpHeaderCss, helpTitleCss, helpBodyCss,
-  helpDescCss, helpWarningPanelCss, helpScoringPanelCss,
-  mushroomHexColors, MushroomDot
+  helpDescCss, mushroomHexColors, MushroomDot
 } from './HelpUtils'
 
 export const RoundTokenHelp: FC<MaterialHelpProps> = ({ item }) => {
@@ -24,12 +23,6 @@ export const RoundTokenHelp: FC<MaterialHelpProps> = ({ item }) => {
         </div>
         <div css={helpBodyCss}>
           <p css={helpDescCss}>{t('help.pig.token.desc')}</p>
-          <div css={helpWarningPanelCss}>
-            {t('help.pig.token.discard')}
-          </div>
-          <div css={helpScoringPanelCss}>
-            {t('help.pig.token.scoring')}
-          </div>
         </div>
       </div>
     )
@@ -47,9 +40,6 @@ export const RoundTokenHelp: FC<MaterialHelpProps> = ({ item }) => {
       </div>
       <div css={helpBodyCss}>
         <p css={helpDescCss}>{t('help.mushroom.token.desc')}</p>
-        <div css={helpScoringPanelCss}>
-          {t('help.mushroom.token.scoring')}
-        </div>
       </div>
     </div>
   )

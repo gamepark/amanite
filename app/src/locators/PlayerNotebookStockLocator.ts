@@ -7,7 +7,7 @@ export class PlayerNotebookStockLocator extends ListLocator {
   gap: Partial<Coordinates> = { x: 2.5 }
 
   getCoordinates(_location: Location) {
-    return { x: -25, y: 27 }
+    return { x: -24.5, y: 24.5 }
   }
 
   placeItem(item: MaterialItem, context: ItemContext): string[] {

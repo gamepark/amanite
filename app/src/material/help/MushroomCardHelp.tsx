@@ -6,7 +6,7 @@ import { MaterialHelpProps } from '@gamepark/react-game'
 import { MushroomColor } from '@gamepark/amanite/material/MushroomColor'
 import {
   helpContainerCss, helpHeaderCss, helpTitleCss, helpBodyCss,
-  helpDescCss, helpScoringPanelCss, helpInfoPanelCss,
+  helpDescCss, helpInfoPanelCss,
   mushroomHexColors, MushroomDot
 } from './HelpUtils'
 
@@ -26,9 +26,6 @@ export const MushroomCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       </div>
       <div css={helpBodyCss}>
         <p css={helpDescCss}>{t('help.mushroom.card.desc')}</p>
-        <div css={helpScoringPanelCss}>
-          {t('help.mushroom.card.scoring')}
-        </div>
         <div css={helpInfoPanelCss}>
           {t('help.mushroom.card.notebook')}
         </div>

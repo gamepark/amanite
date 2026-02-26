@@ -7,6 +7,7 @@ import { createRoot } from 'react-dom/client'
 import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
 import { Locators } from './locators/Locators'
+import { AmaniteLogs } from './logs/AmaniteLogs'
 import { Material } from './material/Material'
 import { ai } from './tutorial/TutorialAi'
 import { Tutorial } from './tutorial/Tutorial'
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')!).render(
       material={Material}
       locators={Locators}
       animations={gameAnimations}
+      logs={new AmaniteLogs()}
       scoring={new AmaniteScoring()}
       tutorial={new Tutorial()}
       ai={ai}

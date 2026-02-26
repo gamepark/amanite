@@ -58,7 +58,7 @@ export class PlaceMeepleRule extends PlayerTurnRule {
     // If placed on second spot (x=1), trigger split
     if (move.location.x === 1) {
       this.memorize(Memory.CurrentForestTile, move.location.parent)
-      return [this.startRule(RuleId.SplitTokens)]
+      return [this.startPlayerTurn(RuleId.SplitTokens, this.player)]
     }
 
     return this.nextPlayerOrPhase()

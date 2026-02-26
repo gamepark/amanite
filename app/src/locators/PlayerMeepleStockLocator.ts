@@ -4,10 +4,10 @@ import { isPlayerViewed } from './ViewHelper'
 import { panelLocator } from './PanelLocator'
 
 export class PlayerMeepleStockLocator extends ListLocator {
-  gap: Partial<Coordinates> = { x: 2.5 }
+  gap: Partial<Coordinates> = { x: 1.5 }
 
   getCoordinates(_location: Location) {
-    return { x: -32, y: 27 }
+    return { x: -24.5, y: 21 }
   }
 
   placeItem(item: MaterialItem, context: ItemContext): string[] {

@@ -16,7 +16,7 @@ export class NotebookSlotLocator extends ListLocator {
     const cardCenterY = 3 + row * 9
     return {
       x: cardCenterX - 6,
-      y: cardCenterY + (has2Slots ? -1.2 : 0.64)
+      y: cardCenterY + (has2Slots ? -1.2 : 0)
     }
   }
 }

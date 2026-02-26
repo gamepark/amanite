@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { MaterialHelpProps } from '@gamepark/react-game'
 import {
   helpContainerCss, helpHeaderCss, helpTitleCss, helpBodyCss,
-  helpDescCss, helpInfoPanelCss
+  helpDescCss
 } from './HelpUtils'
 
 export const ClueCardHelp: FC<MaterialHelpProps> = () => {
@@ -17,9 +17,6 @@ export const ClueCardHelp: FC<MaterialHelpProps> = () => {
       </div>
       <div css={helpBodyCss}>
         <p css={helpDescCss}>{t('help.clue.card.desc')}</p>
-        <div css={helpInfoPanelCss}>
-          {t('help.clue.card.secret')}
-        </div>
       </div>
     </div>
   )
