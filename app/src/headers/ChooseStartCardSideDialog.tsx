@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog, PlayMoveButton, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
 import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
 import { isCustomMoveType } from '@gamepark/rules-api'
@@ -33,11 +33,15 @@ export const ChooseStartCardSideDialog = () => {
   const legalMoves = useLegalMoves()
   const [minimized, setMinimized] = useState(false)
   const [chosen, setChosen] = useState(false)
+  const isActive = rules && player !== undefined
+    && rules.game.rule?.id === RuleId.ChooseStartCardSide
+    && rules.isTurnToPlay(player)
 
-  if (!rules || player === undefined) return null
-  if (rules.game.rule?.id !== RuleId.ChooseStartCardSide) return null
-  if (!rules.isTurnToPlay(player)) return null
-  if (chosen) return null
+  useEffect(() => {
+    if (isActive) setChosen(false)
+  }, [isActive])
+
+  if (!isActive || chosen) return null
 
   const side0Move = legalMoves.find(move => isCustomMoveType(CustomMoveType.Pass)(move) && move.data?.side === 0)
   const side1Move = legalMoves.find(move => isCustomMoveType(CustomMoveType.Pass)(move) && move.data?.side === 1)

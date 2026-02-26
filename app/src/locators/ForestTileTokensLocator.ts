@@ -1,23 +1,32 @@
-import { FlexLocator, ItemContext, MaterialContext } from '@gamepark/react-game'
+import { DropAreaDescription, ItemContext, Locator, MaterialContext } from '@gamepark/react-game'
+import { LotZone } from '@gamepark/amanite/material/LotZone'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 
-export class ForestTileTokensLocator extends FlexLocator {
+export class ForestTileTokensLocator extends Locator {
   parentItemType = MaterialType.ForestTile
-  lineSize = 4
-  gap: Partial<Coordinates> = { x: 3.05 }
-  lineGap: Partial<Coordinates> = { y: 2 }
 
-  getCoordinates(location: Location, context: MaterialContext) {
-    const tile = context.rules.material(MaterialType.ForestTile).getItem(location.parent!)
-    const tileX = -26 + (tile?.location.x ?? 0) * 13
-    return { x: tileX - 4.6, y: -13 }
+  lotDropArea = new DropAreaDescription({ width: 13, height: 4, borderRadius: 0.5 })
+
+  getLocationDescription(location: Location, _context: MaterialContext) {
+    if (location.id === LotZone.Top || location.id === LotZone.Bottom) {
+      return this.lotDropArea
+    }
+    return undefined
   }
 
-  // Override to prevent parent-based positioning (we use absolute coordinates via getCoordinates)
-  // parentItemType is only needed so isPlacedOnItem doesn't crash when location.parent is set
-  placeItemOnParent(_item: MaterialItem, _context: ItemContext): string[] {
-    return []
+  getLocationCoordinates(location: Location): Partial<Coordinates> {
+    // Drop area position relative to parent tile
+    if (location.id === LotZone.Bottom) return { x: 0, y: 5 }
+    return { x: 0, y: -5 }
+  }
+
+  getItemCoordinates(item: MaterialItem, _context: ItemContext): Partial<Coordinates> {
+    const index = item.location.x ?? 0
+    const col = index % 4
+    const row = Math.floor(index / 4)
+    const yOffset = item.location.id === LotZone.Bottom ? 5 : -5
+    return { x: -4.6 + col * 3.05, y: yOffset + row * 1.5, z: row }
   }
 }
 

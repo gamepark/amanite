@@ -1,21 +1,23 @@
-import { Locator, MaterialContext } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
-import { Location, XYCoordinates } from '@gamepark/rules-api'
+import { ListLocator, MaterialContext } from '@gamepark/react-game'
+import { Coordinates, Location } from '@gamepark/rules-api'
 
-export class NotebookSlotLocator extends Locator {
-  parentItemType = MaterialType.MushroomCard
+export class NotebookSlotLocator extends ListLocator {
+  gap = { y: 2.6 }
 
-  getPositionOnParent(location: Location, context: MaterialContext): XYCoordinates {
-    const card = context.rules.material(MaterialType.MushroomCard).getItem(location.parent!)
-    const has2Slots = card?.location?.rotation === 1
-    const slot = location.x ?? 0
+  getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
+    const mushroom = context.rules.material(MaterialType.MushroomCard).getItem(location.id!)
+    const i = mushroom?.location?.x ?? 0
+    const has2Slots = context.rules.game.players.length > 2
 
-    if (!has2Slots) {
-      // Face 1 (2 players): single slot, protruding from left edge
-      return { x: 0, y: 50 }
+    const col = i % 3
+    const row = Math.floor(i / 3)
+    const cardCenterX = -33 + col * 13
+    const cardCenterY = 3 + row * 9
+    return {
+      x: cardCenterX - 6,
+      y: cardCenterY + (has2Slots ? -1.2 : 0.64)
     }
-    // Face 2 (3-4 players): two slots stacked vertically, protruding from left edge
-    return { x: 0, y: 28 + slot * 40 }
   }
 }
 

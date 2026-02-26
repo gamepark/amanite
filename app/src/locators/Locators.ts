@@ -5,8 +5,6 @@ import { Locator } from '@gamepark/react-game'
 import { bagLocator } from './BagLocator'
 import { clueDeckLocator } from './ClueDeckLocator'
 import { firstPlayerAreaLocator } from './FirstPlayerAreaLocator'
-import { forestTileLotLeftLocator } from './ForestTileLotLeftLocator'
-import { forestTileLotRightLocator } from './ForestTileLotRightLocator'
 import { forestTileMeepleSpotLocator } from './ForestTileMeepleSpotLocator'
 import { forestTileRowLocator } from './ForestTileRowLocator'
 import { forestTileTokensLocator } from './ForestTileTokensLocator'
@@ -28,8 +26,6 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerAnimal, Materi
   [LocationType.NotebookSlot]: notebookSlotLocator,
   [LocationType.Bag]: bagLocator,
   [LocationType.ForestTileTokens]: forestTileTokensLocator,
-  [LocationType.ForestTileLotLeft]: forestTileLotLeftLocator,
-  [LocationType.ForestTileLotRight]: forestTileLotRightLocator,
   [LocationType.ForestTileMeepleSpot]: forestTileMeepleSpotLocator,
   [LocationType.PlayerStartCard]: playerStartCardLocator,
   [LocationType.PlayerClueCards]: playerClueCardsLocator,

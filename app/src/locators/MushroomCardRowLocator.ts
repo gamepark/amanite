@@ -3,7 +3,10 @@ import { Location } from '@gamepark/rules-api'
 
 export class MushroomCardRowLocator extends Locator {
   getCoordinates(location: Location) {
-    return { x: -32.5 + (location.x ?? 0) * 13, y: 5 }
+    const i = location.x ?? 0
+    const col = i % 3
+    const row = Math.floor(i / 3)
+    return { x: -33 + col * 13, y: 3 + row * 9 }
   }
 }
 

@@ -1,7 +1,7 @@
 import { CardDescription } from '@gamepark/react-game'
 import { MushroomCardHelp } from './help/MushroomCardHelp'
-import { MaterialItem } from '@gamepark/rules-api'
 import { MushroomColor } from '@gamepark/amanite/material/MushroomColor'
+import { MaterialItem } from '@gamepark/rules-api'
 import BlueMushroomCard1 from '../images/cards/mushroom/BlueMushroomCard1.jpg'
 import BlueMushroomCard2 from '../images/cards/mushroom/BlueMushroomCard2.jpg'
 import GreenMushroomCard1 from '../images/cards/mushroom/GreenMushroomCard1.jpg'
@@ -21,7 +21,7 @@ class MushroomCardDescription extends CardDescription {
   borderRadius = 0.3
   help = MushroomCardHelp
 
-  images = {
+  images: Record<MushroomColor, string> = {
     [MushroomColor.Blue]: BlueMushroomCard1,
     [MushroomColor.Green]: GreenMushroomCard1,
     [MushroomColor.Purple]: PurpleMushroomCard1,
@@ -30,7 +30,7 @@ class MushroomCardDescription extends CardDescription {
     [MushroomColor.Yellow]: YellowMushroomCard1
   }
 
-  backImages = {
+  backImages: Record<MushroomColor, string> = {
     [MushroomColor.Blue]: BlueMushroomCard2,
     [MushroomColor.Green]: GreenMushroomCard2,
     [MushroomColor.Purple]: PurpleMushroomCard2,
@@ -40,7 +40,7 @@ class MushroomCardDescription extends CardDescription {
   }
 
   isFlippedOnTable(item: Partial<MaterialItem>) {
-    return item.location?.rotation === 1
+    return item.location?.rotation === true
   }
 }
 

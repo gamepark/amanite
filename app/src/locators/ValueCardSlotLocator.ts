@@ -3,8 +3,10 @@ import { Location } from '@gamepark/rules-api'
 
 export class ValueCardSlotLocator extends Locator {
   getCoordinates(location: Location) {
-    // Grouped together as a reference line, not aligned with individual mushroom cards
-    return { x: -15 + (location.x ?? 0) * 6, y: 13 }
+    const i = location.x ?? 0
+    const col = i % 3
+    const row = Math.floor(i / 3)
+    return { x: 10 + col * 5.5, y: 3 + row * 9 }
   }
 }
 
