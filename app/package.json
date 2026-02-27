@@ -1,7 +1,7 @@
 {
   "name": "@gamepark/amanite-app",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "The user interface of Amanite adaptation for Game Park",
   "author": "Romain Fromi <romain@game-park.com> (https://game-park.com/)",
