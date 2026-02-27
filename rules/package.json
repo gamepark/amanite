@@ -1,6 +1,6 @@
 {
   "name": "@gamepark/amanite",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "The rules of Amanite adapted for Game Park",
   "sideEffects": false,
   "type": "module",
