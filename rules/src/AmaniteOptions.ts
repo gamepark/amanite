@@ -1,14 +1,12 @@
 import { OptionsSpec } from '@gamepark/rules-api'
-import { PlayerAnimal } from './PlayerAnimal'
-
-type PlayerOptions = { id: PlayerAnimal }
 
 export type AmaniteOptions = {
-  players: PlayerOptions[]
+  players: {}[]
   beginner: boolean
 }
 
 export const AmaniteOptionsSpec: OptionsSpec<AmaniteOptions> = {
+  players: {},
   beginner: {
     label: (t) => t('option.beginner'),
     help: (t) => t('option.beginner.help'),
