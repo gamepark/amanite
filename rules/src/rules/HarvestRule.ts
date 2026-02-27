@@ -1,6 +1,5 @@
 import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
-import { MaterialType } from '../material/MaterialType'
 import { PlayerAnimal } from '../PlayerAnimal'
 import { GameHelper } from './helper/GameHelper'
 import { Memory } from './Memory'

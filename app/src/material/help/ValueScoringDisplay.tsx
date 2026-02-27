@@ -105,15 +105,15 @@ const LimitScoring: FC = () => {
   const tiers = [
     { count: '0', vp: '-5', negative: true },
     { count: '1', vp: '0', neutral: true },
-    { count: '2', vp: '+3', positive: true },
-    { count: '3', vp: '+12', positive: true },
+    { count: '2', vp: '+3' },
+    { count: '3', vp: '+12' },
     { count: '4+', vp: null, eliminated: true }
   ]
   return (
     <div css={scoringPanelCss}>
       <div css={descCss}>{t('scoring.limit.desc')}</div>
       <div css={limitGridCss}>
-        {tiers.map(({ count, vp, negative, neutral, positive, eliminated }) => (
+        {tiers.map(({ count, vp, negative, neutral, eliminated }) => (
           <div key={count} css={limitRowCss}>
             <span css={countCss}>{count}</span>
             {eliminated

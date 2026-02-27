@@ -3,7 +3,6 @@ import {
   hideItemId,
   MaterialGame,
   MaterialMove,
-  FillGapStrategy,
   PositiveSequenceStrategy,
   SecretMaterialRules,
   TimeLimit

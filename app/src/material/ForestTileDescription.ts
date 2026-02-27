@@ -34,7 +34,7 @@ class ForestTileDescription extends BoardDescription {
     5: ForestTile5
   }
 
-  getItemExtraCss(item: MaterialItem, context: ItemContext): Interpolation<Theme> {
+  getItemExtraCss(_item: MaterialItem, context: ItemContext): Interpolation<Theme> {
     const ruleId = context.rules.game.rule?.id
     if (ruleId === RuleId.ChooseLot || ruleId === RuleId.ChooseTokens || ruleId === RuleId.DiscardForPig) {
       const currentTile = context.rules.remind(Memory.CurrentForestTile)

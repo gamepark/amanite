@@ -5,7 +5,7 @@ type PlayerOptions = { id: PlayerAnimal }
 
 export type AmaniteOptions = {
   players: PlayerOptions[]
-  beginner?: boolean
+  beginner: boolean
 }
 
 export const AmaniteOptionsSpec: OptionsSpec<AmaniteOptions> = {

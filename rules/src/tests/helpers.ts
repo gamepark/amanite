@@ -1,9 +1,11 @@
-import { MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { MaterialMove } from '@gamepark/rules-api'
 import { AmaniteRules } from '../AmaniteRules'
 import { AmaniteSetup } from '../AmaniteSetup'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { PlayerAnimal } from '../PlayerAnimal'
+
+type AmaniteMove = MaterialMove<PlayerAnimal, MaterialType, LocationType>
 
 export function createGame(playerCount: 2 | 3 | 4, beginner = true): AmaniteRules {
   const players: PlayerAnimal[] = [PlayerAnimal.Fox, PlayerAnimal.Squirrel, PlayerAnimal.Owl, PlayerAnimal.Jay].slice(0, playerCount)
@@ -12,7 +14,7 @@ export function createGame(playerCount: 2 | 3 | 4, beginner = true): AmaniteRule
   return new AmaniteRules(game)
 }
 
-export function playConsequences(rules: AmaniteRules, move: MaterialMove) {
+export function playConsequences(rules: AmaniteRules, move: AmaniteMove) {
   let consequences = rules.play(move)
   while (consequences.length > 0) {
     const next = consequences.shift()!
@@ -32,7 +34,7 @@ export function resolveAutoMoves(rules: AmaniteRules) {
   }
 }
 
-export function playAndResolve(rules: AmaniteRules, move: MaterialMove) {
+export function playAndResolve(rules: AmaniteRules, move: AmaniteMove) {
   playConsequences(rules, move)
   resolveAutoMoves(rules)
 }

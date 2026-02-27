@@ -20,10 +20,10 @@ export const FinalScoringLog: FC<MoveComponentProps<MaterialMove>> = ({ context 
   const rules = new AmaniteRules(context.game as MaterialGame)
   const players = context.game.players
 
-  const scores = players.map(p => {
+  const scores = players.map((p: number) => {
     const helper = new ScoringHelper(context.game, p)
     return { player: p, score: rules.getScore(p), eliminated: helper.isEliminated }
-  }).sort((a, b) => b.score - a.score)
+  }).sort((a: { score: number }, b: { score: number }) => b.score - a.score)
 
   const winner = scores[0]
 
@@ -32,7 +32,7 @@ export const FinalScoringLog: FC<MoveComponentProps<MaterialMove>> = ({ context 
       <WinnerBlock player={winner.player} score={winner.score} />
       <div css={dividerCss} />
       <div css={standingsCss}>
-        {scores.map(({ player, score, eliminated }) => (
+        {scores.map(({ player, score, eliminated }: { player: number, score: number, eliminated: boolean }) => (
           <ScoreRow key={player} player={player} score={score} eliminated={eliminated} />
         ))}
       </div>

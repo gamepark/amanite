@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Trans } from 'react-i18next'
 import { MoveComponentProps } from '@gamepark/react-game'
-import { MaterialMove, StartPlayerTurn } from '@gamepark/rules-api'
+import { MaterialMove } from '@gamepark/rules-api'
 import { Memory } from '@gamepark/amanite/rules/Memory'
 
 export const ForestTileLog: FC<MoveComponentProps<MaterialMove>> = ({ context }) => {

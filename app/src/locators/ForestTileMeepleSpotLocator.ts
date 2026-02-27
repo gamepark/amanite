@@ -11,7 +11,7 @@ export class ForestTileMeepleSpotLocator extends Locator {
     return { x: 0, y: 0 }
   }
 
-  getItemCoordinates(item: MaterialItem, context: ItemContext): Partial<Coordinates> {
+  getItemCoordinates(item: MaterialItem, _context: ItemContext): Partial<Coordinates> {
     const spot = item.location.x ?? 0
     if (spot === 0) return { x: -3.1, y: 0.15 }
     return { x: 3.1, y: 0.15 }
