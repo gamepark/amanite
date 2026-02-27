@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import { AmaniteOptionsSpec } from '@gamepark/amanite/AmaniteOptions'
 import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
 import { AmaniteSetup } from '@gamepark/amanite/AmaniteSetup'
-import { GameProvider, setupTranslation } from '@gamepark/react-game'
+import { GameProvider } from '@gamepark/react-game'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { gameAnimations } from './animations/GameAnimations'
@@ -13,9 +13,6 @@ import { Material } from './material/Material'
 import { ai } from './tutorial/TutorialAi'
 import { Tutorial } from './tutorial/Tutorial'
 import { AmaniteScoring } from './scoring/AmaniteScoring'
-import translations from './translations.json'
-
-setupTranslation(translations, { debug: false })
 
 const theme = {
   dialog: {

@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { ScoringDescription } from '@gamepark/react-game'
+import { Trans } from 'react-i18next'
 import { MaterialRules } from '@gamepark/rules-api'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { MushroomColor, mushroomColors } from '@gamepark/amanite/material/MushroomColor'
@@ -52,7 +53,8 @@ enum ScoringKeyType {
   PoisonPairing,
   AntidoteElixirPenalty,
   Eliminated,
-  Total
+  Total,
+  Tiebreaker
 }
 
 type ScoringKey =
@@ -62,6 +64,7 @@ type ScoringKey =
   | { type: ScoringKeyType.AntidoteElixirPenalty }
   | { type: ScoringKeyType.Eliminated }
   | { type: ScoringKeyType.Total }
+  | { type: ScoringKeyType.Tiebreaker }
 
 export class AmaniteScoring implements ScoringDescription<PlayerAnimal, MaterialRules, ScoringKey> {
 
@@ -104,6 +107,17 @@ export class AmaniteScoring implements ScoringDescription<PlayerAnimal, Material
       keys.push({ type: ScoringKeyType.Eliminated })
     }
     keys.push({ type: ScoringKeyType.Total })
+
+    // Show tiebreaker row if at least 2 non-eliminated players share the same score
+    const scores = rules.game.players.map((p: PlayerAnimal) => {
+      const h = new ScoringHelper(rules.game, p)
+      return h.isEliminated ? null : h.score
+    }).filter((s: number | null) => s !== null)
+    const hasTie = scores.length !== new Set(scores).size
+    if (hasTie) {
+      keys.push({ type: ScoringKeyType.Tiebreaker })
+    }
+
     return keys
   }
 
@@ -160,6 +174,9 @@ export class AmaniteScoring implements ScoringDescription<PlayerAnimal, Material
         </div>
       )
     }
+    if (key.type === ScoringKeyType.Tiebreaker) {
+      return <div css={tiebreakerHeaderCss}><Trans defaults="scoring.tiebreaker" components={{ br: <br/>, small: <span css={tiebreakerSubCss} /> }} /></div>
+    }
     return <div css={totalHeaderCss}>Total</div>
   }
 
@@ -183,6 +200,10 @@ export class AmaniteScoring implements ScoringDescription<PlayerAnimal, Material
     }
     if (key.type === ScoringKeyType.Total) {
       return <div css={helper.isEliminated ? eliminatedTotalCss : totalDataCss}>{helper.score}</div>
+    }
+    if (key.type === ScoringKeyType.Tiebreaker) {
+      if (helper.isEliminated) return <div css={dataCss}>—</div>
+      return <div css={tiebreakerDataCss}>{helper.totalMushroomCount}</div>
     }
     return null
   }
@@ -263,6 +284,30 @@ const safeCss = css`
   font-weight: 900;
   font-size: 1.3em;
   color: #4caf50;
+`
+
+const tiebreakerHeaderCss = css`
+  font-size: 0.9em;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.3;
+`
+
+const tiebreakerSubCss = css`
+  font-size: 0.75em;
+  font-weight: 400;
+  opacity: 0.6;
+  font-style: italic;
+`
+
+const tiebreakerDataCss = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.9em;
+  opacity: 0.7;
+  font-style: italic;
 `
 
 const eliminatedTotalCss = css`

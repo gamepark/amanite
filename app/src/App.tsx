@@ -25,7 +25,7 @@ export function App() {
     <>
       <Global styles={helpDialogOverrides} />
       {!!game && <GameDisplay />}
-      <LoadingScreen display={loading} author="Thanos Vasof" artist="Roxane Campoy" publisher="Spiral Éditions" developer="Game Park" />
+      <LoadingScreen display={loading} />
       <MaterialHeader rulesStepsHeaders={Headers} loading={loading} />
       <MaterialImageLoader onImagesLoad={() => setImagesLoading(false)} />
       <MaterialGameSounds />
