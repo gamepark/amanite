@@ -8,9 +8,8 @@ import { PlayerAnimal } from '../PlayerAnimal'
 type AmaniteMove = MaterialMove<PlayerAnimal, MaterialType, LocationType>
 
 export function createGame(playerCount: 2 | 3 | 4, beginner = true): AmaniteRules {
-  const players: PlayerAnimal[] = [PlayerAnimal.Fox, PlayerAnimal.Squirrel, PlayerAnimal.Owl, PlayerAnimal.Jay].slice(0, playerCount)
   const setup = new AmaniteSetup()
-  const game = setup.setup({ players: players.map(id => ({ id })), beginner })
+  const game = setup.setup({ players: playerCount, beginner })
   return new AmaniteRules(game)
 }
 
