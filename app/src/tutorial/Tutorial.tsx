@@ -16,7 +16,7 @@ const onTile = (tileX: number) => (move: MaterialMove, game: MaterialGame) => {
 }
 
 export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, LocationType> {
-  version = 4
+  version = 5
   options = { players: [{ id: me }, { id: opponent }] }
   setup = new TutorialSetup()
   players = [
@@ -37,11 +37,11 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans defaults="tuto.mushroom.cards" />,
-        position: { y: -22 }
+        position: { x: 25 }
       },
       focus: (game) => ({
         materials: [this.material(game, MaterialType.MushroomCard)],
-        margin: { left: 1, right: 1, top: 10 }
+        margin: { left: 1, right: 25, top: 2, bottom: 2 }
       })
     },
 
@@ -49,14 +49,14 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans defaults="tuto.value.cards" />,
-        position: { y: -22 }
+        position: { y: -13 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ValueCard),
           this.material(game, MaterialType.MushroomCard)
         ],
-        margin: { left: 1, right: 1, top: 10 }
+        margin: { left: 1, right: 1, top: 12, bottom: 2 }
       })
     },
 
@@ -64,14 +64,14 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans defaults="tuto.secret" />,
-        position: { y: -22 }
+        position: { y: -13 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ValueCard),
           this.material(game, MaterialType.MushroomCard)
         ],
-        margin: { left: 1, right: 1, top: 10 }
+        margin: { left: 1, right: 1, top: 12, bottom: 2 }
       })
     },
 
@@ -111,14 +111,14 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans defaults="tuto.tiles" />,
-        position: { y: 15 }
+        position: { x: 25 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ForestTile),
           this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens)
         ],
-        margin: { top: 2, bottom: 15, left: 2, right: 2 }
+        margin: { top: 2, bottom: 2, left: 2, right: 25 }
       })
     },
 
@@ -156,7 +156,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans defaults="tuto.place.meeple.1" />,
-        position: { x: 0, y: 20 }
+        position: { x: 25 }
       },
       focus: (game) => {
         const tileIndex = this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0).getIndex()
@@ -169,7 +169,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
           locations: [
             { type: LocationType.ForestTileMeepleSpot, parent: tileIndex, x: 0 }
           ],
-          margin: { top: 2, bottom: 20, left: 2, right: 2 }
+          margin: { top: 2, bottom: 15, left: 2, right: 25 }
         }
       },
       move: { player: me, filter: onTile(0) }
@@ -276,14 +276,14 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans defaults="tuto.choose.tokens" />,
-        position: { x: 0, y: 20 }
+        position: { x: 25 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 2),
           this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens)
         ],
-        margin: { top: 2, bottom: 12, left: 2, right: 2 }
+        margin: { top: 2, bottom: 2, left: 2, right: 25 }
       }),
       move: {
         player: me,
@@ -307,14 +307,14 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans defaults="tuto.notebook" />,
-        position: { x: 0, y: 20 }
+        position: { x: 25 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.NotebookToken).location(LocationType.PlayerNotebookStock).player(me),
           this.material(game, MaterialType.MushroomCard)
         ],
-        margin: { left: 1, right: 1, bottom: 12 }
+        margin: { left: 1, right: 25, top: 2, bottom: 2 }
       })
     },
 
@@ -322,14 +322,14 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans defaults="tuto.notebook.effect" />,
-        position: { x: 0, y: 20 }
+        position: { x: 25 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.NotebookToken).location(LocationType.PlayerNotebookStock).player(me),
           this.material(game, MaterialType.ClueCard).location(LocationType.ClueDeck)
         ],
-        margin: { left: 1, right: 1, bottom: 12 }
+        margin: { left: 1, right: 25, top: 2, bottom: 2 }
       })
     },
 
@@ -345,14 +345,14 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans defaults="tuto.place.notebook" />,
-        position: { y: -15 }
+        position: { x: 25 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.NotebookToken).location(LocationType.PlayerNotebookStock).player(me),
           this.material(game, MaterialType.MushroomCard)
         ],
-        margin: { top: 10, bottom: 2, left: 1, right: 1 }
+        margin: { left: 1, right: 25, top: 2, bottom: 2 }
       }),
       move: {
         player: me,

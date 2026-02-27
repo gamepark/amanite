@@ -1,7 +1,11 @@
-import { CardDescription } from '@gamepark/react-game'
+/** @jsxImportSource @emotion/react */
+import { CardDescription, ItemContext, ItemMenuButton } from '@gamepark/react-game'
 import { MushroomCardHelp } from './help/MushroomCardHelp'
 import { MushroomColor } from '@gamepark/amanite/material/MushroomColor'
-import { MaterialItem } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
+import { MaterialType } from '@gamepark/amanite/material/MaterialType'
+import { LocationType } from '@gamepark/amanite/material/LocationType'
+import { Trans } from 'react-i18next'
 import BlueMushroomCard1 from '../images/cards/mushroom/BlueMushroomCard1.jpg'
 import BlueMushroomCard2 from '../images/cards/mushroom/BlueMushroomCard2.jpg'
 import GreenMushroomCard1 from '../images/cards/mushroom/GreenMushroomCard1.jpg'
@@ -41,6 +45,28 @@ class MushroomCardDescription extends CardDescription {
 
   isFlippedOnTable(item: Partial<MaterialItem>) {
     return item.location?.rotation === true
+  }
+
+  menuAlwaysVisible = true
+
+  highlight() {
+    return false
+  }
+
+  getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
+    const notebookMoves = legalMoves.filter((move: any) =>
+      isMoveItemType(MaterialType.NotebookToken)(move)
+      && move.location?.type === LocationType.NotebookSlot
+      && move.location?.id === context.index
+    )
+    if (!notebookMoves.length) return undefined
+
+    return (
+      <ItemMenuButton move={notebookMoves[0]} x={0} y={0}
+        label={<Trans defaults="button.place.notebook" />}>
+        {'\uD83D\uDCD3'}
+      </ItemMenuButton>
+    )
   }
 }
 

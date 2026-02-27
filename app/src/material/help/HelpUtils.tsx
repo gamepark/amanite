@@ -157,6 +157,26 @@ export const helpLabelCss = css`
   margin-bottom: 0.3em;
 `
 
+// ─── Action Button (inside colored headers) ─────────────────────
+export const helpHeaderBtnCss = css`
+  padding: 0.25em 0.7em;
+  border-radius: 0.35em;
+  border: 1.5px solid ${indigo};
+  background: ${cream};
+  color: ${indigo};
+  font-weight: 700;
+  font-size: 0.85em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: #e8deb8;
+    transform: scale(1.05);
+  }
+`
+
 // ─── Utilities ───────────────────────────────────────────────────
 function lighten(hex: string): string {
   const r = parseInt(hex.slice(1, 3), 16)

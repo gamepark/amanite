@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { MaterialHelpProps } from '@gamepark/react-game'
+import { MaterialHelpProps, PlayMoveButton, useLegalMoves } from '@gamepark/react-game'
+import { isMoveItemType, MoveItem } from '@gamepark/rules-api'
 import { ValueType } from '@gamepark/amanite/material/ValueType'
+import { MaterialType } from '@gamepark/amanite/material/MaterialType'
+import { LocationType } from '@gamepark/amanite/material/LocationType'
 import {
   helpContainerCss, helpHeaderCss, helpTitleCss, helpBodyCss,
-  helpDescCss
+  helpDescCss, helpHeaderBtnCss
 } from './HelpUtils'
 import { ValueScoringDisplay } from './ValueScoringDisplay'
 
@@ -25,9 +28,22 @@ function getValueName(value: ValueType): string {
   }
 }
 
-export const ClueCardHelp: FC<MaterialHelpProps> = ({ item }) => {
+export const ClueCardHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
   const { t } = useTranslation()
   const value = item.id as ValueType | undefined
+  const mushroomIndex = item.location?.parent
+
+  const notebookMoves = useLegalMoves<MoveItem>(move =>
+    isMoveItemType(MaterialType.NotebookToken)(move as any)
+    && move.location.type === LocationType.NotebookSlot
+    && move.location.id === mushroomIndex
+  )
+
+  const investigateBtn = mushroomIndex !== undefined && notebookMoves.length > 0 && (
+    <PlayMoveButton move={notebookMoves[0]} onPlay={closeDialog} css={helpHeaderBtnCss}>
+      {t('button.place.notebook')}
+    </PlayMoveButton>
+  )
 
   if (!value) {
     return (
@@ -35,6 +51,7 @@ export const ClueCardHelp: FC<MaterialHelpProps> = ({ item }) => {
         <div css={helpHeaderCss}>
           <span>{'\u{1F50D}'}</span>
           <span css={helpTitleCss}>{t('help.clue.card')}</span>
+          {investigateBtn}
         </div>
         <div css={helpBodyCss}>
           <p css={helpDescCss}>{t('help.clue.card.desc')}</p>
@@ -48,6 +65,7 @@ export const ClueCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       <div css={helpHeaderCss}>
         <span>{'\u{1F50D}'}</span>
         <span css={helpTitleCss}>{t('help.clue.card')} — {t(getValueName(value))}</span>
+        {investigateBtn}
       </div>
       <div css={helpBodyCss}>
         <p css={helpDescCss}>{t('help.clue.card.value.desc')}</p>
@@ -56,3 +74,4 @@ export const ClueCardHelp: FC<MaterialHelpProps> = ({ item }) => {
     </div>
   )
 }
+

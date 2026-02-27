@@ -89,7 +89,7 @@ export class AmaniteRules
 
   getTieBreaker(tieBreaker: number, playerId: PlayerAnimal): number | undefined {
     if (tieBreaker === 1) {
-      return new ScoringHelper(this.game, playerId).totalMushroomCount
+      return -new ScoringHelper(this.game, playerId).totalMushroomCount
     }
     return undefined
   }
