@@ -3,31 +3,20 @@ import { css } from '@emotion/react'
 import { FC } from 'react'
 import { Trans } from 'react-i18next'
 import { MoveComponentProps, usePlayerName } from '@gamepark/react-game'
-import { CustomMove, MaterialGame, MaterialMove } from '@gamepark/rules-api'
-import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
-import { LocationType } from '@gamepark/amanite/material/LocationType'
-import { LotZone } from '@gamepark/amanite/material/LotZone'
-import { MaterialType } from '@gamepark/amanite/material/MaterialType'
-import { Memory } from '@gamepark/amanite/rules/Memory'
+import { CustomMove, MaterialMove } from '@gamepark/rules-api'
 import { getPlayerColor } from './logStyles'
 
 export const ChooseLotLog: FC<MoveComponentProps<MaterialMove>> = ({ move, context }) => {
   const player = context.action.playerId ?? context.game.rule?.player
   const name = usePlayerName(player)
-
   const data = (move as CustomMove).data as string
-  const rules = new AmaniteRules(context.game as MaterialGame)
-  const tileIndex = rules.game.memory[Memory.CurrentForestTile]
-  const tokens = rules.material(MaterialType.RoundToken)
-    .location(LocationType.ForestTileTokens)
-    .parent(tileIndex)
-  const lot = data === 'top'
-    ? tokens.filter(item => item.location.id === LotZone.Top)
-    : tokens.filter(item => item.location.id === LotZone.Bottom)
-  const count = lot.length
+  const key = data === 'top' ? 'log.choose.lot.top' : 'log.choose.lot.bottom'
+  const defaults = data === 'top'
+    ? '<0>{player}</0> chooses the top lot'
+    : '<0>{player}</0> chooses the bottom lot'
 
   return (
-    <Trans defaults="log.choose.lot" values={{ player: name, count }}
+    <Trans i18nKey={key} defaults={defaults} values={{ player: name }}
       components={[<strong css={nameCss(getPlayerColor(player))} />]} />
   )
 }

@@ -13,9 +13,9 @@ import {
 
 const playerColors: Record<number, string> = {
   [PlayerAnimal.Fox]: '#D4722A',
-  [PlayerAnimal.Squirrel]: '#B84032',
-  [PlayerAnimal.Owl]: '#7B7D7E',
-  [PlayerAnimal.Jay]: '#3B7BB5'
+  [PlayerAnimal.Squirrel]: '#8B6040',
+  [PlayerAnimal.Owl]: '#2A2A2A',
+  [PlayerAnimal.Jay]: '#A8C46A'
 }
 
 export const StartCardHelp: FC<MaterialHelpProps> = ({ item }) => {

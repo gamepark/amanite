@@ -73,10 +73,10 @@ export class TutorialSetup extends AmaniteSetup {
 
   /** Place specific tokens on tiles for a predictable tutorial */
   setupTokenBag() {
-    const tileTokens: MushroomColor[][] = [
+    const tileTokens: number[][] = [
       [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Yellow, MushroomColor.Red],
       [MushroomColor.Purple, MushroomColor.White, MushroomColor.Green, MushroomColor.Blue],
-      [MushroomColor.Yellow, MushroomColor.Red, MushroomColor.Green, MushroomColor.White],
+      [MushroomColor.Yellow, MushroomColor.Red, Pig, MushroomColor.White],
     ]
 
     const placedCounts: Record<number, number> = {}
@@ -104,7 +104,8 @@ export class TutorialSetup extends AmaniteSetup {
         })
       }
     }
-    for (let i = 0; i < PIG_TOKEN_COUNT; i++) {
+    const pigsPlaced = placedCounts[Pig] ?? 0
+    for (let i = 0; i < PIG_TOKEN_COUNT - pigsPlaced; i++) {
       this.material(MaterialType.RoundToken).createItem({
         id: Pig,
         location: { type: LocationType.Bag }

@@ -3,6 +3,7 @@ import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { isPig } from '../material/RoundTokenId'
 import { PlayerAnimal } from '../PlayerAnimal'
+import { CustomMoveType } from './CustomMoveType'
 import { GameHelper } from './helper/GameHelper'
 import { Memory } from './Memory'
 import { RuleId } from './RuleId'
@@ -32,8 +33,12 @@ export class ChooseTokensRule extends PlayerTurnRule {
     const picked = (this.remind<number>(Memory.TokensChosen) ?? 0) + 1
     this.memorize(Memory.TokensChosen, picked)
 
-    // Track if the picked token is a pig
+    // Track picked token id and pig count
     const movedItem = this.material(MaterialType.RoundToken).index(move.itemIndex).getItem()
+    const tokenId = movedItem?.id as number
+    if (picked === 1) {
+      this.memorize(Memory.PickedTokenIds, [tokenId])
+    }
     if (movedItem && isPig(movedItem.id)) {
       const pigsPicked = (this.remind<number>(Memory.PigsPicked) ?? 0) + 1
       this.memorize(Memory.PigsPicked, pigsPicked)
@@ -43,13 +48,18 @@ export class ChooseTokensRule extends PlayerTurnRule {
       const moves: MaterialMove[] = []
       const tileIndex = this.tileIndex
 
+      // Emit log custom move with collected token ids
+      const firstIds = this.remind<number[]>(Memory.PickedTokenIds) ?? []
+      const player = this.player as PlayerAnimal
+      moves.push(this.customMove(CustomMoveType.LogTokensCollected, { player, tokens: [...firstIds, tokenId] }))
+      this.forget(Memory.PickedTokenIds)
+
       // Return remaining tokens to bag
       const remainingTokens = this.helper.getForestTileTokens(tileIndex)
       moves.push(...remainingTokens.moveItems({ type: LocationType.Bag }))
 
       // Return meeple to stock
       const meeple = this.helper.getForestTileMeeples(tileIndex)
-      const player = this.player as PlayerAnimal
       moves.push(...meeple.moveItems({ type: LocationType.PlayerMeepleStock, player }))
 
       // Clean up counters

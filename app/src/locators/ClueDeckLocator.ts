@@ -11,6 +11,7 @@ export class ClueDeckLocator extends DeckLocator {
   }
 
   limit = 10
+  navigationSorts = []
 }
 
 export const clueDeckLocator = new ClueDeckLocator()

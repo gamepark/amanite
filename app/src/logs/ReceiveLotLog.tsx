@@ -3,15 +3,19 @@ import { css } from '@emotion/react'
 import { FC } from 'react'
 import { Trans } from 'react-i18next'
 import { MoveComponentProps, usePlayerName } from '@gamepark/react-game'
-import { MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { CustomMove, MaterialMove } from '@gamepark/rules-api'
 import { getPlayerColor } from './logStyles'
+import { TokenIcons } from './TokenIcons'
 
-export const ReceiveLotLog: FC<MoveComponentProps<MaterialMove>> = ({ move, context }) => {
-  const player = (move as MoveItem).location.player ?? context.action.playerId ?? context.game.rule?.player
-  const name = usePlayerName(player)
+export const ReceiveLotLog: FC<MoveComponentProps<MaterialMove>> = ({ move }) => {
+  const data = (move as CustomMove).data as { player: number, tokens: number[] }
+  const name = usePlayerName(data.player)
   return (
-    <Trans defaults="log.receive.lot" values={{ player: name }}
-      components={[<strong css={nameCss(getPlayerColor(player))} />]} />
+    <>
+      <Trans defaults="log.receive.lot" values={{ player: name }}
+        components={[<strong css={nameCss(getPlayerColor(data.player))} />]} />
+      <TokenIcons ids={data.tokens} />
+    </>
   )
 }
 

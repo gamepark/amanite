@@ -5,7 +5,6 @@ import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { mushroomColors } from '@gamepark/amanite/material/MushroomColor'
 import { Pig } from '@gamepark/amanite/material/RoundTokenId'
 import { isPlayerViewed } from './ViewHelper'
-import { panelLocator } from './PanelLocator'
 
 const colorOrder = [...mushroomColors, Pig]
 const baseX = -19
@@ -38,11 +37,8 @@ export class PlayerTokensLocator extends Locator {
     }
   }
 
-  placeItem(item: MaterialItem, context: ItemContext): string[] {
-    if (!isPlayerViewed(item.location.player, context)) {
-      return panelLocator.placeItem(item, context)
-    }
-    return super.placeItem(item, context)
+  hide(item: MaterialItem, context: ItemContext): boolean {
+    return !isPlayerViewed(item.location.player, context)
   }
 }
 

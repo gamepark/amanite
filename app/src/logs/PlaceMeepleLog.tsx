@@ -10,8 +10,13 @@ export const PlaceMeepleLog: FC<MoveComponentProps<MaterialMove>> = ({ move, con
   const player = context.action.playerId ?? context.game.rule?.player
   const name = usePlayerName(player)
   const tileIndex = (move as MoveItem).location.parent ?? 0
+  const spot = (move as MoveItem).location.x ?? 0
+  const key = spot === 0 ? 'log.place.meeple.first' : 'log.place.meeple.second'
+  const defaults = spot === 0
+    ? '<0>{player}</0> places a meeple on forest tile {tile}'
+    : '<0>{player}</0> joins forest tile {tile} (will split tokens)'
   return (
-    <Trans defaults="log.place.meeple" values={{ player: name, tile: tileIndex + 1 }}
+    <Trans i18nKey={key} defaults={defaults} values={{ player: name, tile: tileIndex + 1 }}
       components={[<strong css={nameCss(getPlayerColor(player))} />]} />
   )
 }

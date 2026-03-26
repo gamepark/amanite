@@ -7,5 +7,6 @@ export enum Memory {
   TokensChosen,
   NextPigPlayer,
   NextPigsToDiscard,
-  PigsPicked
+  PigsPicked,
+  PickedTokenIds
 }

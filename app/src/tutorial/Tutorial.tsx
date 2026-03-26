@@ -3,6 +3,7 @@ import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { LotZone } from '@gamepark/amanite/material/LotZone'
+import { Pig } from '@gamepark/amanite/material/RoundTokenId'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { CustomMoveType } from '@gamepark/amanite/rules/CustomMoveType'
 import { isCustomMoveType, isMoveItemType, MaterialGame, MaterialMove, MaterialRules } from '@gamepark/rules-api'
@@ -208,6 +209,22 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       move: { player: opponent, filter: onTile(0) }
     },
 
+    // 12b: Explain that the second player on a tile must split the tokens
+    {
+      popup: {
+        text: () => <Trans defaults="The second player on a tile must split the tokens into two groups. The first player will then choose which group to take!" />,
+        position: { x: 25 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0),
+          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens),
+          this.material(game, MaterialType.Meeple).location(LocationType.ForestTileMeepleSpot)
+        ],
+        margin: { top: 2, bottom: 5, left: 2, right: 25 }
+      })
+    },
+
     // 13-15: Opponent splits tokens (auto: 2 to right + confirm)
     {
       move: {
@@ -240,7 +257,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 17: Choose lot on tile 0
     {
       popup: {
-        text: () => <Trans defaults="tuto.choose.lot" />,
+        text: () => <Trans defaults="As the first player on this tile, you get to choose which group of tokens to take!" />,
         position: { x: 25 }
       },
       focus: (game) => ({
@@ -272,7 +289,21 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       }
     },
 
-    // 20: Explain choosing tokens (alone on tile 2)
+    // 20: Explain pigs (zoom on pig token on tile 2)
+    {
+      popup: {
+        text: () => <Trans defaults="Watch out for pigs! For each pig you collect, you must discard one mushroom token. But each pig is worth 3 points at the end!" />,
+        position: { x: 25 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.RoundToken).id(Pig)
+        ],
+        margin: { top: 5, bottom: 5, left: 5, right: 25 }
+      })
+    },
+
+    // 21: Explain choosing tokens (alone on tile 2)
     {
       popup: {
         text: () => <Trans defaults="tuto.choose.tokens" />,
@@ -287,17 +318,37 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       }),
       move: {
         player: me,
-        filter: (move: MaterialMove) =>
-          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.PlayerTokens
+        filter: (move: MaterialMove, game: MaterialGame) => {
+          if (!isMoveItemType(MaterialType.RoundToken)(move)) return false
+          if (move.location.type !== LocationType.PlayerTokens) return false
+          const item = game.items[MaterialType.RoundToken]?.[move.itemIndex]
+          return item?.id !== Pig
+        }
       }
     },
 
-    // 21: Pick second token
+    // 22: Pick the pig as second token
     {
       move: {
         player: me,
+        filter: (move: MaterialMove, game: MaterialGame) => {
+          if (!isMoveItemType(MaterialType.RoundToken)(move)) return false
+          if (move.location.type !== LocationType.PlayerTokens) return false
+          const item = game.items[MaterialType.RoundToken]?.[move.itemIndex]
+          return item?.id === Pig
+        }
+      }
+    },
+
+    // 23: Discard a mushroom token for the pig (if pig was collected)
+    {
+      popup: {
+        text: () => <Trans defaults="You collected a pig! You must now discard one of your mushroom tokens." />
+      },
+      move: {
+        player: me,
         filter: (move: MaterialMove) =>
-          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.PlayerTokens
+          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.TokenDiscard
       }
     },
 
@@ -362,12 +413,12 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
 
     // ── WRAP-UP ──
 
-    // 26: Explain scoring
+    // Explain scoring
     {
       popup: { text: () => <Trans defaults="tuto.scoring" /> }
     },
 
-    // 27: Tutorial complete
+    // 28: Tutorial complete
     {
       popup: { text: () => <Trans defaults="tuto.end" /> }
     }

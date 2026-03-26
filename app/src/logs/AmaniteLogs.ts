@@ -67,20 +67,17 @@ export class AmaniteLogs implements LogDescription<MaterialMove, PlayerAnimal, M
       return { Component: ChooseLotLog, player, css: logCss(player) }
     }
 
-    // ReceiveLot — non-chooser's meeple returns during ChooseLot
-    if (rule === RuleId.ChooseLot && isMoveItemType(MaterialType.Meeple)(move)
-      && move.location.type === LocationType.PlayerMeepleStock) {
-      const meepleOwner = move.location.player
-      if (meepleOwner && meepleOwner !== player) {
-        return { Component: ReceiveLotLog, player: meepleOwner, css: logCss(meepleOwner) }
+    // LogTokensCollected — shows token icons for lot/choose
+    if (isCustomMoveType(CustomMoveType.LogTokensCollected)(move)) {
+      const data = (move as any).data as { player: number, tokens: number[] }
+      if (rule === RuleId.ChooseLot) {
+        const isChooser = data.player === player
+        if (isChooser) {
+          return { Component: ChooseTokensLog, depth: 1, css: logCss(data.player) }
+        }
+        return { Component: ReceiveLotLog, player: data.player, css: logCss(data.player) }
       }
-    }
-
-    // ChooseTokens — meeple returns during ChooseTokens (1-meeple tile)
-    if (rule === RuleId.ChooseTokens && isMoveItemType(MaterialType.Meeple)(move)
-      && move.location.type === LocationType.PlayerMeepleStock) {
-      const meepleOwner = move.location.player ?? player
-      return { Component: ChooseTokensLog, player: meepleOwner, css: logCss(meepleOwner) }
+      return { Component: ChooseTokensLog, player: data.player, css: logCss(data.player) }
     }
 
     // DiscardForPig

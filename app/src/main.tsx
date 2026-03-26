@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import { BottomBarNavigation } from '@gamepark/react-game'
 import { AmaniteOptionsSpec } from '@gamepark/amanite/AmaniteOptions'
 import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
 import { AmaniteSetup } from '@gamepark/amanite/AmaniteSetup'
@@ -15,9 +16,13 @@ import { Tutorial } from './tutorial/Tutorial'
 import { AmaniteScoring } from './scoring/AmaniteScoring'
 
 const theme = {
+  root: {
+    fontFamily: 'Baloo 2'
+  },
   dialog: {
     backgroundColor: '#f0e8c8',
-    color: '#2d2d7a'
+    color: '#2d2d7a',
+    navigation: BottomBarNavigation
   },
   buttons: css`
     padding: 0.2em 0.6em;

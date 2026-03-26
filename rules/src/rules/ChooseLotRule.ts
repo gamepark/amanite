@@ -39,23 +39,23 @@ export class ChooseLotRule extends PlayerTurnRule {
     const lotBottom = this.helper.getLotBottom(tileIndex)
 
     // First player gets chosen lot, second player gets the other
-    if (chosenSide === 'top') {
-      moves.push(lotTop.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: firstPlayer }))
-      moves.push(lotBottom.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: secondPlayer }))
-    } else {
-      moves.push(lotBottom.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: firstPlayer }))
-      moves.push(lotTop.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: secondPlayer }))
-    }
+    const firstPlayerLotTokens = chosenSide === 'top' ? lotTop : lotBottom
+    const secondPlayerLotTokens = chosenSide === 'top' ? lotBottom : lotTop
+
+    // Log custom moves with player + token ids
+    moves.push(this.customMove(CustomMoveType.LogTokensCollected, { player: firstPlayer, tokens: firstPlayerLotTokens.getItems().map(i => i.id) }))
+    moves.push(this.customMove(CustomMoveType.LogTokensCollected, { player: secondPlayer, tokens: secondPlayerLotTokens.getItems().map(i => i.id) }))
+
+    moves.push(firstPlayerLotTokens.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: firstPlayer }))
+    moves.push(secondPlayerLotTokens.moveItemsAtOnce({ type: LocationType.PlayerTokens, player: secondPlayer }))
 
     // Return meeples to stock
     moves.push(...firstMeeple.moveItems({ type: LocationType.PlayerMeepleStock, player: firstPlayer }))
     moves.push(...secondMeeple.moveItems({ type: LocationType.PlayerMeepleStock, player: secondPlayer }))
 
     // Count pigs in the lots (before moves are applied)
-    const firstPlayerLot = chosenSide === 'top' ? lotTop : lotBottom
-    const secondPlayerLot = chosenSide === 'top' ? lotBottom : lotTop
-    const firstPlayerPigs = firstPlayerLot.filter(item => isPig(item.id)).length
-    const secondPlayerPigs = secondPlayerLot.filter(item => isPig(item.id)).length
+    const firstPlayerPigs = firstPlayerLotTokens.filter(item => isPig(item.id)).length
+    const secondPlayerPigs = secondPlayerLotTokens.filter(item => isPig(item.id)).length
 
     if (firstPlayerPigs > 0) {
       this.memorize(Memory.PigsToDiscard, firstPlayerPigs)

@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { CardDescription, ItemContext, ItemMenuButton } from '@gamepark/react-game'
+import { CardDescription, ItemContext } from '@gamepark/react-game'
 import { MushroomCardHelp } from './help/MushroomCardHelp'
 import { MushroomColor } from '@gamepark/amanite/material/MushroomColor'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { Trans } from 'react-i18next'
+import { StampButton } from '../components/StampButton'
 import BlueMushroomCard1 from '../images/cards/mushroom/BlueMushroomCard1.jpg'
 import BlueMushroomCard2 from '../images/cards/mushroom/BlueMushroomCard2.jpg'
 import GreenMushroomCard1 from '../images/cards/mushroom/GreenMushroomCard1.jpg'
@@ -62,10 +63,9 @@ class MushroomCardDescription extends CardDescription {
     if (!notebookMoves.length) return undefined
 
     return (
-      <ItemMenuButton move={notebookMoves[0]} x={0} y={0}
-        label={<Trans defaults="button.place.notebook" />}>
-        {'\uD83D\uDCD3'}
-      </ItemMenuButton>
+      <StampButton move={notebookMoves[0]} x={2} y={0}>
+        <Trans i18nKey="button.investigate" defaults="Investigate" />
+      </StampButton>
     )
   }
 }

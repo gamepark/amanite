@@ -12,7 +12,6 @@ import { LocalMoveType, MoveKind } from '@gamepark/rules-api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { FC, useRef, useCallback } from 'react'
-import { createPortal } from 'react-dom'
 import BlueToken from '../images/tokens/round/BlueMushroomToken.jpg'
 import GreenToken from '../images/tokens/round/GreenMushroomToken.jpg'
 import PurpleToken from '../images/tokens/round/PurpleMushroomToken.jpg'
@@ -46,9 +45,9 @@ const bookTokenImages: Record<number, string> = {
 
 const playerColors: Record<number, { main: string }> = {
   [PlayerAnimal.Fox]: { main: '#D4722A' },
-  [PlayerAnimal.Squirrel]: { main: '#B84032' },
-  [PlayerAnimal.Owl]: { main: '#7B7D7E' },
-  [PlayerAnimal.Jay]: { main: '#3B7BB5' }
+  [PlayerAnimal.Squirrel]: { main: '#8B6040' },
+  [PlayerAnimal.Owl]: { main: '#2A2A2A' },
+  [PlayerAnimal.Jay]: { main: '#A8C46A' }
 }
 
 const tokenImages: Record<number, string> = {
@@ -73,10 +72,8 @@ export const PlayerPanels = () => {
     }
   }, [defaultPlayer, play, rules])
   useDndMonitor({ onDragStart: resetView })
-  const root = document.getElementById('root')
-  if (!root) return null
 
-  return createPortal(
+  return (
     <>
       {players.map((player) => {
         const index = getRelativePlayerIndex(context, player.id)
@@ -130,8 +127,7 @@ export const PlayerPanels = () => {
           />
         )
       })}
-    </>,
-    root
+    </>
   )
 }
 
@@ -215,14 +211,14 @@ const getSpeechDirection = (el: HTMLDivElement | null): SpeechBubbleDirection =>
 const panelCss = css`
   position: absolute;
   z-index: 100;
-  right: 1em;
+  right: 0.5em;
   width: 22em;
   border-radius: 0.7em;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  font-size: 1.4em;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  font-size: 0.7em;
+  box-shadow: 0 0.15em 0.5em rgba(0, 0, 0, 0.4);
   transition: box-shadow 0.3s, transform 0.2s;
 
   &:hover {
@@ -231,14 +227,14 @@ const panelCss = css`
 `
 
 const activeGlowCss = (color: string) => css`
-  outline: 2.5px solid ${color};
-  outline-offset: -1px;
-  box-shadow: 0 0 16px ${color}66, 0 0 4px ${color}44, 0 3px 12px rgba(0, 0, 0, 0.5);
+  outline: 0.15em solid ${color};
+  outline-offset: -0.06em;
+  box-shadow: 0 0 1em ${color}66, 0 0 0.25em ${color}44, 0 0.2em 0.75em rgba(0, 0, 0, 0.5);
 `
 
 
 const positionCss = (index: number) => css`
-  top: ${8.5 + index * 15}em;
+  top: ${1.5 + index * 14}em;
 `
 
 // --- Banner ---
@@ -309,7 +305,7 @@ const nameCss = css`
   z-index: 1;
   flex: 1;
   font-weight: 900;
-  font-size: 1.05em;
+  font-size: 1.4em;
   color: #fff;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
   text-overflow: ellipsis;
@@ -320,7 +316,7 @@ const nameCss = css`
 const timerCss = css`
   position: relative;
   z-index: 1;
-  font-size: 0.8em;
+  font-size: 1.1em;
   font-weight: 700;
   color: #fff;
   background: rgba(0, 0, 0, 0.45);
@@ -333,7 +329,7 @@ const timerCss = css`
 const eyeIconCss = css`
   position: relative;
   z-index: 1;
-  font-size: 0.75em;
+  font-size: 1.1em;
   color: rgba(255, 255, 255, 0.7);
   flex-shrink: 0;
 `
@@ -350,11 +346,11 @@ const bodyCss = css`
 `
 
 const borderTopActiveCss = (color: string) => css`
-  border-top: 2px solid ${color};
+  border-top: 0.12em solid ${color};
 `
 
 const borderTopInactiveCss = css`
-  border-top: 2px solid rgba(255, 255, 255, 0.08);
+  border-top: 0.12em solid rgba(255, 255, 255, 0.08);
 `
 
 // --- Token grid ---
@@ -380,15 +376,15 @@ const dimCss = css`
 `
 
 const tokenIconCss = css`
-  width: 2.1em;
-  height: 2.1em;
+  width: 2.6em;
+  height: 2.6em;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 `
 
 const countCss = (hasTokens: boolean) => css`
-  font-size: 1.05em;
+  font-size: 1.3em;
   font-weight: 900;
   color: ${hasTokens ? '#fff' : 'rgba(255, 255, 255, 0.2)'};
   min-width: 0.7em;
@@ -428,7 +424,7 @@ const bookIconCss = css`
 `
 
 const footCountCss = css`
-  font-size: 0.9em;
+  font-size: 1.2em;
   font-weight: 900;
   color: #ddd;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
