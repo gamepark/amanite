@@ -57,7 +57,7 @@ class ForestTileDescription extends BoardDescription {
     if (meepleMoves.length === 0) return
     const move = meepleMoves[0] as MoveItem
     const spot = move.location.x ?? 0
-    return <StampButton move={move} x={spot === 0 ? -3 : 3} y={3.8} extraCss={bounceUpCss} vertical><FontAwesomeIcon icon={faArrowUp} css={stampIconCss} /><Trans i18nKey="button.place" defaults="Place" /></StampButton>
+    return <StampButton move={move} x={spot === 0 ? -3 : 3} y={3.8} extraCss={bounceUpCss} vertical><FontAwesomeIcon icon={faArrowUp} css={stampIconCss} /><Trans i18nKey="button.place" /></StampButton>
   }
 
   getItemExtraCss(_item: MaterialItem, context: ItemContext): Interpolation<Theme> {

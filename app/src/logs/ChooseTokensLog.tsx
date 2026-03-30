@@ -13,7 +13,7 @@ export const ChooseTokensLog: FC<MoveComponentProps<MaterialMove>> = ({ move }) 
 
   return (
     <>
-      <Trans defaults="log.choose.tokens" values={{ player: name }}
+      <Trans i18nKey="log.choose.tokens" values={{ player: name }}
         components={[<strong css={nameCss(getPlayerColor(data.player))} />]} />
       <TokenIcons ids={data.tokens} />
     </>

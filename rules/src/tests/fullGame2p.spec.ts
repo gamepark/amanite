@@ -33,12 +33,12 @@ describe('Full 2-player game flow', () => {
     it('should transition to PlaceNewTokens after both choose', () => {
       // Fox chooses side 0
       const foxMove = rules.getLegalMoves(Fox)
-        .find(m => isCustomMoveType(CustomMoveType.Pass)(m) && m.data?.side === 0)!
+        .find(m => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(m) && m.data?.side === 0)!
       playAndResolve(rules, foxMove)
 
       // Squirrel chooses side 1
       const squirrelMove = rules.getLegalMoves(Squirrel)
-        .find(m => isCustomMoveType(CustomMoveType.Pass)(m) && m.data?.side === 1)!
+        .find(m => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(m) && m.data?.side === 1)!
       playAndResolve(rules, squirrelMove)
 
       // Should now be at PlaceNewTokens or PlaceMeeple (auto rules resolve)
@@ -51,10 +51,10 @@ describe('Full 2-player game flow', () => {
     beforeEach(() => {
       // Complete start card selection
       const foxMove = rules.getLegalMoves(Fox)
-        .find(m => isCustomMoveType(CustomMoveType.Pass)(m))!
+        .find(m => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(m))!
       playAndResolve(rules, foxMove)
       const squirrelMove = rules.getLegalMoves(Squirrel)
-        .find(m => isCustomMoveType(CustomMoveType.Pass)(m))!
+        .find(m => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(m))!
       playAndResolve(rules, squirrelMove)
       resolveAutoMoves(rules)
     })

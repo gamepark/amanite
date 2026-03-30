@@ -6,5 +6,5 @@ import { Memory } from '@gamepark/amanite/rules/Memory'
 
 export const StartRoundLog: FC<MoveComponentProps<MaterialMove>> = ({ context }) => {
   const round = context.game.memory[Memory.Round] ?? 1
-  return <Trans defaults="log.start.round" values={{ round }} />
+  return <Trans i18nKey="log.start.round" values={{ round }} />
 }

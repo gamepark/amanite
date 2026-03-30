@@ -8,6 +8,6 @@ export const PlaceNotebookHeader = () => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
-  if (itsMe) return <Trans defaults="header.place.notebook.you" />
-  return <Trans defaults="header.place.notebook.player" values={{ player: name }} />
+  if (itsMe) return <Trans i18nKey="header.place.notebook.you" />
+  return <Trans i18nKey="header.place.notebook.player" values={{ player: name }} />
 }

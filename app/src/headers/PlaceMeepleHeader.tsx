@@ -8,6 +8,6 @@ export const PlaceMeepleHeader = () => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
-  if (itsMe) return <Trans defaults="header.place.meeple.you" />
-  return <Trans defaults="header.place.meeple.player" values={{ player: name }} />
+  if (itsMe) return <Trans i18nKey="header.place.meeple.you" />
+  return <Trans i18nKey="header.place.meeple.player" values={{ player: name }} />
 }

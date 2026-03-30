@@ -10,7 +10,7 @@ export const SplitTokensLog: FC<MoveComponentProps<MaterialMove>> = ({ context }
   const player = context.action.playerId ?? context.game.rule?.player
   const name = usePlayerName(player)
   return (
-    <Trans defaults="log.split.tokens" values={{ player: name }}
+    <Trans i18nKey="log.split.tokens" values={{ player: name }}
       components={[<strong css={nameCss(getPlayerColor(player))} />]} />
   )
 }

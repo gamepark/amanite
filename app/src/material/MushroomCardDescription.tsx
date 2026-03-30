@@ -64,7 +64,7 @@ class MushroomCardDescription extends CardDescription {
 
     return (
       <StampButton move={notebookMoves[0]} x={2} y={0}>
-        <Trans i18nKey="button.investigate" defaults="Investigate" />
+        <Trans i18nKey="button.investigate" />
       </StampButton>
     )
   }

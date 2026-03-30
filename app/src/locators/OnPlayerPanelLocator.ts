@@ -1,5 +1,6 @@
 import { getRelativePlayerIndex, ItemContext, ListLocator, MaterialContext } from '@gamepark/react-game'
 import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
+import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 
 // Panel layout constants (must match PlayerPanels.tsx)
 const panelScale = 0.7
@@ -28,9 +29,14 @@ class OnPlayerPanelLocatorClass extends ListLocator {
   }
 
   placeItem(item: MaterialItem, context: ItemContext): string[] {
-    return [...super.placeItem(item, context), 'scale(0)']
+    const transforms = [...super.placeItem(item, context), 'scale(0)']
+    if (item.id === undefined && isCardType(context.type)) transforms.push('rotateY(180deg)')
+    return transforms
   }
 }
+
+const cardTypes = [MaterialType.ClueCard, MaterialType.ValueCard, MaterialType.StartCard]
+const isCardType = (type: number) => cardTypes.includes(type)
 
 export const onPlayerPanelLocator = new OnPlayerPanelLocatorClass()
 
@@ -41,12 +47,27 @@ class BesidePanelLocatorClass extends ListLocator {
 
   getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
     const center = getPanelCenter(getRelativePlayerIndex(context, location.player))
-    return { x: center.x - panelWidth / 2 - 3, y: center.y, z: 10 }
+    return { x: center.x - panelWidth / 2 - 3, y: center.y + 1, z: 10 }
   }
 
   placeItem(item: MaterialItem, context: ItemContext): string[] {
-    return [...super.placeItem(item, context), 'scale(1)']
+    const transforms = [...super.placeItem(item, context), 'scale(1)']
+    if (item.id === undefined && isCardType(context.type)) transforms.push('rotateY(180deg)')
+    return transforms
   }
 }
 
 export const besidePanelLocator = new BesidePanelLocatorClass()
+
+class FromPanelLocatorClass extends ListLocator {
+  getGap(): Partial<Coordinates> {
+    return { z: 0.05 }
+  }
+
+  getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
+    const center = getPanelCenter(getRelativePlayerIndex(context, location.player))
+    return { x: center.x - panelWidth / 2 - 1.5, y: center.y + 1, z: 10 }
+  }
+}
+
+export const fromPanelLocator = new FromPanelLocatorClass()

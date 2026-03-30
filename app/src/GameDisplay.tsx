@@ -11,7 +11,7 @@ export function GameDisplay() {
       <GameTable
         xMin={-42} xMax={44} yMin={-16} yMax={28}
         margin={margin}
-        zoom={false}
+        verticalCenter
         css={process.env.NODE_ENV === 'development' && tableBorder}
       >
         <PlayerPanels />

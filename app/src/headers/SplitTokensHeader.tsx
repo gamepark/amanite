@@ -15,12 +15,12 @@ export const SplitTokensHeader = () => {
 
   if (itsMe) {
     return (
-      <Trans defaults="header.split.tokens.you"
+      <Trans i18nKey="header.split.tokens.you"
         components={{
           confirm: <PlayMoveButton move={confirmMove}>{t('button.confirm')}</PlayMoveButton>
         }}
       />
     )
   }
-  return <Trans defaults="header.split.tokens.player" values={{ player: name }} />
+  return <Trans i18nKey="header.split.tokens.player" values={{ player: name }} />
 }

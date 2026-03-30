@@ -15,7 +15,7 @@ export const DiscardForPigLog: FC<MoveComponentProps<MaterialMove>> = ({ move, c
   const discardedId = context.game.items[MaterialType.RoundToken]?.[(move as MoveItem).itemIndex]?.id as number
   return (
     <>
-      <Trans defaults="log.discard.for.pig" values={{ player: name }}
+      <Trans i18nKey="log.discard.for.pig" values={{ player: name }}
         components={[<strong css={nameCss(getPlayerColor(player))} />]} />
       <TokenIcons ids={discardedId !== undefined ? [discardedId, Pig] : [Pig]} />
     </>

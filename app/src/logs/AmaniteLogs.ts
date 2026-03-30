@@ -63,7 +63,7 @@ export class AmaniteLogs implements LogDescription<MaterialMove, PlayerAnimal, M
     }
 
     // ChooseLot (single log for the whole lot choice)
-    if (rule === RuleId.ChooseLot && isCustomMoveType(CustomMoveType.Pass)(move)) {
+    if (rule === RuleId.ChooseLot && isCustomMoveType(CustomMoveType.ChooseLot)(move)) {
       return { Component: ChooseLotLog, player, css: logCss(player) }
     }
 

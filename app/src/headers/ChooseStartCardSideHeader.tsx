@@ -7,9 +7,9 @@ export const ChooseStartCardSideHeader = () => {
   const player = usePlayerId<PlayerAnimal>()
   const rules = useRules<AmaniteRules>()!
 
-  if (player === undefined) return <Trans defaults="header.choose.start.waiting" />
+  if (player === undefined) return <Trans i18nKey="header.choose.start.waiting" />
 
   const itsMe = rules.isTurnToPlay(player)
-  if (itsMe) return <Trans defaults="header.choose.start.you" />
-  return <Trans defaults="header.choose.start.waiting" />
+  if (itsMe) return <Trans i18nKey="header.choose.start.you" />
+  return <Trans i18nKey="header.choose.start.waiting" />
 }

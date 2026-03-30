@@ -8,13 +8,13 @@ export class ChooseStartCardSideRule extends SimultaneousRule {
 
   getActivePlayerLegalMoves(player: number): MaterialMove[] {
     return [
-      this.customMove(CustomMoveType.Pass, { player, side: 0 }),
-      this.customMove(CustomMoveType.Pass, { player, side: 1 })
+      this.customMove(CustomMoveType.ChooseStartCardSide, { player, side: 0 }),
+      this.customMove(CustomMoveType.ChooseStartCardSide, { player, side: 1 })
     ]
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (!isCustomMoveType(CustomMoveType.Pass)(move)) return []
+    if (!isCustomMoveType(CustomMoveType.ChooseStartCardSide)(move)) return []
     const { player, side } = move.data as { player: number, side: number }
     const startCard = this.material(MaterialType.StartCard)
       .location(LocationType.PlayerStartCard)

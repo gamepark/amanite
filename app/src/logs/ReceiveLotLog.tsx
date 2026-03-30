@@ -12,7 +12,7 @@ export const ReceiveLotLog: FC<MoveComponentProps<MaterialMove>> = ({ move }) =>
   const name = usePlayerName(data.player)
   return (
     <>
-      <Trans defaults="log.receive.lot" values={{ player: name }}
+      <Trans i18nKey="log.receive.lot" values={{ player: name }}
         components={[<strong css={nameCss(getPlayerColor(data.player))} />]} />
       <TokenIcons ids={data.tokens} />
     </>

@@ -17,13 +17,13 @@ export class ChooseLotRule extends PlayerTurnRule {
   getPlayerMoves(): MaterialMove[] {
     // Player chooses top lot or bottom lot
     return [
-      this.customMove(CustomMoveType.Pass, 'top'),
-      this.customMove(CustomMoveType.Pass, 'bottom')
+      this.customMove(CustomMoveType.ChooseLot, 'top'),
+      this.customMove(CustomMoveType.ChooseLot, 'bottom')
     ]
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (!isCustomMoveType(CustomMoveType.Pass)(move)) return []
+    if (!isCustomMoveType(CustomMoveType.ChooseLot)(move)) return []
 
     const tileIndex = this.tileIndex
     const chosenSide: string = move.data

@@ -175,7 +175,7 @@ export class AmaniteScoring implements ScoringDescription<PlayerAnimal, Material
       )
     }
     if (key.type === ScoringKeyType.Tiebreaker) {
-      return <div css={tiebreakerHeaderCss}><Trans defaults="scoring.tiebreaker" components={{ br: <br/>, small: <span css={tiebreakerSubCss} /> }} /></div>
+      return <div css={tiebreakerHeaderCss}><Trans i18nKey="scoring.tiebreaker" components={{ br: <br/>, small: <span css={tiebreakerSubCss} /> }} /></div>
     }
     return <div css={totalHeaderCss}>Total</div>
   }

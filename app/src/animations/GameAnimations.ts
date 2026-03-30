@@ -3,7 +3,7 @@ import { isMoveItemType, isMoveItemTypeAtOnce, LocalMoveType, MoveKind } from '@
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { RuleId } from '@gamepark/amanite/rules/RuleId'
-import { besidePanelLocator, onPlayerPanelLocator } from '../locators/OnPlayerPanelLocator'
+import { besidePanelLocator, fromPanelLocator, onPlayerPanelLocator } from '../locators/OnPlayerPanelLocator'
 import { getViewPlayer } from '../locators/ViewHelper'
 
 export const gameAnimations = new MaterialGameAnimations()
@@ -49,13 +49,12 @@ gameAnimations
     && isMeepleMove(move)
     && context.rules.game.rule?.player !== getViewPlayer(context)
   )
-  .duration(1800)
+  .duration(1200)
   .trajectory((context) => {
     const player = context.rules.game.rule?.player
     return {
       waypoints: [
-        { at: 0, locator: onPlayerPanelLocator, location: () => ({ player }) },
-        { at: 0.3, locator: besidePanelLocator, location: () => ({ player }) }
+        { at: 0, locator: fromPanelLocator, location: () => ({ player }) }
       ]
     }
   })
@@ -84,7 +83,7 @@ gameAnimations
     && isTokenMoveAtOnce(move)
     && move.location.player !== getViewPlayer(context)
   )
-  .duration(1200)
+  .duration(1600)
   .trajectory(toPanelTrajectory)
 
 // Token collection via choose tokens — viewed player
@@ -105,7 +104,7 @@ gameAnimations
     && move.location.type === LocationType.PlayerTokens
     && move.location.player !== getViewPlayer(context)
   )
-  .duration(1000)
+  .duration(1400)
   .trajectory(toPanelTrajectory)
 
 // Tokens returned to bag (after choose tokens)
@@ -133,7 +132,7 @@ gameAnimations
     && move.location.type === LocationType.PlayerMeepleStock
     && move.location.player !== getViewPlayer(context)
   )
-  .duration(800)
+  .duration(1200)
   .trajectory(toPanelTrajectory)
 
 // Discard token for pig
@@ -159,13 +158,12 @@ gameAnimations
     && isNotebookMove(move)
     && context.rules.game.rule?.player !== getViewPlayer(context)
   )
-  .duration(1800)
+  .duration(1200)
   .trajectory((context) => {
     const player = context.rules.game.rule?.player
     return {
       waypoints: [
-        { at: 0, locator: onPlayerPanelLocator, location: () => ({ player }) },
-        { at: 0.3, locator: besidePanelLocator, location: () => ({ player }) }
+        { at: 0, locator: fromPanelLocator, location: () => ({ player }) }
       ]
     }
   })
@@ -186,7 +184,7 @@ gameAnimations
     && move.location.type === LocationType.PlayerClueCards
     && move.location.player !== getViewPlayer(context)
   )
-  .duration(1000)
+  .duration(1400)
   .trajectory(toPanelTrajectory)
 
 // Clue cards (other moves like shuffle, return to deck)

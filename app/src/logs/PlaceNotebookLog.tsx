@@ -39,7 +39,7 @@ export const PlaceNotebookLog: FC<MoveComponentProps<MaterialMove>> = ({ move, c
   }
 
   return (
-    <Trans i18nKey="log.place.notebook" defaults="<name>{player}</name> investigates <mushroom/>"
+    <Trans i18nKey="log.place.notebook"
       values={{ player: name }}
       components={{
         name: <strong css={nameCss(getPlayerColor(player))} />,

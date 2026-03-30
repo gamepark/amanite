@@ -43,8 +43,8 @@ export const ChooseStartCardSideDialog = () => {
 
   if (!isActive || chosen) return null
 
-  const side0Move = legalMoves.find(move => isCustomMoveType(CustomMoveType.Pass)(move) && move.data?.side === 0)
-  const side1Move = legalMoves.find(move => isCustomMoveType(CustomMoveType.Pass)(move) && move.data?.side === 1)
+  const side0Move = legalMoves.find(move => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(move) && move.data?.side === 0)
+  const side1Move = legalMoves.find(move => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(move) && move.data?.side === 1)
   const side0Mushrooms = getStartCardMushrooms(player, 0)
   const side1Mushrooms = getStartCardMushrooms(player, 1)
   const images = cardImages[player]

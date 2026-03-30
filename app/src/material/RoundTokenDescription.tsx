@@ -62,9 +62,9 @@ class RoundTokenDescription extends TokenDescription {
     if ((item.location.x ?? 0) !== maxX) return
 
     const data = lotId === LotZone.Top ? 'top' : 'bottom'
-    const move = legalMoves.find(m => isCustomMoveType(CustomMoveType.Pass)(m) && m.data === data)
+    const move = legalMoves.find(m => isCustomMoveType(CustomMoveType.ChooseLot)(m) && m.data === data)
     if (!move) return
-    return <StampButton move={move} x={4} y={0} extraCss={chooseSlideCss} align="left"><FontAwesomeIcon icon={faArrowLeft} css={stampIconCss} /> <Trans i18nKey="button.choose" defaults="Choose" /></StampButton>
+    return <StampButton move={move} x={4} y={0} extraCss={chooseSlideCss} align="left"><FontAwesomeIcon icon={faArrowLeft} css={stampIconCss} /> <Trans i18nKey="button.choose" /></StampButton>
   }
 }
 

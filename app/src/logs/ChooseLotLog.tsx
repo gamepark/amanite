@@ -11,12 +11,9 @@ export const ChooseLotLog: FC<MoveComponentProps<MaterialMove>> = ({ move, conte
   const name = usePlayerName(player)
   const data = (move as CustomMove).data as string
   const key = data === 'top' ? 'log.choose.lot.top' : 'log.choose.lot.bottom'
-  const defaults = data === 'top'
-    ? '<0>{player}</0> chooses the top lot'
-    : '<0>{player}</0> chooses the bottom lot'
 
   return (
-    <Trans i18nKey={key} defaults={defaults} values={{ player: name }}
+    <Trans i18nKey={key} values={{ player: name }}
       components={[<strong css={nameCss(getPlayerColor(player))} />]} />
   )
 }

@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
-import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { LotZone } from '@gamepark/amanite/material/LotZone'
+import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { Pig } from '@gamepark/amanite/material/RoundTokenId'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { CustomMoveType } from '@gamepark/amanite/rules/CustomMoveType'
+import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
 import { isCustomMoveType, isMoveItemType, MaterialGame, MaterialMove, MaterialRules } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
-import { TutorialSetup, me, opponent } from './TutorialSetup'
+import { me, opponent, TutorialSetup } from './TutorialSetup'
 
 const onTile = (tileX: number) => (move: MaterialMove, game: MaterialGame) => {
   if (!isMoveItemType(MaterialType.Meeple)(move)) return false
@@ -31,78 +31,79 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
 
     // 0: Welcome
     {
-      popup: { text: () => <Trans defaults="tuto.welcome" /> }
+      popup: {
+        text: () => <Trans i18nKey="tuto.welcome"/>
+      }
     },
 
     // 1: Show mushroom cards (6 colors)
     {
       popup: {
-        text: () => <Trans defaults="tuto.mushroom.cards" />,
-        position: { x: 25 }
+        text: () => <Trans i18nKey="tuto.mushroom.cards"/>,
+        position: { y: -25 }
       },
       focus: (game) => ({
         materials: [this.material(game, MaterialType.MushroomCard)],
-        margin: { left: 1, right: 25, top: 2, bottom: 2 }
+        margin: { left: 5, right: 5, top: 10, bottom: 2 }
       })
     },
 
     // 2: Show value cards + mushroom cards
     {
       popup: {
-        text: () => <Trans defaults="tuto.value.cards" />,
-        position: { y: -13 }
+        text: () => <Trans i18nKey="tuto.value.cards"/>,
+        position: { y: -25 }
       },
       focus: (game) => ({
         materials: [
-          this.material(game, MaterialType.ValueCard),
-          this.material(game, MaterialType.MushroomCard)
+          this.material(game, MaterialType.ValueCard)
         ],
-        margin: { left: 1, right: 1, top: 12, bottom: 2 }
+        margin: { left: 5, right: 1, top: 10, bottom: 2 }
       })
     },
 
     // 3: Explain the secret assignment
     {
       popup: {
-        text: () => <Trans defaults="tuto.secret" />,
-        position: { y: -13 }
+        text: () => <Trans i18nKey="tuto.secret"/>,
+        position: { y: -25 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ValueCard),
           this.material(game, MaterialType.MushroomCard)
         ],
-        margin: { left: 1, right: 1, top: 12, bottom: 2 }
+        margin: { left: 5, right: 1, top: 10, bottom: 2 }
       })
     },
 
     // 4: Show YOUR clue cards
     {
       popup: {
-        text: () => <Trans defaults="tuto.clues" />,
-        position: { x: 0, y: -20 }
+        text: () => <Trans i18nKey="tuto.clues"/>,
+        position: { x: -10 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ClueCard).location(LocationType.PlayerClueCards).player(me),
           this.material(game, MaterialType.StartCard).player(me)
         ],
-        margin: { top: 3, bottom: 3, left: 1, right: 1 }
+        margin: { top: 3, bottom: 3, left: 3, right: 3 }
       })
     },
 
     // 5: Explain what YOUR clues tell you
     {
       popup: {
-        text: () => <Trans defaults="tuto.clues.explain" />,
-        position: { x: 0, y: -20 }
+        text: () => <Trans i18nKey="tuto.clues.explain"/>,
+        position: { x: -10 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ClueCard).location(LocationType.PlayerClueCards).player(me),
           this.material(game, MaterialType.StartCard).player(me)
         ],
-        margin: { top: 3, bottom: 3, left: 1, right: 1 }
+        margin: { top: 3, bottom: 3, left: 3, right: 3 }
       })
     },
 
@@ -111,8 +112,8 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 6: Show forest tiles with tokens
     {
       popup: {
-        text: () => <Trans defaults="tuto.tiles" />,
-        position: { x: 25 }
+        text: () => <Trans i18nKey="tuto.tiles"/>,
+        position: { x: -30 }
       },
       focus: (game) => ({
         materials: [
@@ -126,8 +127,8 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 7: Explain the 2 zones on a forest tile
     {
       popup: {
-        text: () => <Trans defaults="tuto.tile.zones" />,
-        position: { x: 20 }
+        text: () => <Trans i18nKey="tuto.tile.zones"/>,
+        position: { x: -30, y: 20 }
       },
       focus: (game) => ({
         materials: [
@@ -140,8 +141,8 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 8: Show meeples + explain placement
     {
       popup: {
-        text: () => <Trans defaults="tuto.meeples" />,
-        position: { x: 20 }
+        text: () => <Trans i18nKey="tuto.meeples"/>,
+        position: { x: -30, y: -10 }
       },
       focus: (game) => ({
         materials: [
@@ -156,8 +157,8 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 9: Place first meeple on tile 0
     {
       popup: {
-        text: () => <Trans defaults="tuto.place.meeple.1" />,
-        position: { x: 25 }
+        text: () => <Trans i18nKey="tuto.place.meeple.1"/>,
+        position: { x: -30 }
       },
       focus: (game) => {
         const tileIndex = this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0).getIndex()
@@ -184,7 +185,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 11: Place second meeple on tile 2
     {
       popup: {
-        text: () => <Trans defaults="tuto.place.meeple.2" />,
+        text: () => <Trans i18nKey="tuto.place.meeple.2"/>,
         position: { x: -25 }
       },
       focus: (game) => {
@@ -212,8 +213,8 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 12b: Explain that the second player on a tile must split the tokens
     {
       popup: {
-        text: () => <Trans defaults="The second player on a tile must split the tokens into two groups. The first player will then choose which group to take!" />,
-        position: { x: 25 }
+        text: () => <Trans i18nKey="tuto.split.explain"/>,
+        position: { x: -30 }
       },
       focus: (game) => ({
         materials: [
@@ -251,25 +252,31 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
 
     // 16: Explain harvest + split result
     {
-      popup: { text: () => <Trans defaults="tuto.harvest" /> }
+      popup: {
+        text: () => <Trans i18nKey="tuto.harvest"/>,
+        position: { x: 32, y: -7 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0),
+          this.material(game, MaterialType.RoundToken).filter(item => item.location.type === LocationType.ForestTileTokens && item.location.parent === this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0).getIndex())]
+      })
     },
 
     // 17: Choose lot on tile 0
     {
       popup: {
-        text: () => <Trans defaults="As the first player on this tile, you get to choose which group of tokens to take!" />,
-        position: { x: 25 }
+        text: () => <Trans i18nKey="tuto.choose.lot"/>,
+        position: { x: 32, y: -7 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0),
-          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens)
-        ],
-        margin: { top: 2, bottom: 5, left: 2, right: 25 }
+          this.material(game, MaterialType.RoundToken).filter(item => item.location.type === LocationType.ForestTileTokens && item.location.parent === this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0).getIndex())]
       }),
       move: {
         player: me,
-        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.Pass)(move)
+        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ChooseLot)(move)
       }
     },
 
@@ -292,29 +299,30 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 20: Explain pigs (zoom on pig token on tile 2)
     {
       popup: {
-        text: () => <Trans defaults="Watch out for pigs! For each pig you collect, you must discard one mushroom token. But each pig is worth 3 points at the end!" />,
-        position: { x: 25 }
+        text: () => <Trans i18nKey="tuto.pigs"/>,
+        position: { x: 0 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.RoundToken).id(Pig)
         ],
-        margin: { top: 5, bottom: 5, left: 5, right: 25 }
+        margin: { top: 5, bottom: 5, left: 5, right: 5 }
       })
     },
 
     // 21: Explain choosing tokens (alone on tile 2)
     {
       popup: {
-        text: () => <Trans defaults="tuto.choose.tokens" />,
-        position: { x: 25 }
+        text: () => <Trans i18nKey="tuto.choose.tokens"/>,
+        position: { x: 0 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 2),
-          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens)
+          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens),
+          this.material(game, MaterialType.RoundToken).location(LocationType.PlayerTokens).player(me)
         ],
-        margin: { top: 2, bottom: 2, left: 2, right: 25 }
+        margin: { top: 5, bottom: 5, left: 5, right: 5 },
       }),
       move: {
         player: me,
@@ -343,7 +351,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 23: Discard a mushroom token for the pig (if pig was collected)
     {
       popup: {
-        text: () => <Trans defaults="You collected a pig! You must now discard one of your mushroom tokens." />
+        text: () => <Trans i18nKey="tuto.discard.pig"/>
       },
       move: {
         player: me,
@@ -357,7 +365,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 22: Explain notebook tokens
     {
       popup: {
-        text: () => <Trans defaults="tuto.notebook" />,
+        text: () => <Trans i18nKey="tuto.notebook"/>,
         position: { x: 25 }
       },
       focus: (game) => ({
@@ -372,7 +380,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 23: Explain what placing a notebook does
     {
       popup: {
-        text: () => <Trans defaults="tuto.notebook.effect" />,
+        text: () => <Trans i18nKey="tuto.notebook.effect"/>,
         position: { x: 25 }
       },
       focus: (game) => ({
@@ -395,7 +403,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     // 25: Place YOUR notebook
     {
       popup: {
-        text: () => <Trans defaults="tuto.place.notebook" />,
+        text: () => <Trans i18nKey="tuto.place.notebook"/>,
         position: { x: 25 }
       },
       focus: (game) => ({
@@ -415,12 +423,16 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
 
     // Explain scoring
     {
-      popup: { text: () => <Trans defaults="tuto.scoring" /> }
+      popup: {
+        text: () => <Trans i18nKey="tuto.scoring"/>
+      }
     },
 
     // 28: Tutorial complete
     {
-      popup: { text: () => <Trans defaults="tuto.end" /> }
+      popup: {
+        text: () => <Trans i18nKey="tuto.end"/>
+      }
     }
   ]
 

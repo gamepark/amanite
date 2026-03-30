@@ -14,10 +14,10 @@ export const ChooseLotHeader = () => {
   const legalMoves = useLegalMoves()
 
   if (itsMe) {
-    const topMove = legalMoves.find(move => isCustomMoveType(CustomMoveType.Pass)(move) && move.data === 'top')
-    const bottomMove = legalMoves.find(move => isCustomMoveType(CustomMoveType.Pass)(move) && move.data === 'bottom')
+    const topMove = legalMoves.find(move => isCustomMoveType(CustomMoveType.ChooseLot)(move) && move.data === 'top')
+    const bottomMove = legalMoves.find(move => isCustomMoveType(CustomMoveType.ChooseLot)(move) && move.data === 'bottom')
     return (
-      <Trans defaults="header.choose.lot.you"
+      <Trans i18nKey="header.choose.lot.you"
         components={{
           top: <PlayMoveButton move={topMove}>{t('button.top.lot')}</PlayMoveButton>,
           bottom: <PlayMoveButton move={bottomMove}>{t('button.bottom.lot')}</PlayMoveButton>
@@ -25,5 +25,5 @@ export const ChooseLotHeader = () => {
       />
     )
   }
-  return <Trans defaults="header.choose.lot.player" values={{ player: name }} />
+  return <Trans i18nKey="header.choose.lot.player" values={{ player: name }} />
 }
