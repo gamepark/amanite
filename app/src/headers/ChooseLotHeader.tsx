@@ -1,5 +1,6 @@
 import { Trans, useTranslation } from 'react-i18next'
-import { PlayMoveButton, useLegalMoves, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { useLegalMoves, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { StampPlayMoveButton } from '../components/StampPlayMoveButton'
 import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
 import { isCustomMoveType } from '@gamepark/rules-api'
 import { CustomMoveType } from '@gamepark/amanite/rules/CustomMoveType'
@@ -19,8 +20,8 @@ export const ChooseLotHeader = () => {
     return (
       <Trans i18nKey="header.choose.lot.you"
         components={{
-          top: <PlayMoveButton move={topMove}>{t('button.top.lot')}</PlayMoveButton>,
-          bottom: <PlayMoveButton move={bottomMove}>{t('button.bottom.lot')}</PlayMoveButton>
+          top: <StampPlayMoveButton move={topMove}>{t('button.top.lot')}</StampPlayMoveButton>,
+          bottom: <StampPlayMoveButton move={bottomMove}>{t('button.bottom.lot')}</StampPlayMoveButton>
         }}
       />
     )

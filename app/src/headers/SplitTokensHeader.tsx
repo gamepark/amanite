@@ -1,5 +1,6 @@
 import { Trans, useTranslation } from 'react-i18next'
-import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { StampPlayMoveButton } from '../components/StampPlayMoveButton'
 import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
 import { isCustomMoveType } from '@gamepark/rules-api'
 import { CustomMoveType } from '@gamepark/amanite/rules/CustomMoveType'
@@ -17,7 +18,7 @@ export const SplitTokensHeader = () => {
     return (
       <Trans i18nKey="header.split.tokens.you"
         components={{
-          confirm: <PlayMoveButton move={confirmMove}>{t('button.confirm')}</PlayMoveButton>
+          confirm: <StampPlayMoveButton move={confirmMove}>{t('button.confirm')}</StampPlayMoveButton>
         }}
       />
     )
