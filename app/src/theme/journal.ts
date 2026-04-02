@@ -14,5 +14,5 @@ export const journalTabSelectedCss = css`
 export const historyEntryCss = css`
   background: rgba(245, 237, 208, 0.06);
   border-radius: 0.3em;
-  font-size: 1.8em;
+  font-size: 2.4em;
 `

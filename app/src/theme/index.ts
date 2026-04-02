@@ -17,8 +17,8 @@ export const theme = {
     primaryLighter: '#B0AEE8',
     surface: colors.cream,
     onSurface: colors.textDark,
-    onSurfaceFocus: colors.indigo,
-    onSurfaceActive: colors.indigoDark,
+    onSurfaceFocus: 'rgba(52, 50, 160, 0.1)',
+    onSurfaceActive: 'rgba(52, 50, 160, 0.2)',
     danger: colors.danger,
     dangerHover: colors.dangerHover,
     dangerActive: colors.dangerActive,
@@ -48,6 +48,12 @@ export const theme = {
     panel: css`
       background: linear-gradient(180deg, ${colors.cream} 0%, ${colors.creamDark} 100%);
       border: 1px solid ${colors.indigo};
+
+      > button {
+        display: flex;
+        align-items: center;
+        gap: 0.4em;
+      }
     `,
     button: css`
       color: ${colors.textDark};
