@@ -310,7 +310,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       })
     },
 
-    // 21: Explain choosing tokens (alone on tile 2)
+    // 21: Explain choosing tokens (alone on tile 2) — pick the pig first
     {
       popup: {
         text: () => <Trans i18nKey="tuto.choose.tokens"/>,
@@ -330,12 +330,12 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
           if (!isMoveItemType(MaterialType.RoundToken)(move)) return false
           if (move.location.type !== LocationType.PlayerTokens) return false
           const item = game.items[MaterialType.RoundToken]?.[move.itemIndex]
-          return item?.id !== Pig
+          return item?.id === Pig
         }
       }
     },
 
-    // 22: Pick the pig as second token
+    // 22: Pick a mushroom token as second token
     {
       move: {
         player: me,
@@ -343,7 +343,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
           if (!isMoveItemType(MaterialType.RoundToken)(move)) return false
           if (move.location.type !== LocationType.PlayerTokens) return false
           const item = game.items[MaterialType.RoundToken]?.[move.itemIndex]
-          return item?.id === Pig
+          return item?.id !== Pig
         }
       }
     },
