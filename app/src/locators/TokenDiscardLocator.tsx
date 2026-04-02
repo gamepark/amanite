@@ -28,7 +28,7 @@ export class TokenDiscardLocator extends PileLocator {
   locationDescription = discardDropArea
 
   getLocations(context: MaterialContext) {
-    if (context.rules.game.rule?.id === RuleId.DiscardForPig) {
+    if (context.rules.game.rule?.id === RuleId.DiscardForPig && context.player === context.rules.game.rule?.player) {
       return [{ type: LocationType.TokenDiscard }]
     }
     return []
