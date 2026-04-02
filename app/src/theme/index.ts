@@ -89,6 +89,11 @@ export const theme = {
       border: 2px solid ${colors.indigo};
       color: ${colors.textDark};
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    `,
+    content: css`
+      button:focus:not(:hover) {
+        background: transparent;
+      }
     `
   },
   timeStats: {
