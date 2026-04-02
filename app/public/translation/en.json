@@ -134,7 +134,7 @@
   "tuto.place.meeple.1": "Place your meeple on the first tile. Look at the tokens and use your clue cards to decide!\n<i>Drag your meeple onto the tile.</i>",
   "tuto.place.meeple.2": "Now place your <strong>second meeple</strong> on another tile to claim more tokens.",
   "tuto.place.notebook": "Place your <strong>notebook</strong> on a Mushroom card to discover its value.\nPick a color you've been collecting but don't know the value of yet!",
-  "tuto.scoring": "At the end of <strong>round 3</strong>, all Value cards are revealed and final scoring begins.\nEach mushroom token you collected scores (or costs!) points based on its secret value.\n<i>Pigs are always worth <strong>3 VP</strong>, but they force you to discard a token when collected.</i>",
+  "tuto.scoring": "At the end of <strong>round 3</strong>, all Value cards are revealed and final scoring begins.\nEach mushroom token you collected scores (or costs!) points based on its secret value. Some values have special effects!\n<i>Click on the Value cards to see the details of each scoring.</i>",
   "tuto.secret": "That's the core mystery of Amanite! You <strong>don't know</strong> which value is paired with which color.\nYour goal: gather <strong>clues</strong> to figure out which mushrooms to collect — and which to avoid.",
   "tuto.split.explain": "The <strong>second player</strong> on a tile must split the tokens into <strong>two groups</strong>.\nThe first player will then choose which group to take!",
   "tuto.tile.zones": "Each tile has <strong>2 yellow circles</strong>.\nThe left one (with a number) is where the first meeple goes. The right one (with arrows) opens when a second player joins the same tile — <i>this triggers the token split!</i>",
