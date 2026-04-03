@@ -147,12 +147,22 @@ const sideCardCss = css`
   padding: 0.8em;
   border-radius: 0.6em;
   border: 2px solid transparent;
+  background: linear-gradient(180deg, #f0e8c8 0%, #e8deb8 100%);
+  color: #2d1f0e;
+  font-weight: normal;
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s;
 
   &:hover {
     border-color: #2d2d7a;
     box-shadow: 0 0 16px rgba(45, 45, 122, 0.3);
+    background: linear-gradient(180deg, #e8deb8 0%, #ddd4a8 100%);
+    color: #2d1f0e;
+  }
+
+  &:active {
+    background: #ddd4a8;
+    color: #2d1f0e;
   }
 `
 
