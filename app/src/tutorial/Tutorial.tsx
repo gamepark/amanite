@@ -81,14 +81,13 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans i18nKey="tuto.clues"/>,
-        position: { x: -10 }
+        position: { x: -20 }
       },
       focus: (game) => ({
         materials: [
-          this.material(game, MaterialType.ClueCard).location(LocationType.PlayerClueCards).player(me),
-          this.material(game, MaterialType.StartCard).player(me)
+          this.material(game, MaterialType.ClueCard).location(LocationType.PlayerClueCards).player(me)
         ],
-        margin: { top: 3, bottom: 3, left: 3, right: 3 }
+        margin: { top: 3, bottom: 3, left: 30, right: 3 }
       })
     },
 
@@ -96,14 +95,19 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans i18nKey="tuto.clues.explain"/>,
-        position: { x: -10 }
+        position: { x: -30 }
       },
       focus: (game) => ({
         materials: [
-          this.material(game, MaterialType.ClueCard).location(LocationType.PlayerClueCards).player(me),
-          this.material(game, MaterialType.StartCard).player(me)
+          this.material(game, MaterialType.ClueCard).location(LocationType.PlayerClueCards).player(me)
         ],
-        margin: { top: 3, bottom: 3, left: 3, right: 3 }
+        locations: [
+          {
+            type: LocationType.StartCardClueZone,
+            parent: this.material(game, MaterialType.StartCard).player(me).getIndex()
+          }
+        ],
+        margin: { top: 1, bottom: 1, left: 1, right: 1 }
       })
     },
 
