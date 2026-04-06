@@ -131,7 +131,7 @@
   "tuto.notebook": "After harvesting, it's time to <strong>investigate</strong>! Your <strong>notebook tokens</strong> let you draw a new Clue Card from any Mushroom card.",
   "tuto.notebook.effect": "When you place a notebook on a Mushroom card, you draw <strong>1 clue</strong> from its deck.\nThis reveals the <strong>secret value</strong> of that color — <i>very useful for future rounds!</i>",
   "tuto.pigs": "Watch out for <strong>pigs</strong>! For each pig you collect, you must discard one mushroom token.\n<i>But each pig is worth <strong>3 points</strong> at the end!</i>",
-  "tuto.place.meeple.1": "Place your meeple on the first tile. Look at the tokens and use your clue cards to decide!\n<i>Drag your meeple onto the tile.</i>",
+  "tuto.place.meeple.1": "Place your first meeple on the first tile. The mushrooms here match your clues!",
   "tuto.place.meeple.2": "Now place your <strong>second meeple</strong> on another tile to claim more tokens.",
   "tuto.place.notebook": "Place your <strong>notebook</strong> on a Mushroom card to discover its value.\nPick a color you've been collecting but don't know the value of yet!",
   "tuto.scoring": "At the end of <strong>round 3</strong>, all Value cards are revealed and final scoring begins.\nEach mushroom token you collected scores (or costs!) points based on its secret value. Some values have special effects!\n<i>Click on the Value cards to see the details of each scoring.</i>",

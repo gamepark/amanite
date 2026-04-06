@@ -117,7 +117,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans i18nKey="tuto.tiles"/>,
-        position: { x: -30 }
+        position: { x: -30, y: 10 }
       },
       focus: (game) => ({
         materials: [
@@ -138,7 +138,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
         materials: [
           this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0)
         ],
-        margin: { top: 2, bottom: 2, left: 2, right: 25 }
+        margin: { top: 2, bottom: 10, left: 2, right: 25 }
       })
     },
 
