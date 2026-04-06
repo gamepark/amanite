@@ -214,11 +214,27 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       move: { player: opponent, filter: onTile(0) }
     },
 
-    // 12b: Explain that the second player on a tile must split the tokens
+    // 12b: Announce the harvest phase
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.harvest.start"/>,
+        position: { x: -30, y: 10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ForestTile),
+          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens),
+          this.material(game, MaterialType.Meeple).location(LocationType.ForestTileMeepleSpot)
+        ],
+        margin: { top: 2, bottom: 5, left: 2, right: 25 }
+      })
+    },
+
+    // 12c: Explain that the second player on a tile must split the tokens
     {
       popup: {
         text: () => <Trans i18nKey="tuto.split.explain"/>,
-        position: { x: -30 }
+        position: { x: -30, y: 10 }
       },
       focus: (game) => ({
         materials: [
