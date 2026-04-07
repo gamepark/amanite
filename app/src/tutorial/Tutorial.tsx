@@ -393,12 +393,13 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans i18nKey="tuto.notebook"/>,
-        position: { x: 25 }
+        position: { x: 20, y: 30 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.NotebookToken).location(LocationType.PlayerNotebookStock).player(me),
-          this.material(game, MaterialType.MushroomCard)
+          this.material(game, MaterialType.MushroomCard),
+          this.material(game, MaterialType.ClueCard).location(LocationType.ClueDeck)
         ],
         margin: { left: 1, right: 25, top: 2, bottom: 2 }
       })
@@ -408,7 +409,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans i18nKey="tuto.notebook.effect"/>,
-        position: { x: 25 }
+        position: { x: 20, y: 30 }
       },
       focus: (game) => ({
         materials: [
@@ -431,14 +432,15 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans i18nKey="tuto.place.notebook"/>,
-        position: { x: 25 }
+        position: { x: 50 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.NotebookToken).location(LocationType.PlayerNotebookStock).player(me),
-          this.material(game, MaterialType.MushroomCard)
+          this.material(game, MaterialType.MushroomCard),
+          this.material(game, MaterialType.RoundToken).location(LocationType.PlayerTokens).player(me)
         ],
-        margin: { left: 1, right: 25, top: 2, bottom: 2 }
+        margin: { left: 1, right: 30, top: 2, bottom: 2 }
       }),
       move: {
         player: me,
