@@ -432,7 +432,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     {
       popup: {
         text: () => <Trans i18nKey="tuto.place.notebook"/>,
-        position: { x: 50 }
+        position: { x: 40, y: 5 }
       },
       focus: (game) => ({
         materials: [
@@ -440,7 +440,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
           this.material(game, MaterialType.MushroomCard),
           this.material(game, MaterialType.RoundToken).location(LocationType.PlayerTokens).player(me)
         ],
-        margin: { left: 1, right: 30, top: 2, bottom: 2 }
+        margin: { left: 1, right: 30, top: 20, bottom: 2 }
       }),
       move: {
         player: me,

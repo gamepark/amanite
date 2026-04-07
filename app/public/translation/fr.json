@@ -31,6 +31,7 @@
   "header.discard.pig.player": "{player} doit défausser un jeton champignon pour le cochon",
   "header.discard.pig.you": "Vous avez collecté un cochon ! Vous devez défausser 1 jeton champignon de votre collection",
   "header.final.scoring": "Décompte final ! Les valeurs sont révélées.",
+  "header.place.tokens": "Apparition des jetons champignon...",
   "header.place.meeple.player": "{player} doit placer un meeple sur une tuile Forêt",
   "header.place.meeple.you": "Vous devez placer un meeple sur une tuile Forêt",
   "header.place.notebook.player": "{player} doit placer un carnet sur une carte Champignon",

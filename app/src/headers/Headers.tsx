@@ -8,10 +8,12 @@ import { ChooseTokensHeader } from './ChooseTokensHeader'
 import { DiscardForPigHeader } from './DiscardForPigHeader'
 import { PlaceNotebookHeader } from './PlaceNotebookHeader'
 import { FinalScoringHeader } from './FinalScoringHeader'
+import { PlaceNewTokensHeader } from './PlaceNewTokensHeader'
 import { RevealCluesHeader } from './RevealCluesHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseStartCardSide]: ChooseStartCardSideHeader,
+  [RuleId.PlaceNewTokens]: PlaceNewTokensHeader,
   [RuleId.PlaceMeeple]: PlaceMeepleHeader,
   [RuleId.SplitTokens]: SplitTokensHeader,
   [RuleId.ChooseLot]: ChooseLotHeader,

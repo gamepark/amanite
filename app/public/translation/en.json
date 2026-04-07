@@ -31,6 +31,7 @@
   "header.discard.pig.player": "{player} must discard a mushroom token for the pig",
   "header.discard.pig.you": "You must discard a mushroom token for the pig",
   "header.final.scoring": "Final scoring! Values are revealed.",
+  "header.place.tokens": "Mushroom tokens appearing...",
   "header.place.meeple.player": "{player} must place a meeple on a Forest tile",
   "header.place.meeple.you": "You must place a meeple on a Forest tile",
   "header.place.notebook.player": "{player} must place a notebook on a Mushroom card",
