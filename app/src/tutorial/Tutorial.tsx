@@ -270,20 +270,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
 
     // ── GAMEPLAY: Harvest ──
 
-    // 16: Explain harvest + split result
-    {
-      popup: {
-        text: () => <Trans i18nKey="tuto.harvest"/>,
-        position: { x: 32, y: -7 }
-      },
-      focus: (game) => ({
-        materials: [
-          this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0),
-          this.material(game, MaterialType.RoundToken).filter(item => item.location.type === LocationType.ForestTileTokens && item.location.parent === this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 0).getIndex())]
-      })
-    },
-
-    // 17: Choose lot on tile 0
+    // 16: Choose lot on tile 0
     {
       popup: {
         text: () => <Trans i18nKey="tuto.choose.lot"/>,
