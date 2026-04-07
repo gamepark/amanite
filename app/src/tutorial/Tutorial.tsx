@@ -371,6 +371,15 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       popup: {
         text: () => <Trans i18nKey="tuto.discard.pig"/>
       },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.RoundToken).location(LocationType.PlayerTokens).player(me)
+        ],
+        locations: [
+          { type: LocationType.TokenDiscard }
+        ],
+        margin: { top: 5, bottom: 5, left: 5, right: 5 }
+      }),
       move: {
         player: me,
         filter: (move: MaterialMove) =>
