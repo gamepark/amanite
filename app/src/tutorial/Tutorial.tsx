@@ -303,33 +303,33 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       }
     },
 
-    // 20: Explain pigs (zoom on pig token on tile 2)
+    // 20: Explain being alone on a tile
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.pigs"/>,
-        position: { x: 0 }
-      },
-      focus: (game) => ({
-        materials: [
-          this.material(game, MaterialType.RoundToken).id(Pig)
-        ],
-        margin: { top: 5, bottom: 5, left: 5, right: 5 }
-      })
-    },
-
-    // 21: Explain choosing tokens (alone on tile 2) — pick the pig first
-    {
-      popup: {
-        text: () => <Trans i18nKey="tuto.choose.tokens"/>,
-        position: { x: 0 }
+        text: () => <Trans i18nKey="tuto.alone.tile"/>,
+        position: { y: 20 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 2),
-          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens),
-          this.material(game, MaterialType.RoundToken).location(LocationType.PlayerTokens).player(me)
+          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens)
         ],
-        margin: { top: 5, bottom: 5, left: 5, right: 5 },
+        margin: { top: 5, bottom: 10, left: 5, right: 5 }
+      })
+    },
+
+    // 21: Explain pigs + pick the pig token
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.pigs"/>,
+        position: { y: 20 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 2),
+          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens).id(Pig)
+        ],
+        margin: { top: 5, bottom: 10, left: 5, right: 5 }
       }),
       move: {
         player: me,
@@ -342,8 +342,19 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       }
     },
 
-    // 22: Pick a mushroom token as second token
+    // 23: Pick a mushroom token as second token
     {
+      popup: {
+        text: () => <Trans i18nKey="tuto.choose.mushroom"/>,
+        position: { y: 20 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ForestTile).filter(item => item.location.x === 2),
+          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens)
+        ],
+        margin: { top: 5, bottom: 10, left: 5, right: 5 }
+      }),
       move: {
         player: me,
         filter: (move: MaterialMove, game: MaterialGame) => {
