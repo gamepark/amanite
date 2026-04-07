@@ -119,7 +119,7 @@
   "scoring.potion.leftover": "par paire Antidote+Élixir restante",
   "scoring.potion.pair": "par paire avec le Poison",
   "scoring.tiebreaker": "Égalité<br/><small>(moins de jetons)</small>",
-  "tuto.choose.lot": "L'adversaire a séparé les jetons en <strong>2 lots</strong>.\nEn tant que premier joueur sur cette tuile, vous choisissez quel lot prendre !",
+  "tuto.choose.lot": "L'adversaire a séparé les jetons en <strong>2 lots</strong>.\nEn tant que premier joueur sur cette tuile, vous choisissez quel lot prendre !\n<i>Pour l'instant, vous savez que les champignons jaune, rouge et bleu valent 3, 2 et -1, mais vous ne savez pas encore quelle valeur est associée à quelle couleur.</i>",
   "tuto.choose.tokens": "Vous êtes seul sur cette tuile, vous pouvez donc choisir <strong>2 jetons</strong> à garder.\nLe reste retourne dans le sac. Prenez le cochon puis un jeton champignon !",
   "tuto.discard.pig": "Vous avez collecté un <strong>cochon</strong> !\nVous devez maintenant défausser un de vos jetons champignon.",
   "tuto.clues": "C'est là qu'interviennent les <strong>cartes Indice</strong> ! Vous commencez avec <strong>3 cartes</strong>. Chacune révèle la <strong>valeur secrète</strong> d'une couleur de champignon.\n<i>Vous seul pouvez voir vos indices — les autres joueurs ont des informations différentes !</i>",

@@ -119,7 +119,7 @@
   "scoring.potion.leftover": "per leftover Antidote+Elixir pair",
   "scoring.potion.pair": "per pair with Poison",
   "scoring.tiebreaker": "Tiebreaker<br/><small>(fewer tokens)</small>",
-  "tuto.choose.lot": "The opponent has split the tokens into <strong>2 lots</strong>.\nAs the first player on this tile, you choose which lot to take!",
+  "tuto.choose.lot": "The opponent has split the tokens into <strong>2 lots</strong>.\nAs the first player on this tile, you choose which lot to take!\n<i>So far, you know that yellow, red and blue mushrooms are worth 3, 2 and -1, but you don't know yet which value matches which color.</i>",
   "tuto.choose.tokens": "You're alone on this tile, so you get to pick <strong>2 tokens</strong> to keep.\nThe rest go back to the bag. Pick the pig first, then a mushroom token!",
   "tuto.discard.pig": "You collected a <strong>pig</strong>!\nYou must now discard one of your mushroom tokens.",
   "tuto.clues": "This is how you find out: <strong>Clue Cards</strong>! You start with <strong>3 clue cards</strong>. Each one reveals the <strong>secret value</strong> of one mushroom color.\n<i>Only you can see your clues — other players have different information!</i>",
