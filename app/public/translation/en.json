@@ -126,7 +126,7 @@
   "tuto.discard.pig": "You collected a <strong>pig</strong>!\nYou must now discard one of your mushroom tokens.",
   "tuto.clues": "This is how you find out: <strong>Clue Cards</strong>! You start with <strong>3 clue cards</strong>. Each one reveals the <strong>secret value</strong> of one mushroom color.\n<i>Only you can see your clues — other players have different information!</i>",
   "tuto.clues.explain": "As shown on your Start card, you received clues for <strong>Blue</strong>, <strong>Yellow</strong> and <strong>Red</strong>.\nYour 3 clues show the values <strong>+3</strong>, <strong>+2</strong> and <strong>-1</strong> — but you don’t know which value goes with which color!\n<i>That’s for you to deduce throughout the game.</i>",
-  "tuto.end": "Well done! You’ve learned the basics of Amanite.\nRemember: gather <strong>clues</strong>, collect the right mushrooms, and avoid the bad ones. Good luck!",
+  "tuto.end": "The first round is over, and you now know the rules of <strong>Amanite</strong>!\nIt’s your turn to play rounds 2 and 3.\nHappy foraging!",
   "tuto.meeples": "These are your <strong>2 meeples</strong>. Each round, you place them one at a time on Forest tiles.\nWhere you place them determines which tokens you can collect!",
   "tuto.mushroom.cards": "Here are the <strong>6 Mushroom cards</strong>. Each one represents a color: Blue, Green, Purple, Red, White, and Yellow.\nYou’ll collect tokens of these colors throughout the game.",
   "tuto.notebook": "After the harvest, it’s time to <strong>investigate</strong>!\nThe game lasts <strong>3 rounds</strong>, and at the end of rounds 1 and 2, you can use one of your <strong>2 notebook tokens</strong> to draw a new Clue Card from any Mushroom card.",
