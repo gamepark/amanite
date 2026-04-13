@@ -2,7 +2,9 @@
 import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { LotZone } from '@gamepark/amanite/material/LotZone'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
+import { MushroomColor } from '@gamepark/amanite/material/MushroomColor'
 import { Pig } from '@gamepark/amanite/material/RoundTokenId'
+import { ValueType } from '@gamepark/amanite/material/ValueType'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { CustomMoveType } from '@gamepark/amanite/rules/CustomMoveType'
 import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
@@ -246,19 +248,27 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       })
     },
 
-    // 13-15: Opponent splits tokens (auto: 2 to right + confirm)
+    // 13-15: Opponent splits tokens (auto: 1 blue + 1 other to bottom + confirm)
     {
       move: {
         player: opponent,
-        filter: (move: MaterialMove) =>
-          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.ForestTileTokens && move.location.id === LotZone.Bottom
+        filter: (move: MaterialMove, game: MaterialGame) => {
+          if (!isMoveItemType(MaterialType.RoundToken)(move)) return false
+          if (move.location.type !== LocationType.ForestTileTokens || move.location.id !== LotZone.Bottom) return false
+          const item = game.items[MaterialType.RoundToken]?.[move.itemIndex]
+          return item?.id === MushroomColor.Blue
+        }
       }
     },
     {
       move: {
         player: opponent,
-        filter: (move: MaterialMove) =>
-          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.ForestTileTokens && move.location.id === LotZone.Bottom
+        filter: (move: MaterialMove, game: MaterialGame) => {
+          if (!isMoveItemType(MaterialType.RoundToken)(move)) return false
+          if (move.location.type !== LocationType.ForestTileTokens || move.location.id !== LotZone.Bottom) return false
+          const item = game.items[MaterialType.RoundToken]?.[move.itemIndex]
+          return item?.id !== MushroomColor.Blue
+        }
       }
     },
     {
@@ -455,6 +465,20 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       popup: {
         text: () => <Trans i18nKey="tuto.scoring"/>
       }
+    },
+
+    // Explain special values (Antidote + Poison)
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.scoring.special"/>,
+        position: { y: -25 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ValueCard).filter(item => item.id === ValueType.Antidote || item.id === ValueType.Poison)
+        ],
+        margin: { left: 5, right: 5, top: 10, bottom: 2 }
+      })
     },
 
     // 28: Tutorial complete
