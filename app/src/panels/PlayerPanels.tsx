@@ -153,8 +153,7 @@ const PlayerPanel: FC<PlayerPanelProps> = ({
   const panelRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div ref={panelRef} css={[panelCss, positionCss(index), isViewActive && !isTurnToPlay && activeGlowCss(colors.main)]} onClick={onClick}>
-      <div css={turnBorderCss} style={{ opacity: isTurnToPlay ? 1 : 0 }} />
+    <div ref={panelRef} css={[panelCss, positionCss(index), isTurnToPlay && turnBorderCss, isViewActive && !isTurnToPlay && activeGlowCss(colors.main)]} onClick={onClick}>
       {/* Banner: art background + avatar + name + timer */}
       <div css={bannerCss}>
         <div css={bannerBgCss(bannerImages[playerId])} />
@@ -271,15 +270,17 @@ const borderTravel = keyframes`
 `
 
 const turnBorderCss = css`
-  position: absolute;
-  inset: -0.25em;
-  z-index: -1;
-  border-radius: 0.8em;
-  background: linear-gradient(90deg, transparent, gold, rgb(40, 184, 206), transparent, gold, rgb(40, 184, 206), transparent);
-  background-size: 200% 100%;
-  animation: ${borderTravel} 2s linear infinite;
-  pointer-events: none;
-  transition: opacity 0.3s;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -0.25em;
+    z-index: -1;
+    border-radius: 0.8em;
+    background: linear-gradient(90deg, transparent, gold, rgb(40, 184, 206), transparent, gold, rgb(40, 184, 206), transparent);
+    background-size: 200% 100%;
+    animation: ${borderTravel} 2s linear infinite;
+    pointer-events: none;
+  }
 `
 
 const avatarWrapperCss = css`

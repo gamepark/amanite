@@ -763,7 +763,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": "npm:^7.2.0"
     "@fortawesome/free-solid-svg-icons": "npm:^7.2.0"
     "@fortawesome/react-fontawesome": "npm:^3.3.0"
-    "@gamepark/react-game": "npm:~7.7.12"
+    "@gamepark/react-game": "npm:~7.7.13"
     "@gamepark/rules-api": "npm:~7.6.2"
     "@types/node": "npm:^25.5.0"
     "@types/react": "npm:^19.2.14"
@@ -845,9 +845,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gamepark/react-game@npm:~7.7.12":
-  version: 7.7.12
-  resolution: "@gamepark/react-game@npm:7.7.12"
+"@gamepark/react-game@npm:~7.7.13":
+  version: 7.7.13
+  resolution: "@gamepark/react-game@npm:7.7.13"
   dependencies:
     "@datadog/browser-logs": "npm:^6.28.1"
     "@dnd-kit/modifiers": "npm:^9.0.0"
@@ -881,7 +881,7 @@ __metadata:
     react-dom: 19.x
     react-i18next: 16.x
     react-redux: 9.x
-  checksum: 10c0/29bbcb183c25d79164b377c1207641f15413d41335cfd443b52edb324cfa40d918752130c1ea82e2bc0fff7d2cea86e2df46f656439c8d2e9f0dd34860622c77
+  checksum: 10c0/dc90ab912ed7d3e9256087ea9db52ad96a0d971f5d31cd4871e34ba31874a8694906f6be22192073e1a7ab9c455ea6e5f80c40f50e5ff6d9db9eed351081f8d8
   languageName: node
   linkType: hard
 
