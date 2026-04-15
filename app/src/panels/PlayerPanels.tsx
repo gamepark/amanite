@@ -211,6 +211,7 @@ const getSpeechDirection = (el: HTMLDivElement | null): SpeechBubbleDirection =>
 const panelCss = css`
   position: absolute;
   z-index: 100;
+  isolation: isolate;
   right: 0.5em;
   width: 22em;
   border-radius: 0.7em;
