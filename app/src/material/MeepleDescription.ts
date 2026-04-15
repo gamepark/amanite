@@ -5,10 +5,10 @@ import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { MeepleHelp } from './help/MeepleHelp'
 
 const playerColors: Record<number, string> = {
-  [PlayerAnimal.Fox]: '#D4722A',
-  [PlayerAnimal.Squirrel]: '#8B6040',
+  [PlayerAnimal.Fox]: '#A8C46A',
+  [PlayerAnimal.Squirrel]: '#D4722A',
   [PlayerAnimal.Owl]: '#2A2A2A',
-  [PlayerAnimal.Jay]: '#A8C46A'
+  [PlayerAnimal.Jay]: '#8B6040'
 }
 
 const meepleCss = (color: string) => css`

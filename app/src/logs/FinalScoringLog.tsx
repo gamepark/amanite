@@ -10,10 +10,10 @@ import { getPlayerColor } from './logStyles'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 
 const playerAccent: Record<number, string> = {
-  [PlayerAnimal.Fox]: '#D4722A',
-  [PlayerAnimal.Squirrel]: '#B84032',
+  [PlayerAnimal.Fox]: '#3B7BB5',
+  [PlayerAnimal.Squirrel]: '#D4722A',
   [PlayerAnimal.Owl]: '#7B7D7E',
-  [PlayerAnimal.Jay]: '#3B7BB5'
+  [PlayerAnimal.Jay]: '#B84032'
 }
 
 export const FinalScoringLog: FC<MoveComponentProps<MaterialMove>> = ({ context }) => {

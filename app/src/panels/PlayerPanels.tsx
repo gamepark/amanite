@@ -44,10 +44,10 @@ const bookTokenImages: Record<number, string> = {
 }
 
 const playerColors: Record<number, { main: string }> = {
-  [PlayerAnimal.Fox]: { main: '#D4722A' },
-  [PlayerAnimal.Squirrel]: { main: '#8B6040' },
+  [PlayerAnimal.Fox]: { main: '#A8C46A' },
+  [PlayerAnimal.Squirrel]: { main: '#D4722A' },
   [PlayerAnimal.Owl]: { main: '#2A2A2A' },
-  [PlayerAnimal.Jay]: { main: '#A8C46A' }
+  [PlayerAnimal.Jay]: { main: '#8B6040' }
 }
 
 const tokenImages: Record<number, string> = {

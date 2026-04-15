@@ -2,10 +2,10 @@ import { css } from '@emotion/react'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 
 const playerLogColors: Record<number, { accent: string, bg: string, name: string }> = {
-  [PlayerAnimal.Fox]: { accent: '#D4722A', bg: 'rgba(230,160,50,0.15)', name: '#b05510' },
-  [PlayerAnimal.Squirrel]: { accent: '#8B6040', bg: 'rgba(139,96,64,0.15)', name: '#6B4830' },
+  [PlayerAnimal.Fox]: { accent: '#A8C46A', bg: 'rgba(168,196,106,0.15)', name: '#7A9A40' },
+  [PlayerAnimal.Squirrel]: { accent: '#D4722A', bg: 'rgba(230,160,50,0.15)', name: '#b05510' },
   [PlayerAnimal.Owl]: { accent: '#2A2A2A', bg: 'rgba(42,42,42,0.12)', name: '#1A1A1A' },
-  [PlayerAnimal.Jay]: { accent: '#A8C46A', bg: 'rgba(168,196,106,0.15)', name: '#7A9A40' }
+  [PlayerAnimal.Jay]: { accent: '#8B6040', bg: 'rgba(139,96,64,0.15)', name: '#6B4830' }
 }
 
 const fallback = { accent: '#888', bg: 'rgba(85,85,85,0.06)', name: '#555' }
