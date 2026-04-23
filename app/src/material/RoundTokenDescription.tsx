@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from '@emotion/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { ItemContext, TokenDescription } from '@gamepark/react-game'
-import { isCustomMoveType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
+import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { MushroomColor } from '@gamepark/amanite/material/MushroomColor'
@@ -32,6 +32,26 @@ const chooseSlideCss = css`
   &:hover { animation-play-state: paused; }
 `
 
+const bounceDown = keyframes`
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(0.3em); }
+`
+
+const bounceDownCss = css`
+  animation: ${bounceDown} 1.5s ease-in-out infinite;
+  &:hover { animation-play-state: paused; }
+`
+
+const bounceUp = keyframes`
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-0.3em); }
+`
+
+const bounceUpCss = css`
+  animation: ${bounceUp} 1.5s ease-in-out infinite;
+  &:hover { animation-play-state: paused; }
+`
+
 class RoundTokenDescription extends TokenDescription {
   width = 3
   height = 3
@@ -53,6 +73,28 @@ class RoundTokenDescription extends TokenDescription {
     if (item.location.type !== LocationType.ForestTileTokens) return
     const currentTile = context.rules.remind(Memory.CurrentForestTile)
     if (item.location.parent !== currentTile) return
+
+    const takeMoves = legalMoves.filter(isMoveItemType(MaterialType.RoundToken))
+      .filter(m => m.location.type === LocationType.PlayerTokens) as MoveItem[]
+    if (takeMoves.length > 0) {
+      const takeMove = takeMoves.find(m => m.itemIndex === context.index)
+      if (!takeMove) return
+      const tokens = context.rules.material(MaterialType.RoundToken)
+      const rightmost = takeMoves.reduce((a, b) => {
+        const ax = tokens.index(a.itemIndex).getItem()?.location.x ?? 0
+        const bx = tokens.index(b.itemIndex).getItem()?.location.x ?? 0
+        return bx > ax ? b : a
+      })
+      const isRightmost = rightmost.itemIndex === context.index
+      const isSecondRow = (item.location.x ?? 0) >= 4
+      const y = isSecondRow ? 2.5 : -2.5
+      const animationCss = isSecondRow ? bounceUpCss : bounceDownCss
+      return <StampButton move={takeMove} x={-1.17} y={y} extraCss={animationCss} xOrigin="start">
+        <FontAwesomeIcon icon={faArrowDown} css={stampIconCss} />
+        {isRightmost && <Trans i18nKey="button.take.token" />}
+      </StampButton>
+    }
+
     const lotId = item.location.id
     const tokensInLot = context.rules.material(MaterialType.RoundToken)
       .location(LocationType.ForestTileTokens)

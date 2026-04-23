@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css, Interpolation, keyframes, Theme } from '@emotion/react'
 import { ItemMenuButton } from '@gamepark/react-game'
-import { FC, PropsWithChildren } from 'react'
+import React, { FC, PropsWithChildren } from 'react'
 
 type StampButtonProps = PropsWithChildren<{
   move: any
@@ -10,6 +10,7 @@ type StampButtonProps = PropsWithChildren<{
   extraCss?: Interpolation<Theme>
   vertical?: boolean
   align?: 'left' | 'center' | 'right'
+  xOrigin?: 'center' | 'start'
 }>
 
 const stampClipPath = `polygon(
@@ -19,15 +20,21 @@ const stampClipPath = `polygon(
   0% 92%, 3% 75%, 0% 60%, 2% 45%, 0% 30%, 3% 15%
 )`
 
-export const StampButton: FC<StampButtonProps> = ({ move, x, y, extraCss, vertical, align = 'center', children }) =>
-  <ItemMenuButton move={move} x={x} y={y}
-    style={{ background: 'none', border: 'none', borderRadius: 0, width: 'auto', height: 'auto', padding: 0 }}>
-    <div css={extraCss} style={{ transform: align === 'left' ? 'translateX(50%)' : align === 'right' ? 'translateX(-50%)' : undefined }}>
-      <span css={outlineCss}>
-        <span css={[stampInnerCss, vertical && verticalCss]}>{children}</span>
-      </span>
-    </div>
-  </ItemMenuButton>
+export const StampButton: FC<StampButtonProps> = ({ move, x, y, extraCss, vertical, align = 'center', xOrigin = 'center', children }) => {
+  const style: React.CSSProperties = { background: 'none', border: 'none', borderRadius: 0, width: 'auto', height: 'auto', padding: 0 }
+  if (xOrigin === 'start') {
+    style.transform = `translate(0, -50%) translate(${x ?? 0}em, ${y ?? 0}em)`
+  }
+  return (
+    <ItemMenuButton move={move} x={xOrigin === 'start' ? 0 : x} y={xOrigin === 'start' ? 0 : y} style={style}>
+      <div css={extraCss} style={{ transform: align === 'left' ? 'translateX(50%)' : align === 'right' ? 'translateX(-50%)' : undefined }}>
+        <span css={outlineCss}>
+          <span css={[stampInnerCss, vertical && verticalCss]}>{children}</span>
+        </span>
+      </div>
+    </ItemMenuButton>
+  )
+}
 
 const outlineCss = css`
   display: inline-block;
