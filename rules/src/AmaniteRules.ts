@@ -1,7 +1,7 @@
 import {
   CompetitiveScore, FillGapStrategy,
   hideItemId,
-  MaterialGame,
+  MaterialGame, MaterialItem,
   MaterialMove,
   PositiveSequenceStrategy,
   SecretMaterialRules,
@@ -69,8 +69,8 @@ export class AmaniteRules
 
   hidingStrategies = {
     [MaterialType.ClueCard]: {
-      [LocationType.ClueDeck]: (item: any) => item.location?.rotation === true ? [] : ['id'],
-      [LocationType.PlayerClueCards]: (item: any, player: any) =>
+      [LocationType.ClueDeck]: (item: MaterialItem) => item.location?.rotation === true ? [] : ['id'],
+      [LocationType.PlayerClueCards]: (item: MaterialItem, player: PlayerAnimal) =>
         item.location?.rotation === true ? (item.location?.player === player ? [] : ['id']) : ['id']
     },
     [MaterialType.RoundToken]: {
