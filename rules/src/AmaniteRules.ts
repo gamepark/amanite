@@ -1,5 +1,5 @@
 import {
-  CompetitiveScore,
+  CompetitiveScore, FillGapStrategy,
   hideItemId,
   MaterialGame,
   MaterialMove,
@@ -60,7 +60,7 @@ export class AmaniteRules
       [LocationType.PlayerClueCards]: new PositiveSequenceStrategy()
     },
     [MaterialType.Meeple]: {
-      [LocationType.PlayerMeepleStock]: new PositiveSequenceStrategy()
+      [LocationType.PlayerMeepleStock]: new FillGapStrategy()
     },
     [MaterialType.NotebookToken]: {
       [LocationType.PlayerNotebookStock]: new PositiveSequenceStrategy()
