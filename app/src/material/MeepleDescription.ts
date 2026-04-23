@@ -1,34 +1,23 @@
-import { css } from '@emotion/react'
 import { TokenDescription } from '@gamepark/react-game'
-import { MaterialItem } from '@gamepark/rules-api'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { MeepleHelp } from './help/MeepleHelp'
-
-const playerColors: Record<number, string> = {
-  [PlayerAnimal.Fox]: '#A8C46A',
-  [PlayerAnimal.Squirrel]: '#D4722A',
-  [PlayerAnimal.Owl]: '#2A2A2A',
-  [PlayerAnimal.Jay]: '#8B6040'
-}
-
-const meepleCss = (color: string) => css`
-  background-color: ${color};
-  clip-path: polygon(50% 0%, 68% 3%, 78% 14%, 80% 28%, 76% 42%, 65% 52%, 85% 60%, 97% 70%, 100% 85%, 100% 100%, 0% 100%, 0% 85%, 3% 70%, 15% 60%, 35% 52%, 24% 42%, 20% 28%, 22% 14%, 32% 3%);
-  filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.5));
-`
+import FoxMeeple from '../images/tokens/meeple/FoxMeeple.png'
+import SquirrelMeeple from '../images/tokens/meeple/SquirrelMeeple.png'
+import OwlMeeple from '../images/tokens/meeple/OwlMeeple.png'
+import JayMeeple from '../images/tokens/meeple/JayMeeple.png'
 
 class MeepleDescription extends TokenDescription {
-  width = 1.5
-  height = 2.2
+  width = 1.6
+  height = 2.4
   borderRadius = 0
+  transparency = true
   help = MeepleHelp
 
-  getItemExtraCss(item: MaterialItem) {
-    return meepleCss(playerColors[item.id as number] ?? '#888')
-  }
-
-  getHelpDisplayExtraCss(item: Partial<MaterialItem>) {
-    return meepleCss(playerColors[item.id as number] ?? '#888')
+  images = {
+    [PlayerAnimal.Fox]: FoxMeeple,
+    [PlayerAnimal.Squirrel]: SquirrelMeeple,
+    [PlayerAnimal.Owl]: OwlMeeple,
+    [PlayerAnimal.Jay]: JayMeeple
   }
 }
 
