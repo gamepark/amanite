@@ -79,7 +79,7 @@ export class AmaniteRules
   }
 
   giveTime(): number {
-    return 60
+    return 30
   }
 
   getScore(playerId: PlayerAnimal): number {
