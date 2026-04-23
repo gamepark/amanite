@@ -70,7 +70,7 @@ export class AmaniteRules
   hidingStrategies = {
     [MaterialType.ClueCard]: {
       [LocationType.ClueDeck]: (item: MaterialItem) => item.location?.rotation === true ? [] : ['id'],
-      [LocationType.PlayerClueCards]: (item: MaterialItem, player: PlayerAnimal) =>
+      [LocationType.PlayerClueCards]: (item: MaterialItem, player?: PlayerAnimal) =>
         item.location?.rotation === true ? (item.location?.player === player ? [] : ['id']) : ['id']
     },
     [MaterialType.RoundToken]: {
