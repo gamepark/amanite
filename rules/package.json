@@ -16,18 +16,20 @@
   },
   "scripts": {
     "test": "vitest",
-    "build": "tsc",
-    "prepublishOnly": "tsc",
+    "check:cycles": "madge --circular --extensions ts src",
+    "build": "yarn check:cycles && tsc",
+    "prepublishOnly": "yarn check:cycles && tsc",
     "publish": "lerna publish",
     "lint": "eslint --fix"
   },
   "peerDependencies": {
     "@gamepark/rules-api": ">=7",
-    "es-toolkit": "^1.43.0"
+    "es-toolkit": "^1.45.1"
   },
   "devDependencies": {
-    "@gamepark/rules-api": "~7.6.2",
-    "es-toolkit": "^1.45.1",
-    "vitest": "^4.1.2"
+    "@gamepark/rules-api": "~7.6.3",
+    "es-toolkit": "^1.46.0",
+    "madge": "^8.0.0",
+    "vitest": "^4.1.5"
   }
 }
