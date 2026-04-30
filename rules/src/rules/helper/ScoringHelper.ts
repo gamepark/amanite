@@ -17,12 +17,10 @@ export class ScoringHelper extends MaterialRulesPart {
   /** Derive mushroom→value mapping from revealed clue cards on ClueDeck */
   get mushroomValueMapping(): Record<number, ValueType> {
     const mapping: Record<number, ValueType> = {}
-    const mushroomCards = this.material(MaterialType.MushroomCard)
     for (const color of mushroomColors) {
-      const cardIndex = mushroomCards.id(color).getIndex()
       const revealedCard = this.material(MaterialType.ClueCard)
         .location(LocationType.ClueDeck)
-        .parent(cardIndex)
+        .locationId(color)
         .rotation(true)
         .getItem()
       if (revealedCard?.id !== undefined) {

@@ -13,7 +13,7 @@ import {
   mushroomHexColors, MushroomDot
 } from './HelpUtils'
 
-export const MushroomCardHelp: FC<MaterialHelpProps> = ({ item, itemIndex, closeDialog }) => {
+export const MushroomCardHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
   const { t } = useTranslation()
   const color = item.id as MushroomColor
   const hex = mushroomHexColors[color] ?? '#888'
@@ -21,7 +21,7 @@ export const MushroomCardHelp: FC<MaterialHelpProps> = ({ item, itemIndex, close
   const notebookMoves = useLegalMoves<MoveItem>(move =>
     isMoveItemType(MaterialType.NotebookToken)(move)
     && move.location.type === LocationType.NotebookSlot
-    && move.location.id === itemIndex
+    && move.location.id === color
   )
 
   return (

@@ -33,8 +33,6 @@ export class TutorialSetup extends AmaniteSetup {
     for (let i = 0; i < fixedMapping.length; i++) {
       const [color, value] = fixedMapping[i]
 
-      const mushroomIndex = this.material(MaterialType.MushroomCard).id(color).getIndex()
-
       this.material(MaterialType.ValueCard).createItem({
         id: value,
         location: { type: LocationType.ValueCardSlot, x: i }
@@ -48,7 +46,7 @@ export class TutorialSetup extends AmaniteSetup {
       for (let j = 0; j < 6 - dealt; j++) {
         this.material(MaterialType.ClueCard).createItem({
           id: value,
-          location: { type: LocationType.ClueDeck, parent: mushroomIndex, x: j }
+          location: { type: LocationType.ClueDeck, id: color, x: j }
         })
       }
 

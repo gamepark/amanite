@@ -44,8 +44,8 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
         text: () => <Trans i18nKey="tuto.mushroom.cards"/>,
         position: { y: -25 }
       },
-      focus: (game) => ({
-        materials: [this.material(game, MaterialType.MushroomCard)],
+      focus: (_game, context) => ({
+        staticItems: { [MaterialType.MushroomCard]: context.material[MaterialType.MushroomCard]!.getStaticItems(context) },
         margin: { left: 5, right: 5, top: 10, bottom: 2 }
       })
     },
@@ -70,11 +70,11 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
         text: () => <Trans i18nKey="tuto.secret"/>,
         position: { y: -25 }
       },
-      focus: (game) => ({
+      focus: (game, context) => ({
         materials: [
-          this.material(game, MaterialType.ValueCard),
-          this.material(game, MaterialType.MushroomCard)
+          this.material(game, MaterialType.ValueCard)
         ],
+        staticItems: { [MaterialType.MushroomCard]: context.material[MaterialType.MushroomCard]!.getStaticItems(context) },
         margin: { left: 5, right: 1, top: 10, bottom: 2 }
       })
     },
@@ -405,12 +405,12 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
         text: () => <Trans i18nKey="tuto.notebook"/>,
         position: { x: 20, y: 30 }
       },
-      focus: (game) => ({
+      focus: (game, context) => ({
         materials: [
           this.material(game, MaterialType.NotebookToken).location(LocationType.PlayerNotebookStock).player(me),
-          this.material(game, MaterialType.MushroomCard),
           this.material(game, MaterialType.ClueCard).location(LocationType.ClueDeck)
         ],
+        staticItems: { [MaterialType.MushroomCard]: context.material[MaterialType.MushroomCard]!.getStaticItems(context) },
         margin: { left: 1, right: 25, top: 2, bottom: 2 }
       })
     },
@@ -444,12 +444,12 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
         text: () => <Trans i18nKey="tuto.place.notebook"/>,
         position: { x: 40, y: 5 }
       },
-      focus: (game) => ({
+      focus: (game, context) => ({
         materials: [
           this.material(game, MaterialType.NotebookToken).location(LocationType.PlayerNotebookStock).player(me),
-          this.material(game, MaterialType.MushroomCard),
           this.material(game, MaterialType.RoundToken).location(LocationType.PlayerTokens).player(me)
         ],
+        staticItems: { [MaterialType.MushroomCard]: context.material[MaterialType.MushroomCard]!.getStaticItems(context) },
         margin: { left: 1, right: 30, top: 20, bottom: 2 }
       }),
       move: {

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { CardDescription, ItemContext } from '@gamepark/react-game'
+import { CardDescription, ItemContext, MaterialContext } from '@gamepark/react-game'
 import { MushroomCardHelp } from './help/MushroomCardHelp'
-import { MushroomColor } from '@gamepark/amanite/material/MushroomColor'
+import { MushroomColor, mushroomColors } from '@gamepark/amanite/material/MushroomColor'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
@@ -54,11 +54,19 @@ class MushroomCardDescription extends CardDescription {
     return false
   }
 
-  getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
+  getStaticItems(context: MaterialContext): MaterialItem[] {
+    const rotation = context.rules.game.players.length > 2
+    return mushroomColors.map((color, x) => ({
+      id: color,
+      location: { type: LocationType.MushroomCardRow, x, rotation }
+    }))
+  }
+
+  getItemMenu(item: MaterialItem, _context: ItemContext, legalMoves: MaterialMove[]) {
     const notebookMoves = legalMoves.filter(move =>
       isMoveItemType(MaterialType.NotebookToken)(move)
       && move.location?.type === LocationType.NotebookSlot
-      && move.location?.id === context.index
+      && move.location?.id === item.id
     )
     if (!notebookMoves.length) return undefined
 

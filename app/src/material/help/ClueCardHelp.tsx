@@ -31,15 +31,15 @@ function getValueName(value: ValueType): string {
 export const ClueCardHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
   const { t } = useTranslation()
   const value = item.id as ValueType | undefined
-  const mushroomIndex = item.location?.parent
+  const color = item.location?.id
 
   const notebookMoves = useLegalMoves<MoveItem>(move =>
     isMoveItemType(MaterialType.NotebookToken)(move)
     && move.location.type === LocationType.NotebookSlot
-    && move.location.id === mushroomIndex
+    && move.location.id === color
   )
 
-  const investigateBtn = mushroomIndex !== undefined && notebookMoves.length > 0 && (
+  const investigateBtn = color !== undefined && notebookMoves.length > 0 && (
     <PlayMoveButton move={notebookMoves[0]} onPlay={closeDialog} css={helpHeaderBtnCss}>
       {t('button.place.notebook')}
     </PlayMoveButton>

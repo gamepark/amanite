@@ -1,6 +1,7 @@
 import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
+import { mushroomColors } from '../material/MushroomColor'
 import { PlayerAnimal } from '../PlayerAnimal'
 import { GameHelper } from './helper/GameHelper'
 import { Memory } from './Memory'
@@ -25,29 +26,27 @@ export class PlaceNotebookRule extends PlayerTurnRule {
     if (notebooks.length === 0) return []
 
     const moves: MaterialMove[] = []
-    const mushrooms = this.material(MaterialType.MushroomCard)
-      .location(LocationType.MushroomCardRow)
 
-    // For each mushroom card, check if there's an available notebook slot
-    for (const mushroomIndex of mushrooms.getIndexes()) {
+    // For each mushroom color, check if there's an available notebook slot
+    for (const color of mushroomColors) {
       const maxSlots = this.helper.notebookSlotsPerMushroom
 
-      // Count notebooks already on this mushroom
+      // Count notebooks already on this mushroom (location.id = mushroom color)
       const existingNotebooks = this.material(MaterialType.NotebookToken)
         .location(LocationType.NotebookSlot)
-        .filter(item => item.location.id === mushroomIndex)
+        .locationId(color)
 
       if (existingNotebooks.length < maxSlots) {
         // Check if this mushroom still has clue cards
         const clueDeck = this.material(MaterialType.ClueCard)
           .location(LocationType.ClueDeck)
-          .parent(mushroomIndex)
+          .locationId(color)
 
         if (clueDeck.length > 0) {
           moves.push(
             ...notebooks.moveItems({
               type: LocationType.NotebookSlot,
-              id: mushroomIndex,
+              id: color,
               x: existingNotebooks.length
             })
           )
@@ -62,12 +61,12 @@ export class PlaceNotebookRule extends PlayerTurnRule {
     if (!isMoveItemType(MaterialType.NotebookToken)(move)) return []
 
     const moves: MaterialMove[] = []
-    const mushroomIndex = move.location.id!
+    const color = move.location.id!
 
     // Draw 1 clue card from this mushroom's deck
     const clueDeck = this.material(MaterialType.ClueCard)
       .location(LocationType.ClueDeck)
-      .parent(mushroomIndex)
+      .locationId(color)
 
     if (clueDeck.length > 0) {
       const topCard = clueDeck.maxBy(item => item.location.x!)

@@ -37,26 +37,13 @@ function createScoringGame(
     memory: {}
   }
 
-  // Create mushroom cards
-  const colors = [MushroomColor.Blue, MushroomColor.Green, MushroomColor.Purple,
-    MushroomColor.Red, MushroomColor.White, MushroomColor.Yellow]
-  for (let i = 0; i < colors.length; i++) {
-    game.items[MaterialType.MushroomCard]!.push({
-      id: colors[i],
-      location: { type: LocationType.MushroomCardRow, x: i }
-    })
-  }
-
-  // Create revealed clue cards on mushrooms (establishes the mapping)
+  // Mushroom cards are static (not in game state) — clue decks reference them by color via location.id
   for (const [colorStr, value] of Object.entries(mapping)) {
     const color = Number(colorStr) as MushroomColor
-    const mushroomIndex = colors.indexOf(color)
-    if (mushroomIndex >= 0) {
-      game.items[MaterialType.ClueCard]!.push({
-        id: value,
-        location: { type: LocationType.ClueDeck, parent: mushroomIndex, x: 0, rotation: true }
-      })
-    }
+    game.items[MaterialType.ClueCard]!.push({
+      id: value,
+      location: { type: LocationType.ClueDeck, id: color, x: 0, rotation: true }
+    })
   }
 
   // Create player tokens

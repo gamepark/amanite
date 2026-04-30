@@ -2,15 +2,14 @@
 import { css } from '@emotion/react'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { MoveComponentProps, usePlayerName, usePlay } from '@gamepark/react-game'
-import { MaterialMove, MoveItem, MaterialGame } from '@gamepark/rules-api'
+import { MoveComponentProps, usePlayerName, usePlay, useMaterialContext } from '@gamepark/react-game'
+import { MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { MaterialMoveBuilder } from '@gamepark/rules-api/dist/material/moves/MaterialMoveBuilder'
-import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { MushroomColor } from '@gamepark/amanite/material/MushroomColor'
 import { getPlayerColor } from './logStyles'
 
-const mushroomColors: Record<number, string> = {
+const mushroomHex: Record<number, string> = {
   [MushroomColor.Blue]: '#4488cc',
   [MushroomColor.Green]: '#44aa55',
   [MushroomColor.Purple]: '#8855bb',
@@ -24,17 +23,18 @@ export const PlaceNotebookLog: FC<MoveComponentProps<MaterialMove>> = ({ move, c
   const name = usePlayerName(player)
   const { t } = useTranslation()
   const play = usePlay()
+  const materialContext = useMaterialContext()
 
-  const mushroomIndex = (move as MoveItem).location.id
-  const rules = new AmaniteRules(context.game as MaterialGame)
-  const mushroomCard = rules.material(MaterialType.MushroomCard).getItem(mushroomIndex!)
-  const colorId = mushroomCard?.id as number
-  const colorName = mushroomCard ? t(`mushroom.${colorId}`) : '?'
-  const hex = mushroomColors[colorId] ?? '#ccc'
+  const colorId = (move as MoveItem).location.id as number | undefined
+  const mushroomCard = colorId !== undefined
+    ? materialContext.material[MaterialType.MushroomCard]?.getStaticItems(materialContext).find(item => item.id === colorId)
+    : undefined
+  const colorName = colorId !== undefined ? t(`mushroom.${colorId}`) : '?'
+  const hex = colorId !== undefined ? (mushroomHex[colorId] ?? '#ccc') : '#ccc'
 
   const openHelp = () => {
-    if (mushroomIndex !== undefined) {
-      play(MaterialMoveBuilder.displayMaterialHelp(MaterialType.MushroomCard, mushroomCard!, mushroomIndex), { transient: true })
+    if (mushroomCard) {
+      play(MaterialMoveBuilder.displayMaterialHelp(MaterialType.MushroomCard, mushroomCard), { transient: true })
     }
   }
 

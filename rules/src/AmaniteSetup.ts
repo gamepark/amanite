@@ -18,7 +18,6 @@ export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, 
 
   setupMaterial(options: AmaniteOptions) {
     this.setupForestTiles()
-    this.setupMushroomCards()
     this.setupPlayers()
     this.setupValueCardsAndClues(options.beginner)
     this.setupTokenBag()
@@ -41,18 +40,9 @@ export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, 
     }
   }
 
-  /** Step 2: Place 6 mushroom cards */
-  setupMushroomCards() {
-    for (let i = 0; i < mushroomColors.length; i++) {
-      this.material(MaterialType.MushroomCard).createItem({
-        id: mushroomColors[i],
-        location: { type: LocationType.MushroomCardRow, x: i, rotation: this.players.length > 2 }
-      })
-    }
-  }
-
   /** Steps 3-9: Setup value cards (face up line), clue decks (random on mushrooms),
-   *  then deal each player's 3 starting clue cards directly into a shuffled hand. */
+   *  then deal each player's 3 starting clue cards directly into a shuffled hand.
+   *  Mushroom cards are static (declared in MushroomCardDescription), referenced by color. */
   setupValueCardsAndClues(beginner: boolean) {
     const selectedValues = beginner ? defaultValueCards : this.randomValueCards()
 
@@ -84,15 +74,14 @@ export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, 
       }
     }
 
-    // Build clue decks (6 - dealt) per mushroom
+    // Build clue decks (6 - dealt) per mushroom (location.id = mushroom color, since mushrooms are static)
     for (const color of mushroomColors) {
       const value = valueByColor.get(color)!
-      const mushroomIndex = this.material(MaterialType.MushroomCard).id(color).getIndex()
       const remaining = 6 - (dealtPerColor.get(color) ?? 0)
       for (let j = 0; j < remaining; j++) {
         this.material(MaterialType.ClueCard).createItem({
           id: value,
-          location: { type: LocationType.ClueDeck, parent: mushroomIndex, x: j }
+          location: { type: LocationType.ClueDeck, id: color, x: j }
         })
       }
     }

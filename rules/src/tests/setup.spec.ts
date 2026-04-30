@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { createGame, getItems } from './helpers'
 import { MaterialType } from '../material/MaterialType'
 import { LocationType } from '../material/LocationType'
+import { mushroomColors } from '../material/MushroomColor'
 import { RuleId } from '../rules/RuleId'
 import { Memory } from '../rules/Memory'
 import { defaultValueCards, ValueType, mandatoryValueCards } from '../material/ValueType'
@@ -14,11 +15,9 @@ describe('Game Setup', () => {
       expect(getItems(rules, MaterialType.ForestTile, LocationType.ForestTileRow)).toHaveLength(3)
     })
 
-    it('should create 6 mushroom cards with rotation=false (1 notebook slot)', () => {
+    it('should not create mushroom cards in game state (they are static)', () => {
       const rules = createGame(2)
-      const cards = getItems(rules, MaterialType.MushroomCard, LocationType.MushroomCardRow)
-      expect(cards).toHaveLength(6)
-      cards.forEach(card => expect(card.location.rotation).toBe(false))
+      expect(rules.game.items[MaterialType.MushroomCard] ?? []).toHaveLength(0)
     })
 
     it('should create 64 round tokens total (bag + tiles after PlaceNewTokens auto-runs)', () => {
@@ -80,11 +79,9 @@ describe('Game Setup', () => {
       expect(getItems(rules, MaterialType.ForestTile, LocationType.ForestTileRow)).toHaveLength(5)
     })
 
-    it('should create 6 mushroom cards with rotation=true (2 notebook slots)', () => {
+    it('should not create mushroom cards in game state (they are static)', () => {
       const rules = createGame(4)
-      const cards = getItems(rules, MaterialType.MushroomCard, LocationType.MushroomCardRow)
-      expect(cards).toHaveLength(6)
-      cards.forEach(card => expect(card.location.rotation).toBe(true))
+      expect(rules.game.items[MaterialType.MushroomCard] ?? []).toHaveLength(0)
     })
 
     it('should give 2 meeples to each of 4 players', () => {
@@ -124,13 +121,12 @@ describe('Game Setup', () => {
       expect(inDecks + inFoxHand + inSquirrelHand).toBe(36)
     })
 
-    it('should place a clue pile on each mushroom card with size = 6 - players dealt from it', () => {
+    it('should place a clue pile on each mushroom (keyed by color) with size = 6 - players dealt from it', () => {
       const rules = createGame(2)
-      const mushrooms = rules.material(MaterialType.MushroomCard).getIndexes()
-      for (const mushroomIndex of mushrooms) {
+      for (const color of mushroomColors) {
         const deck = rules.material(MaterialType.ClueCard)
           .location(LocationType.ClueDeck)
-          .parent(mushroomIndex)
+          .locationId(color)
         expect(deck.length).toBeGreaterThanOrEqual(4)
         expect(deck.length).toBeLessThanOrEqual(6)
       }
