@@ -55,7 +55,7 @@ class MushroomCardDescription extends CardDescription {
   }
 
   getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
-    const notebookMoves = legalMoves.filter((move: any) =>
+    const notebookMoves = legalMoves.filter(move =>
       isMoveItemType(MaterialType.NotebookToken)(move)
       && move.location?.type === LocationType.NotebookSlot
       && move.location?.id === context.index

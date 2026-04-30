@@ -14,7 +14,7 @@ import {
 } from './HelpUtils'
 
 const isTokenMove = (move: MaterialMove): move is MoveItem =>
-  isMoveItemType(MaterialType.RoundToken)(move as any)
+  isMoveItemType(MaterialType.RoundToken)(move)
 
 export const RoundTokenHelp: FC<MaterialHelpProps> = ({ item, itemIndex, closeDialog }) => {
   const { t } = useTranslation()

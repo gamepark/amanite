@@ -1,4 +1,4 @@
-import { MaterialRulesPart } from '@gamepark/rules-api'
+import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { MushroomColor, mushroomColors } from '../../material/MushroomColor'
@@ -6,9 +6,11 @@ import { isMushroomToken, isPig } from '../../material/RoundTokenId'
 import { ValueType } from '../../material/ValueType'
 import { PlayerAnimal } from '../../PlayerAnimal'
 
+type AmaniteGame = MaterialGame<PlayerAnimal, MaterialType, LocationType>
+
 export class ScoringHelper extends MaterialRulesPart {
 
-  constructor(game: any, readonly player: PlayerAnimal) {
+  constructor(game: AmaniteGame, readonly player: PlayerAnimal) {
     super(game)
   }
 
@@ -90,7 +92,7 @@ export class ScoringHelper extends MaterialRulesPart {
 
     switch (value) {
       case ValueType.Minus1: return -1 * count
-      case ValueType.Value1: return 1 * count
+      case ValueType.Value1: return count
       case ValueType.Value2: return 2 * count
       case ValueType.Value3: return 3 * count
       case ValueType.MushroomLimit: return this.mushroomLimitScore

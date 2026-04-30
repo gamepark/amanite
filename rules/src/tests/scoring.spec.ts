@@ -17,7 +17,7 @@ import { RuleId } from '../rules/RuleId'
  */
 function createScoringGame(
   mapping: Partial<Record<MushroomColor, ValueType>>,
-  playerTokens: Record<PlayerAnimal, number[]>, // player → array of token ids (MushroomColor or Pig)
+  playerTokens: Partial<Record<PlayerAnimal, number[]>>, // player → array of token ids (MushroomColor or Pig)
   players: PlayerAnimal[] = [PlayerAnimal.Fox, PlayerAnimal.Squirrel]
 ): AmaniteRules {
   const game: MaterialGame = {
@@ -81,7 +81,7 @@ describe('Scoring', () => {
     it('should score -1 per token for Minus1', () => {
       const rules = createScoringGame(
         { [MushroomColor.Blue]: ValueType.Minus1 },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.getMushroomScore(MushroomColor.Blue)).toBe(-3)
@@ -90,7 +90,7 @@ describe('Scoring', () => {
     it('should score +1 per token for Value1', () => {
       const rules = createScoringGame(
         { [MushroomColor.Green]: ValueType.Value1 },
-        { [Fox]: [MushroomColor.Green, MushroomColor.Green] } as any
+        { [Fox]: [MushroomColor.Green, MushroomColor.Green] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.getMushroomScore(MushroomColor.Green)).toBe(2)
@@ -99,7 +99,7 @@ describe('Scoring', () => {
     it('should score +2 per token for Value2', () => {
       const rules = createScoringGame(
         { [MushroomColor.Purple]: ValueType.Value2 },
-        { [Fox]: [MushroomColor.Purple, MushroomColor.Purple, MushroomColor.Purple, MushroomColor.Purple] } as any
+        { [Fox]: [MushroomColor.Purple, MushroomColor.Purple, MushroomColor.Purple, MushroomColor.Purple] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.getMushroomScore(MushroomColor.Purple)).toBe(8)
@@ -108,7 +108,7 @@ describe('Scoring', () => {
     it('should score +3 per token for Value3', () => {
       const rules = createScoringGame(
         { [MushroomColor.Red]: ValueType.Value3 },
-        { [Fox]: [MushroomColor.Red, MushroomColor.Red] } as any
+        { [Fox]: [MushroomColor.Red, MushroomColor.Red] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.getMushroomScore(MushroomColor.Red)).toBe(6)
@@ -119,7 +119,7 @@ describe('Scoring', () => {
     it('should score 3 VP per pig', () => {
       const rules = createScoringGame(
         {},
-        { [Fox]: [Pig, Pig] } as any
+        { [Fox]: [Pig, Pig] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.pigScore).toBe(6)
@@ -128,7 +128,7 @@ describe('Scoring', () => {
     it('should score 0 with no pigs', () => {
       const rules = createScoringGame(
         {},
-        { [Fox]: [MushroomColor.Blue] } as any
+        { [Fox]: [MushroomColor.Blue] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.pigScore).toBe(0)
@@ -142,7 +142,7 @@ describe('Scoring', () => {
           [MushroomColor.Blue]: ValueType.Poison,
           [MushroomColor.Green]: ValueType.Antidote
         },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Green, MushroomColor.Green, MushroomColor.Green] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Green, MushroomColor.Green, MushroomColor.Green] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       // 2 poisons, 3 antidotes → 2 pairs = 10 VP
@@ -155,7 +155,7 @@ describe('Scoring', () => {
           [MushroomColor.Blue]: ValueType.Poison,
           [MushroomColor.Red]: ValueType.Potion
         },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Red, MushroomColor.Red, MushroomColor.Red] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Red, MushroomColor.Red, MushroomColor.Red] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       // 2 poisons, 3 elixirs → 2 pairs = 10 VP
@@ -169,7 +169,7 @@ describe('Scoring', () => {
           [MushroomColor.Green]: ValueType.Antidote,
           [MushroomColor.Red]: ValueType.Potion
         },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Green, MushroomColor.Green, MushroomColor.Red, MushroomColor.Red] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Green, MushroomColor.Green, MushroomColor.Red, MushroomColor.Red] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       // 1 poison, 2 antidotes, 2 elixirs
@@ -186,7 +186,7 @@ describe('Scoring', () => {
           [MushroomColor.Green]: ValueType.Antidote,
           [MushroomColor.Red]: ValueType.Potion
         },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Green, MushroomColor.Red] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Green, MushroomColor.Red] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       // 2 Poison + 1 Antidote + 1 Elixir
@@ -203,7 +203,7 @@ describe('Scoring', () => {
           [MushroomColor.Blue]: ValueType.Poison,
           [MushroomColor.Green]: ValueType.Antidote
         },
-        { [Fox]: [MushroomColor.Green, MushroomColor.Green, MushroomColor.Green] } as any
+        { [Fox]: [MushroomColor.Green, MushroomColor.Green, MushroomColor.Green] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.antidoteElixirPenaltyScore).toBe(0)
@@ -215,7 +215,7 @@ describe('Scoring', () => {
           [MushroomColor.Blue]: ValueType.Poison,
           [MushroomColor.Green]: ValueType.Antidote
         },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Green] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Green] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       // 3 poison, 1 antidote → 3 > 1 → eliminated
@@ -229,7 +229,7 @@ describe('Scoring', () => {
           [MushroomColor.Green]: ValueType.Antidote,
           [MushroomColor.Red]: ValueType.Potion
         },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Green, MushroomColor.Red] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Green, MushroomColor.Red] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       // 2 poison, 1 antidote + 1 elixir = 2 → not eliminated
@@ -241,7 +241,7 @@ describe('Scoring', () => {
     it('should score -5 for 0 tokens', () => {
       const rules = createScoringGame(
         { [MushroomColor.Blue]: ValueType.MushroomLimit },
-        { [Fox]: [] } as any
+        { [Fox]: [] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomLimitScore).toBe(-5)
@@ -250,7 +250,7 @@ describe('Scoring', () => {
     it('should score 0 for 1 token', () => {
       const rules = createScoringGame(
         { [MushroomColor.Blue]: ValueType.MushroomLimit },
-        { [Fox]: [MushroomColor.Blue] } as any
+        { [Fox]: [MushroomColor.Blue] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomLimitScore).toBe(0)
@@ -259,7 +259,7 @@ describe('Scoring', () => {
     it('should score 3 for 2 tokens', () => {
       const rules = createScoringGame(
         { [MushroomColor.Blue]: ValueType.MushroomLimit },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomLimitScore).toBe(3)
@@ -268,7 +268,7 @@ describe('Scoring', () => {
     it('should score 12 for 3 tokens', () => {
       const rules = createScoringGame(
         { [MushroomColor.Blue]: ValueType.MushroomLimit },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomLimitScore).toBe(12)
@@ -277,7 +277,7 @@ describe('Scoring', () => {
     it('should eliminate with 4+ tokens', () => {
       const rules = createScoringGame(
         { [MushroomColor.Blue]: ValueType.MushroomLimit },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.isEliminated).toBe(true)
@@ -288,7 +288,7 @@ describe('Scoring', () => {
     it('should score 8 for exactly 2 tokens', () => {
       const rules = createScoringGame(
         { [MushroomColor.Blue]: ValueType.MushroomPair },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomPairScore).toBe(8)
@@ -297,7 +297,7 @@ describe('Scoring', () => {
     it('should score 0 for 1 token', () => {
       const rules = createScoringGame(
         { [MushroomColor.Blue]: ValueType.MushroomPair },
-        { [Fox]: [MushroomColor.Blue] } as any
+        { [Fox]: [MushroomColor.Blue] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomPairScore).toBe(0)
@@ -306,7 +306,7 @@ describe('Scoring', () => {
     it('should score 0 for 3 tokens', () => {
       const rules = createScoringGame(
         { [MushroomColor.Blue]: ValueType.MushroomPair },
-        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue] } as any
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue] }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomPairScore).toBe(0)
@@ -320,7 +320,7 @@ describe('Scoring', () => {
         {
           [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue],
           [Squirrel]: [MushroomColor.Blue]
-        } as any
+        }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomMajorityScore).toBe(10)
@@ -332,7 +332,7 @@ describe('Scoring', () => {
         {
           [Fox]: [MushroomColor.Blue],
           [Squirrel]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue]
-        } as any
+        }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomMajorityScore).toBe(4)
@@ -344,7 +344,7 @@ describe('Scoring', () => {
         {
           [Fox]: [MushroomColor.Blue, MushroomColor.Blue],
           [Squirrel]: [MushroomColor.Blue, MushroomColor.Blue]
-        } as any
+        }
       )
       const foxHelper = new ScoringHelper(rules.game, Fox)
       const squirrelHelper = new ScoringHelper(rules.game, Squirrel)
@@ -358,7 +358,7 @@ describe('Scoring', () => {
         {
           [Fox]: [],
           [Squirrel]: [MushroomColor.Blue, MushroomColor.Blue]
-        } as any
+        }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.mushroomMajorityScore).toBe(0)
@@ -382,7 +382,7 @@ describe('Scoring', () => {
             MushroomColor.Purple, MushroomColor.Purple, // antidote
             Pig                                         // 3 VP
           ]
-        } as any
+        }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       // 6 + 1 + 5 (1 poison+antidote pair) + 3 (pig) = 15
@@ -402,7 +402,7 @@ describe('Scoring', () => {
             MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Blue, // 3 poison
             MushroomColor.Green, MushroomColor.Green                     // 2×3 = 6
           ]
-        } as any
+        }
       )
       const helper = new ScoringHelper(rules.game, Fox)
       expect(helper.isEliminated).toBe(true)

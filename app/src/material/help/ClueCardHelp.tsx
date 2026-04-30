@@ -34,7 +34,7 @@ export const ClueCardHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
   const mushroomIndex = item.location?.parent
 
   const notebookMoves = useLegalMoves<MoveItem>(move =>
-    isMoveItemType(MaterialType.NotebookToken)(move as any)
+    isMoveItemType(MaterialType.NotebookToken)(move)
     && move.location.type === LocationType.NotebookSlot
     && move.location.id === mushroomIndex
   )

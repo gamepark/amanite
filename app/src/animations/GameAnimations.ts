@@ -1,7 +1,8 @@
 import { MaterialGameAnimations } from '@gamepark/react-game'
-import { isMoveItemType, isMoveItemTypeAtOnce, LocalMoveType, MoveKind } from '@gamepark/rules-api'
-import { MaterialType } from '@gamepark/amanite/material/MaterialType'
+import { isMoveItemType, isMoveItemTypeAtOnce, LocalMoveType, MaterialMove, MoveKind } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
+import { MaterialType } from '@gamepark/amanite/material/MaterialType'
+import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { RuleId } from '@gamepark/amanite/rules/RuleId'
 import { besidePanelLocator, fromPanelLocator, onPlayerPanelLocator } from '../locators/OnPlayerPanelLocator'
 import { getViewPlayer } from '../locators/ViewHelper'
@@ -14,12 +15,17 @@ const isNotebookMove = isMoveItemType(MaterialType.NotebookToken)
 const isClueMove = isMoveItemType(MaterialType.ClueCard)
 const isTokenMoveAtOnce = isMoveItemTypeAtOnce(MaterialType.RoundToken)
 
-const toPanelTrajectory = (_context: any, move: any) => ({
-  waypoints: [
-    { at: 0.6, locator: besidePanelLocator, location: () => ({ player: move.location.player }) },
-    { at: 1, locator: onPlayerPanelLocator, location: () => ({ player: move.location.player }) }
-  ]
-})
+type AmaniteMove = MaterialMove<PlayerAnimal, MaterialType, LocationType>
+
+const toPanelTrajectory = (_context: unknown, move: AmaniteMove) => {
+  const player = 'location' in move ? move.location.player : undefined
+  return {
+    waypoints: [
+      { at: 0.6, locator: besidePanelLocator, location: () => ({ player }) },
+      { at: 1, locator: onPlayerPanelLocator, location: () => ({ player }) }
+    ]
+  }
+}
 
 // No animation on view change
 gameAnimations

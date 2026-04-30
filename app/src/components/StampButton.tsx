@@ -1,10 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css, Interpolation, keyframes, Theme } from '@emotion/react'
+import { css, Interpolation, Theme } from '@emotion/react'
+import { LocationType } from '@gamepark/amanite/material/LocationType'
+import { MaterialType } from '@gamepark/amanite/material/MaterialType'
+import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
 import { ItemMenuButton } from '@gamepark/react-game'
+import { MaterialMove } from '@gamepark/rules-api'
 import React, { FC, PropsWithChildren } from 'react'
 
 type StampButtonProps = PropsWithChildren<{
-  move: any
+  move: MaterialMove<PlayerAnimal, MaterialType, LocationType>
   x?: number
   y?: number
   extraCss?: Interpolation<Theme>
@@ -47,16 +51,6 @@ const outlineCss = css`
   }
 `
 
-const slide = keyframes`
-  0%, 100% { transform: translateX(-0.15em); }
-  50% { transform: translateX(0.15em); }
-`
-
-export const slideCss = css`
-  animation: ${slide} 1.5s ease-in-out infinite;
-  &:hover { animation-play-state: paused; }
-`
-
 const stampInnerCss = css`
   display: inline-flex;
   align-items: center;
@@ -85,8 +79,6 @@ const stampInnerCss = css`
 const verticalCss = css`
   flex-direction: column;
 `
-
-export const stampButtonCss = stampInnerCss
 
 export const stampIconCss = css`
   font-size: 0.7em;

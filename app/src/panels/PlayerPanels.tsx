@@ -11,7 +11,7 @@ import { Avatar, PlayerTimer, SpeechBubbleDirection, useMaterialContext, usePlay
 import { LocalMoveType, MoveKind } from '@gamepark/rules-api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
-import { FC, useRef, useCallback } from 'react'
+import { FC, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import BlueToken from '../images/tokens/round/BlueMushroomToken.jpg'
 import GreenToken from '../images/tokens/round/GreenMushroomToken.jpg'
 import PurpleToken from '../images/tokens/round/PurpleMushroomToken.jpg'
@@ -151,6 +151,11 @@ const PlayerPanel: FC<PlayerPanelProps> = ({
   const playerName = usePlayerName(playerId)
   const colors = playerColors[playerId]
   const panelRef = useRef<HTMLDivElement>(null)
+  const [speechDirection, setSpeechDirection] = useState<SpeechBubbleDirection>(SpeechBubbleDirection.BOTTOM_RIGHT)
+
+  useLayoutEffect(() => {
+    setSpeechDirection(getSpeechDirection(panelRef.current))
+  }, [index])
 
   return (
     <div ref={panelRef} css={[panelCss, positionCss(index), isTurnToPlay && turnBorderCss, isViewActive && !isTurnToPlay && activeGlowCss(colors.main)]} onClick={onClick}>
@@ -159,7 +164,7 @@ const PlayerPanel: FC<PlayerPanelProps> = ({
         <div css={bannerBgCss(bannerImages[playerId])} />
         <div css={bannerOverlayCss} />
         <div css={avatarWrapperCss}>
-          <Avatar playerId={playerId} css={avatarCss} speechBubbleProps={{ direction: getSpeechDirection(panelRef.current) }} />
+          <Avatar playerId={playerId} css={avatarCss} speechBubbleProps={{ direction: speechDirection }} />
         </div>
         <span css={nameCss}>{playerName}</span>
         {isViewActive && <FontAwesomeIcon icon={faEye} css={eyeIconCss} />}
@@ -265,8 +270,8 @@ const bannerOverlayCss = css`
 `
 
 const borderTravel = keyframes`
-  0% { background-position: 0% 0%; }
-  100% { background-position: 200% 0%; }
+  0% { background-position: 0 0; }
+  100% { background-position: 200% 0; }
 `
 
 const turnBorderCss = css`

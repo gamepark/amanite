@@ -68,8 +68,8 @@ export class AmaniteLogs implements LogDescription<MaterialMove, PlayerAnimal, M
     }
 
     // LogTokensCollected — shows token icons for lot/choose
-    if (isCustomMoveType(CustomMoveType.LogTokensCollected)(move)) {
-      const data = (move as any).data as { player: number, tokens: number[] }
+    if (isCustomMoveType<CustomMoveType.LogTokensCollected, { player: number, tokens: number[] }>(CustomMoveType.LogTokensCollected)(move) && move.data) {
+      const data = move.data
       if (rule === RuleId.ChooseLot) {
         const isChooser = data.player === player
         if (isChooser) {

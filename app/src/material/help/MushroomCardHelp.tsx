@@ -19,7 +19,7 @@ export const MushroomCardHelp: FC<MaterialHelpProps> = ({ item, itemIndex, close
   const hex = mushroomHexColors[color] ?? '#888'
 
   const notebookMoves = useLegalMoves<MoveItem>(move =>
-    isMoveItemType(MaterialType.NotebookToken)(move as any)
+    isMoveItemType(MaterialType.NotebookToken)(move)
     && move.location.type === LocationType.NotebookSlot
     && move.location.id === itemIndex
   )

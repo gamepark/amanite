@@ -14,7 +14,7 @@ export function createGame(playerCount: 2 | 3 | 4, beginner = true): AmaniteRule
 }
 
 export function playConsequences(rules: AmaniteRules, move: AmaniteMove) {
-  let consequences = rules.play(move)
+  const consequences = rules.play(move)
   while (consequences.length > 0) {
     const next = consequences.shift()!
     consequences.push(...rules.play(next))

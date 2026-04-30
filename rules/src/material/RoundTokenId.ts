@@ -5,11 +5,11 @@ export const Pig = 7 as const
 
 export type RoundTokenId = MushroomColor | typeof Pig
 
-export function isPig(id: any): boolean {
+export function isPig(id: unknown): boolean {
   return id === Pig
 }
 
-export function isMushroomToken(id: any): boolean {
+export function isMushroomToken(id: unknown): boolean {
   return typeof id === 'number' && id !== Pig && id >= 1 && id <= 6
 }
 
