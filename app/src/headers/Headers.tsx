@@ -1,6 +1,5 @@
 import { RuleId } from '@gamepark/amanite/rules/RuleId'
 import { ComponentType } from 'react'
-import { ChooseStartCardSideHeader } from './ChooseStartCardSideHeader'
 import { PlaceMeepleHeader } from './PlaceMeepleHeader'
 import { SplitTokensHeader } from './SplitTokensHeader'
 import { ChooseLotHeader } from './ChooseLotHeader'
@@ -9,10 +8,8 @@ import { DiscardForPigHeader } from './DiscardForPigHeader'
 import { PlaceNotebookHeader } from './PlaceNotebookHeader'
 import { FinalScoringHeader } from './FinalScoringHeader'
 import { PlaceNewTokensHeader } from './PlaceNewTokensHeader'
-import { RevealCluesHeader } from './RevealCluesHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
-  [RuleId.ChooseStartCardSide]: ChooseStartCardSideHeader,
   [RuleId.PlaceNewTokens]: PlaceNewTokensHeader,
   [RuleId.PlaceMeeple]: PlaceMeepleHeader,
   [RuleId.SplitTokens]: SplitTokensHeader,
@@ -20,6 +17,5 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseTokens]: ChooseTokensHeader,
   [RuleId.DiscardForPig]: DiscardForPigHeader,
   [RuleId.PlaceNotebook]: PlaceNotebookHeader,
-  [RuleId.FinalScoring]: FinalScoringHeader,
-  [RuleId.RevealClues]: RevealCluesHeader
+  [RuleId.FinalScoring]: FinalScoringHeader
 }

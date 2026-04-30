@@ -12,8 +12,6 @@ import { MaterialType } from './material/MaterialType'
 import { PlayerAnimal } from './PlayerAnimal'
 import { RuleId } from './rules/RuleId'
 import { ScoringHelper } from './rules/helper/ScoringHelper'
-import { ChooseStartCardSideRule } from './rules/ChooseStartCardSideRule'
-import { DealInitialCluesRule } from './rules/DealInitialCluesRule'
 import { PlaceNewTokensRule } from './rules/PlaceNewTokensRule'
 import { PlaceMeepleRule } from './rules/PlaceMeepleRule'
 import { SplitTokensRule } from './rules/SplitTokensRule'
@@ -24,7 +22,6 @@ import { DiscardForPigRule } from './rules/DiscardForPigRule'
 import { PlaceNotebookRule } from './rules/PlaceNotebookRule'
 import { EndRoundRule } from './rules/EndRoundRule'
 import { FinalScoringRule } from './rules/FinalScoringRule'
-import { RevealCluesRule } from './rules/RevealCluesRule'
 
 export class AmaniteRules
   extends SecretMaterialRules<PlayerAnimal, MaterialType, LocationType>
@@ -33,8 +30,6 @@ export class AmaniteRules
     TimeLimit<MaterialGame<PlayerAnimal, MaterialType, LocationType>, MaterialMove<PlayerAnimal, MaterialType, LocationType>, PlayerAnimal>
 {
   rules = {
-    [RuleId.ChooseStartCardSide]: ChooseStartCardSideRule,
-    [RuleId.DealInitialClues]: DealInitialCluesRule,
     [RuleId.PlaceNewTokens]: PlaceNewTokensRule,
     [RuleId.PlaceMeeple]: PlaceMeepleRule,
     [RuleId.SplitTokens]: SplitTokensRule,
@@ -45,7 +40,6 @@ export class AmaniteRules
     [RuleId.PlaceNotebook]: PlaceNotebookRule,
     [RuleId.EndRound]: EndRoundRule,
     [RuleId.FinalScoring]: FinalScoringRule,
-    [RuleId.RevealClues]: RevealCluesRule,
   }
 
   locationsStrategies = {

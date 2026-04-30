@@ -21,9 +21,11 @@ describe('Game Setup', () => {
       cards.forEach(card => expect(card.location.rotation).toBe(false))
     })
 
-    it('should create 64 round tokens in the bag', () => {
+    it('should create 64 round tokens total (bag + tiles after PlaceNewTokens auto-runs)', () => {
       const rules = createGame(2)
-      expect(getItems(rules, MaterialType.RoundToken, LocationType.Bag)).toHaveLength(64)
+      const inBag = getItems(rules, MaterialType.RoundToken, LocationType.Bag).length
+      const onTiles = getItems(rules, MaterialType.RoundToken, LocationType.ForestTileTokens).length
+      expect(inBag + onTiles).toBe(64)
     })
 
     it('should give 2 meeples per player', () => {
@@ -44,9 +46,25 @@ describe('Game Setup', () => {
       expect(getItems(rules, MaterialType.StartCard, LocationType.PlayerStartCard, PlayerAnimal.Squirrel)).toHaveLength(1)
     })
 
-    it('should start with ChooseStartCardSide rule', () => {
+    it('should auto-resolve PlaceNewTokens at start and stop on PlaceMeeple', () => {
       const rules = createGame(2)
-      expect(rules.game.rule?.id).toBe(RuleId.ChooseStartCardSide)
+      expect(rules.game.rule?.id).toBe(RuleId.PlaceMeeple)
+    })
+
+    it('should deal 3 clue cards (face up to owner) into each player\'s hand', () => {
+      const rules = createGame(2)
+      for (const player of [PlayerAnimal.Fox, PlayerAnimal.Squirrel]) {
+        const hand = getItems(rules, MaterialType.ClueCard, LocationType.PlayerClueCards, player)
+        expect(hand).toHaveLength(3)
+        hand.forEach(card => expect(card.location.rotation).toBe(true))
+      }
+    })
+
+    it('should leave 6 minus dealt clue cards on each mushroom deck', () => {
+      const rules = createGame(2)
+      const totalDeckCards = getItems(rules, MaterialType.ClueCard, LocationType.ClueDeck).length
+      // 36 total clues − 2 players × 3 dealt = 30
+      expect(totalDeckCards).toBe(30)
     })
 
     it('should memorize round 1 and first player', () => {
@@ -98,20 +116,23 @@ describe('Game Setup', () => {
       }
     })
 
-    it('should have 6 clue cards per value', () => {
+    it('should have 36 clue cards total split between decks and player hands', () => {
       const rules = createGame(2)
-      const clueCards = getItems(rules, MaterialType.ClueCard, LocationType.ClueDeck)
-      expect(clueCards).toHaveLength(36)
+      const inDecks = getItems(rules, MaterialType.ClueCard, LocationType.ClueDeck).length
+      const inFoxHand = getItems(rules, MaterialType.ClueCard, LocationType.PlayerClueCards, PlayerAnimal.Fox).length
+      const inSquirrelHand = getItems(rules, MaterialType.ClueCard, LocationType.PlayerClueCards, PlayerAnimal.Squirrel).length
+      expect(inDecks + inFoxHand + inSquirrelHand).toBe(36)
     })
 
-    it('should place each clue pile on a different mushroom card', () => {
+    it('should place a clue pile on each mushroom card with size = 6 - players dealt from it', () => {
       const rules = createGame(2)
       const mushrooms = rules.material(MaterialType.MushroomCard).getIndexes()
       for (const mushroomIndex of mushrooms) {
         const deck = rules.material(MaterialType.ClueCard)
           .location(LocationType.ClueDeck)
           .parent(mushroomIndex)
-        expect(deck.length).toBe(6)
+        expect(deck.length).toBeGreaterThanOrEqual(4)
+        expect(deck.length).toBeLessThanOrEqual(6)
       }
     })
   })

@@ -196,11 +196,3 @@ gameAnimations
 gameAnimations
   .configure((move) => isMoveItemType(MaterialType.FirstPlayerToken)(move))
   .duration(800)
-
-// Start card rotation (choosing side)
-gameAnimations
-  .configure((move, context) =>
-    context.rules.game.rule?.id === RuleId.ChooseStartCardSide
-    && isMoveItemType(MaterialType.StartCard)(move)
-  )
-  .duration(400)

@@ -8,6 +8,7 @@ import { ValueType } from '../material/ValueType'
 import { PlayerAnimal } from '../PlayerAnimal'
 import { Pig } from '../material/RoundTokenId'
 import { ScoringHelper } from '../rules/helper/ScoringHelper'
+import { RuleId } from '../rules/RuleId'
 
 /**
  * Creates a minimal game state for testing scoring.
@@ -32,7 +33,7 @@ function createScoringGame(
       [MaterialType.Meeple]: [],
       [MaterialType.FirstPlayerToken]: []
     },
-    rule: { id: 12 }, // FinalScoring
+    rule: { id: RuleId.FinalScoring },
     memory: {}
   }
 

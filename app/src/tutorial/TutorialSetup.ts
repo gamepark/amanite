@@ -116,7 +116,7 @@ export class TutorialSetup extends AmaniteSetup {
     this.material(MaterialType.RoundToken).location(LocationType.Bag).shuffle()
   }
 
-  /** Skip ChooseStartCardSide + DealInitialClues + PlaceNewTokens */
+  /** Skip PlaceNewTokens — tokens are pre-placed for a deterministic tutorial */
   start() {
     this.memorize(Memory.MeeplePlacementRound, 1)
     this.startPlayerTurn(RuleId.PlaceMeeple, me)

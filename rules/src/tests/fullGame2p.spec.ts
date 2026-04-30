@@ -18,44 +18,17 @@ describe('Full 2-player game flow', () => {
     rules = createGame(2)
   })
 
-  it('should start at ChooseStartCardSide', () => {
-    expect(rules.game.rule?.id).toBe(RuleId.ChooseStartCardSide)
+  it('should auto-resolve to PlaceMeeple at start (sides + clues already dealt in setup)', () => {
+    expect(rules.game.rule?.id).toBe(RuleId.PlaceMeeple)
   })
 
-  describe('ChooseStartCardSide', () => {
-    it('should allow both players to choose a side', () => {
-      const foxMoves = rules.getLegalMoves(Fox)
-      const squirrelMoves = rules.getLegalMoves(Squirrel)
-      expect(foxMoves.length).toBe(2)
-      expect(squirrelMoves.length).toBe(2)
-    })
-
-    it('should transition to PlaceNewTokens after both choose', () => {
-      // Fox chooses side 0
-      const foxMove = rules.getLegalMoves(Fox)
-        .find(m => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(m) && m.data?.side === 0)!
-      playAndResolve(rules, foxMove)
-
-      // Squirrel chooses side 1
-      const squirrelMove = rules.getLegalMoves(Squirrel)
-        .find(m => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(m) && m.data?.side === 1)!
-      playAndResolve(rules, squirrelMove)
-
-      // Should now be at PlaceNewTokens or PlaceMeeple (auto rules resolve)
-      resolveAutoMoves(rules)
-      expect(rules.game.rule?.id).toBe(RuleId.PlaceMeeple)
-    })
+  it('should have already dealt 3 clues to each player at game start', () => {
+    expect(getItems(rules, MaterialType.ClueCard, LocationType.PlayerClueCards, Fox)).toHaveLength(3)
+    expect(getItems(rules, MaterialType.ClueCard, LocationType.PlayerClueCards, Squirrel)).toHaveLength(3)
   })
 
   describe('Full round flow', () => {
     beforeEach(() => {
-      // Complete start card selection
-      const foxMove = rules.getLegalMoves(Fox)
-        .find(m => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(m))!
-      playAndResolve(rules, foxMove)
-      const squirrelMove = rules.getLegalMoves(Squirrel)
-        .find(m => isCustomMoveType(CustomMoveType.ChooseStartCardSide)(m))!
-      playAndResolve(rules, squirrelMove)
       resolveAutoMoves(rules)
     })
 
@@ -142,9 +115,11 @@ describe('Full 2-player game flow', () => {
         .find(m => isCustomMoveType(CustomMoveType.ConfirmSplit)(m))!
       playAndResolve(rules, confirm)
 
-      // Squirrel places meeple on tile 2
+      // Squirrel places meeple on tile 2 (empty single placement, no split)
       moves = rules.getLegalMoves(Squirrel)
-      place = moves.find((m: any) => isMoveItemType(MaterialType.Meeple)(m))!
+      place = moves.find((m: any) =>
+        isMoveItemType(MaterialType.Meeple)(m) && m.location.parent === 2
+      )!
       playAndResolve(rules, place)
 
       resolveAutoMoves(rules)
