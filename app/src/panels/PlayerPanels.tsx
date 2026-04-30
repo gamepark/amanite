@@ -21,23 +21,12 @@ import RedToken from '../images/tokens/round/RedMushroomToken.jpg'
 import WhiteToken from '../images/tokens/round/WhiteMushroomToken.jpg'
 import YellowToken from '../images/tokens/round/YellowMushroomToken.jpg'
 import PigToken from '../images/tokens/round/PigToken.jpg'
-import FoxCard from '../images/cards/start/FoxCard1.jpg'
-import SquirrelCard from '../images/cards/start/SquirrelCard1.jpg'
-import OwlCard from '../images/cards/start/OwlCard1.jpg'
-import JayCard from '../images/cards/start/JayCard1.jpg'
 
-const bannerImages: Record<number, string> = {
-  [PlayerAnimal.Fox]: FoxCard,
-  [PlayerAnimal.Squirrel]: SquirrelCard,
-  [PlayerAnimal.Owl]: OwlCard,
-  [PlayerAnimal.Jay]: JayCard
-}
-
-const playerColors: Record<number, { main: string }> = {
-  [PlayerAnimal.Fox]: { main: '#A8C46A' },
-  [PlayerAnimal.Squirrel]: { main: '#D4722A' },
-  [PlayerAnimal.Owl]: { main: '#2A2A2A' },
-  [PlayerAnimal.Jay]: { main: '#8B6040' }
+const playerColors: Record<number, { main: string, dark: string }> = {
+  [PlayerAnimal.Fox]: { main: '#A8C46A', dark: '#3F5020' },
+  [PlayerAnimal.Squirrel]: { main: '#E89248', dark: '#7A3E10' },
+  [PlayerAnimal.Owl]: { main: '#2A2A2A', dark: '#0A0A0A' },
+  [PlayerAnimal.Jay]: { main: '#8B6040', dark: '#2E1E12' }
 }
 
 const tokenImages: Record<number, string> = {
@@ -166,10 +155,9 @@ const PlayerPanel: FC<PlayerPanelProps> = ({
 
   return (
     <div ref={panelRef} css={[panelCss, positionCss(index), isTurnToPlay && turnBorderCss, isViewActive && !isTurnToPlay && activeGlowCss(colors.main)]} onClick={onClick}>
-      {/* Banner: art background + avatar + name + timer */}
+      {/* Banner: color gradient + avatar + name + timer */}
       <div css={bannerCss}>
-        <div css={bannerBgCss(bannerImages[playerId])} />
-        <div css={bannerOverlayCss} />
+        <div css={bannerBgCss(colors.main, colors.dark)} />
         <div css={avatarWrapperCss}>
           <Avatar playerId={playerId} css={avatarCss} speechBubbleProps={{ direction: speechDirection }} />
         </div>
@@ -289,18 +277,10 @@ const bannerCss = css`
   border-radius: 0.7em 0.7em 0 0;
 `
 
-const bannerBgCss = (image: string) => css`
+const bannerBgCss = (main: string, dark: string) => css`
   position: absolute;
   inset: 0;
-  background: url('${image}') center/cover;
-  background-position: 65% 30%;
-  filter: brightness(0.55) saturate(0.9);
-`
-
-const bannerOverlayCss = css`
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.15) 50%, rgba(0, 0, 0, 0.3) 100%);
+  background: linear-gradient(135deg, ${main} 0%, ${dark} 100%);
 `
 
 const borderTravel = keyframes`
