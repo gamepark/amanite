@@ -200,7 +200,7 @@ const PlayerPanel: FC<PlayerPanelProps> = ({
         <div css={gridScoresCss}>
           {colorScores.map((s, i) => <ScoreCell key={i} score={s} />)}
           <div css={scoreCellCss}>
-            <span css={scoreNumberCss(pigScore)}>{formatScore(pigScore)}</span>
+            {pigCount > 0 && <span css={scoreNumberCss(pigScore)}>{formatScore(pigScore)}</span>}
           </div>
         </div>
       </div>
