@@ -257,9 +257,10 @@ const panelCss = css`
   font-size: 0.7em;
   box-shadow: 0 0.15em 0.5em rgba(0, 0, 0, 0.4);
   transition: box-shadow 0.3s, transform 0.2s;
+  transform: translate3d(0, 0, 0);
 
   &:hover {
-    transform: translateX(-2px);
+    transform: translate3d(-2px, 0, 0);
   }
 `
 
@@ -278,6 +279,7 @@ const positionCss = (index: number) => css`
 
 const bannerCss = css`
   position: relative;
+  z-index: 1;
   padding: 0.5em 0.7em;
   display: flex;
   align-items: center;
@@ -311,7 +313,6 @@ const turnBorderCss = css`
     content: '';
     position: absolute;
     inset: -0.25em;
-    z-index: -1;
     border-radius: 0.8em;
     background: linear-gradient(90deg, transparent, gold, rgb(40, 184, 206), transparent, gold, rgb(40, 184, 206), transparent);
     background-size: 200% 100%;
@@ -396,6 +397,8 @@ const finalScoreEliminatedCss = css`
 // --- Body ---
 
 const bodyCss = css`
+  position: relative;
+  z-index: 1;
   background: linear-gradient(180deg, #181E18 0%, #141a14 100%);
   padding: 0.5em 0.7em;
   display: flex;
