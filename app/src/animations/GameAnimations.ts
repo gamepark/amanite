@@ -193,6 +193,15 @@ gameAnimations
   .duration(1400)
   .trajectory(toPanelTrajectory)
 
+// Final scoring: dramatic flip-by-flip reveal (left → right by mushroom layout order)
+gameAnimations
+  .configure((move, context) =>
+    context.rules.game.rule?.id === RuleId.FinalScoring
+    && isClueMove(move)
+    && move.location.rotation === true
+  )
+  .duration(1500)
+
 // Clue cards (other moves like shuffle, return to deck)
 gameAnimations
   .configure((move) => isClueMove(move))
