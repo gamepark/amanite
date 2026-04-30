@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from '@emotion/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowDown, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faArrowLeft, faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { ItemContext, TokenDescription } from '@gamepark/react-game'
 import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
@@ -93,6 +93,34 @@ class RoundTokenDescription extends TokenDescription {
         <FontAwesomeIcon icon={faArrowDown} css={stampIconCss} />
         {isRightmost && <Trans i18nKey="button.take.token" />}
       </StampButton>
+    }
+
+    const splitMoves = legalMoves.filter(isMoveItemType(MaterialType.RoundToken))
+      .filter(m => m.location.type === LocationType.ForestTileTokens) as MoveItem[]
+    if (splitMoves.length > 0) {
+      const splitMove = splitMoves.find(m => m.itemIndex === context.index)
+      if (splitMove) {
+        const isFromTop = item.location.id === LotZone.Top
+        const isSecondRow = (item.location.x ?? 0) >= 4
+        const y = isSecondRow ? 2.5 : -2.5
+        const arrowIcon = isFromTop ? faArrowDown : faArrowUp
+        const animationCss = isSecondRow ? bounceUpCss : bounceDownCss
+        const tokens = context.rules.material(MaterialType.RoundToken)
+        const sameLotMoves = splitMoves.filter(m => {
+          const t = tokens.index(m.itemIndex).getItem()
+          return t?.location.id === item.location.id
+        })
+        const rightmost = sameLotMoves.reduce((a, b) => {
+          const ax = tokens.index(a.itemIndex).getItem()?.location.x ?? 0
+          const bx = tokens.index(b.itemIndex).getItem()?.location.x ?? 0
+          return bx > ax ? b : a
+        })
+        const isRightmost = rightmost.itemIndex === context.index
+        return <StampButton move={splitMove} x={-1.17} y={y} extraCss={animationCss} xOrigin="start">
+          <FontAwesomeIcon icon={arrowIcon} css={stampIconCss} />
+          {isRightmost && <Trans i18nKey={isFromTop ? 'button.move.down' : 'button.move.up'} />}
+        </StampButton>
+      }
     }
 
     const lotId = item.location.id
