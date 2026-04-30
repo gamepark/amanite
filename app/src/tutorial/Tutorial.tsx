@@ -19,7 +19,7 @@ const onTile = (tileX: number) => (move: MaterialMove, game: MaterialGame) => {
 }
 
 export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, LocationType> {
-  version = 5
+  version = 6
   options = { players: [{ id: me }, { id: opponent }] }
   setup = new TutorialSetup()
   players = [
@@ -211,28 +211,12 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
       move: { player: me, filter: onTile(2) }
     },
 
-    // 12: Opponent places on tile 0 x=1 → triggers split
+    // 12: Opponent places on tile 0 x=1 → triggers split (still in placement phase)
     {
       move: { player: opponent, filter: onTile(0) }
     },
 
-    // 12b: Announce the harvest phase
-    {
-      popup: {
-        text: () => <Trans i18nKey="tuto.harvest.start"/>,
-        position: { x: -30, y: 10 }
-      },
-      focus: (game) => ({
-        materials: [
-          this.material(game, MaterialType.ForestTile),
-          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens),
-          this.material(game, MaterialType.Meeple).location(LocationType.ForestTileMeepleSpot)
-        ],
-        margin: { top: 2, bottom: 5, left: 2, right: 25 }
-      })
-    },
-
-    // 12c: Explain that the second player on a tile must split the tokens
+    // 12b: Explain that placing on the 2nd slot triggers an immediate split (still placement phase)
     {
       popup: {
         text: () => <Trans i18nKey="tuto.split.explain"/>,
@@ -279,6 +263,22 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
     },
 
     // ── GAMEPLAY: Harvest ──
+
+    // 15b: Announce the harvest phase, now that all meeples are placed and splits are done
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.harvest.start"/>,
+        position: { x: -30, y: 10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ForestTile),
+          this.material(game, MaterialType.RoundToken).location(LocationType.ForestTileTokens),
+          this.material(game, MaterialType.Meeple).location(LocationType.ForestTileMeepleSpot)
+        ],
+        margin: { top: 2, bottom: 5, left: 2, right: 25 }
+      })
+    },
 
     // 16: Choose lot on tile 0
     {
