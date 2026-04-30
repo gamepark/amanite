@@ -31,7 +31,7 @@ class StartCardDescription extends CardDescription {
     [PlayerAnimal.Jay]: JayCard2
   }
 
-  isFlippedOnTable(item: Partial<MaterialItem>) {
+  isFlipped(item: Partial<MaterialItem>) {
     return item.location?.rotation === 1
   }
 }
