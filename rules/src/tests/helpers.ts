@@ -9,7 +9,8 @@ type AmaniteMove = MaterialMove<PlayerAnimal, MaterialType, LocationType>
 
 export function createGame(playerCount: 2 | 3 | 4, beginner = true): AmaniteRules {
   const setup = new AmaniteSetup()
-  const game = setup.setup({ players: playerCount, beginner })
+  const players = Array.from({ length: playerCount }, (_, i) => ({ id: (i + 1) as PlayerAnimal }))
+  const game = setup.setup({ players, beginner })
   return new AmaniteRules(game)
 }
 

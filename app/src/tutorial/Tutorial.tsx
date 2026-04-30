@@ -24,7 +24,7 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
   setup = new TutorialSetup()
   players = [
     { id: me },
-    { id: opponent, name: 'Squirrel' }
+    { id: opponent }
   ]
 
   steps: TutorialStep<PlayerAnimal, MaterialType, LocationType>[] = [
