@@ -83,6 +83,61 @@ export class ScoringHelper extends MaterialRulesPart {
       .length
   }
 
+  /** Whether the player survives the poison check (heart vs skull) */
+  get isPoisonSurvived(): boolean {
+    const mapping = this.mushroomValueMapping
+    const counts = this.mushroomCounts
+    let poisonCount = 0
+    let antidoteCount = 0
+    let elixirCount = 0
+    for (const color of mushroomColors) {
+      const c = counts[color] ?? 0
+      if (mapping[color] === ValueType.Poison) poisonCount += c
+      if (mapping[color] === ValueType.Antidote) antidoteCount += c
+      if (mapping[color] === ValueType.Potion) elixirCount += c
+    }
+    return poisonCount <= antidoteCount + elixirCount
+  }
+
+  /**
+   * Per-color score for the player panel. Reattributes the global poison/antidote/elixir
+   * pairing scores to specific colors:
+   *   - Antidote color: min(antidote, poison) × 5 (antidote pairs poisons first)
+   *   - Elixir color : remaining unpaired poisons × 5 - antidote/elixir pairs × 3
+   *   - Poison color : 0 (display heart/skull icon instead via isPoisonSurvived)
+   */
+  getColorPanelScore(color: MushroomColor): number {
+    const mapping = this.mushroomValueMapping
+    const value = mapping[color]
+    if (value === undefined) return 0
+
+    if (value === ValueType.Poison) return 0
+
+    if (value === ValueType.Antidote) {
+      let antidote = 0, poison = 0
+      for (const c of mushroomColors) {
+        const n = this.mushroomCounts[c] ?? 0
+        if (mapping[c] === ValueType.Antidote) antidote += n
+        if (mapping[c] === ValueType.Poison) poison += n
+      }
+      return Math.min(antidote, poison) * 5
+    }
+
+    if (value === ValueType.Potion) {
+      let antidote = 0, poison = 0, elixir = 0
+      for (const c of mushroomColors) {
+        const n = this.mushroomCounts[c] ?? 0
+        if (mapping[c] === ValueType.Antidote) antidote += n
+        if (mapping[c] === ValueType.Poison) poison += n
+        if (mapping[c] === ValueType.Potion) elixir += n
+      }
+      const unpaired = Math.max(0, poison - antidote)
+      return Math.min(elixir, unpaired) * 5 - Math.min(antidote, elixir) * 3
+    }
+
+    return this.getMushroomScore(color)
+  }
+
   /** Score for a single mushroom color based on its assigned value */
   getMushroomScore(color: MushroomColor): number {
     const mapping = this.mushroomValueMapping

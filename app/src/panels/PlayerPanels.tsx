@@ -6,11 +6,13 @@ import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
 import { mushroomColors, MushroomColor } from '@gamepark/amanite/material/MushroomColor'
+import { ValueType } from '@gamepark/amanite/material/ValueType'
 import { isPig } from '@gamepark/amanite/material/RoundTokenId'
+import { ScoringHelper } from '@gamepark/amanite/rules/helper/ScoringHelper'
 import { Avatar, PlayerTimer, SpeechBubbleDirection, useMaterialContext, usePlayerName, usePlayers, usePlay, useRules, getRelativePlayerIndex } from '@gamepark/react-game'
 import { LocalMoveType, MoveKind } from '@gamepark/rules-api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faHeart, faSkull } from '@fortawesome/free-solid-svg-icons'
 import { FC, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import BlueToken from '../images/tokens/round/BlueMushroomToken.jpg'
 import GreenToken from '../images/tokens/round/GreenMushroomToken.jpg'
@@ -19,11 +21,6 @@ import RedToken from '../images/tokens/round/RedMushroomToken.jpg'
 import WhiteToken from '../images/tokens/round/WhiteMushroomToken.jpg'
 import YellowToken from '../images/tokens/round/YellowMushroomToken.jpg'
 import PigToken from '../images/tokens/round/PigToken.jpg'
-import ClueCardBack from '../images/cards/clue/ClueCardBack.jpg'
-import FoxBookToken from '../images/tokens/book/FoxBookToken.png'
-import SquirrelBookToken from '../images/tokens/book/SquirrelBookToken.png'
-import OwlBookToken from '../images/tokens/book/OwlBookToken.png'
-import JayBookToken from '../images/tokens/book/JayBookToken.png'
 import FoxCard from '../images/cards/start/FoxCard1.jpg'
 import SquirrelCard from '../images/cards/start/SquirrelCard1.jpg'
 import OwlCard from '../images/cards/start/OwlCard1.jpg'
@@ -34,13 +31,6 @@ const bannerImages: Record<number, string> = {
   [PlayerAnimal.Squirrel]: SquirrelCard,
   [PlayerAnimal.Owl]: OwlCard,
   [PlayerAnimal.Jay]: JayCard
-}
-
-const bookTokenImages: Record<number, string> = {
-  [PlayerAnimal.Fox]: FoxBookToken,
-  [PlayerAnimal.Squirrel]: SquirrelBookToken,
-  [PlayerAnimal.Owl]: OwlBookToken,
-  [PlayerAnimal.Jay]: JayBookToken
 }
 
 const playerColors: Record<number, { main: string }> = {
@@ -81,11 +71,15 @@ export const PlayerPanels = () => {
         const isTurnToPlay = rules?.isTurnToPlay(player.id) ?? false
 
         const mushroomCounts: { image: string, count: number }[] = []
+        const colorScores: ColorScore[] = []
         let pigCount = 0
-        let clueCount = 0
-        let notebookCount = 0
+        let pigScore = 0
+        let totalScore = 0
+        let isEliminated = false
 
         if (rules) {
+          const helper = new ScoringHelper(rules.game, player.id)
+          const mapping = helper.mushroomValueMapping
           for (const color of mushroomColors) {
             mushroomCounts.push({
               image: tokenImages[color],
@@ -95,20 +89,23 @@ export const PlayerPanels = () => {
                 .id(color)
                 .length
             })
+            const value = mapping[color]
+            if (value === undefined) {
+              colorScores.push({ kind: 'hidden' })
+            } else if (value === ValueType.Poison) {
+              colorScores.push({ kind: helper.isPoisonSurvived ? 'poison-alive' : 'poison-dead' })
+            } else {
+              colorScores.push({ kind: 'value', score: helper.getColorPanelScore(color) })
+            }
           }
           pigCount = rules.material(MaterialType.RoundToken)
             .location(LocationType.PlayerTokens)
             .player(player.id)
             .filter(item => isPig(item.id))
             .length
-          clueCount = rules.material(MaterialType.ClueCard)
-            .location(LocationType.PlayerClueCards)
-            .player(player.id)
-            .length
-          notebookCount = rules.material(MaterialType.NotebookToken)
-            .location(LocationType.PlayerNotebookStock)
-            .player(player.id)
-            .length
+          pigScore = helper.pigScore
+          totalScore = helper.score
+          isEliminated = helper.isEliminated
         }
 
         return (
@@ -121,8 +118,10 @@ export const PlayerPanels = () => {
             gameOver={rules?.isOver() ?? false}
             mushroomCounts={mushroomCounts}
             pigCount={pigCount}
-            clueCount={clueCount}
-            notebookCount={notebookCount}
+            colorScores={colorScores}
+            pigScore={pigScore}
+            totalScore={totalScore}
+            isEliminated={isEliminated}
             onClick={() => play({ kind: MoveKind.LocalMove, type: LocalMoveType.ChangeView, view: player.id }, { transient: true })}
           />
         )
@@ -130,6 +129,12 @@ export const PlayerPanels = () => {
     </>
   )
 }
+
+type ColorScore =
+  | { kind: 'hidden' }
+  | { kind: 'value', score: number }
+  | { kind: 'poison-alive' }
+  | { kind: 'poison-dead' }
 
 type PlayerPanelProps = {
   playerId: PlayerAnimal
@@ -139,14 +144,16 @@ type PlayerPanelProps = {
   gameOver: boolean
   mushroomCounts: { image: string, count: number }[]
   pigCount: number
-  clueCount: number
-  notebookCount: number
+  colorScores: ColorScore[]
+  pigScore: number
+  totalScore: number
+  isEliminated: boolean
   onClick: () => void
 }
 
 const PlayerPanel: FC<PlayerPanelProps> = ({
   playerId, index, isViewActive, isTurnToPlay, gameOver,
-  mushroomCounts, pigCount, clueCount, notebookCount, onClick
+  mushroomCounts, pigCount, colorScores, pigScore, totalScore, isEliminated, onClick
 }) => {
   const playerName = usePlayerName(playerId)
   const colors = playerColors[playerId]
@@ -168,7 +175,9 @@ const PlayerPanel: FC<PlayerPanelProps> = ({
         </div>
         <span css={nameCss}>{playerName}</span>
         {isViewActive && <FontAwesomeIcon icon={faEye} css={eyeIconCss} />}
-        {!gameOver && <PlayerTimer playerId={playerId} css={timerCss} />}
+        {gameOver
+          ? <span css={[finalScoreCss, isEliminated && finalScoreEliminatedCss]}>{totalScore}</span>
+          : <PlayerTimer playerId={playerId} css={timerCss} />}
       </div>
 
       {/* Body: solid dark background */}
@@ -187,18 +196,41 @@ const PlayerPanel: FC<PlayerPanelProps> = ({
           </div>
         </div>
 
-        {/* Bottom row: clues + notebooks */}
-        <div css={footCss}>
-          <div css={[footBadgeCss, clueCount === 0 && dimCss]}>
-            <img src={ClueCardBack} css={cardIconCss} alt="" />
-            <span css={footCountCss}>{clueCount}</span>
-          </div>
-          <div css={[footBadgeCss, notebookCount === 0 && dimCss]}>
-            <img src={bookTokenImages[playerId]} css={bookIconCss} alt="" />
-            <span css={footCountCss}>{notebookCount}</span>
+        {/* Score row: per-color score (revealed only) + pig score */}
+        <div css={gridScoresCss}>
+          {colorScores.map((s, i) => <ScoreCell key={i} score={s} />)}
+          <div css={scoreCellCss}>
+            <span css={scoreNumberCss(pigScore)}>{formatScore(pigScore)}</span>
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+const formatScore = (n: number): string => n > 0 ? `+${n}` : `${n}`
+
+const ScoreCell: FC<{ score: ColorScore }> = ({ score }) => {
+  if (score.kind === 'hidden') {
+    return <div css={scoreCellCss} />
+  }
+  if (score.kind === 'poison-alive') {
+    return (
+      <div css={scoreCellCss}>
+        <FontAwesomeIcon icon={faHeart} css={poisonAliveIconCss} />
+      </div>
+    )
+  }
+  if (score.kind === 'poison-dead') {
+    return (
+      <div css={scoreCellCss}>
+        <FontAwesomeIcon icon={faSkull} css={poisonDeadIconCss} />
+      </div>
+    )
+  }
+  return (
+    <div css={scoreCellCss}>
+      <span css={scoreNumberCss(score.score)}>{formatScore(score.score)}</span>
     </div>
   )
 }
@@ -341,6 +373,26 @@ const eyeIconCss = css`
   flex-shrink: 0;
 `
 
+const finalScoreCss = css`
+  position: relative;
+  z-index: 1;
+  font-size: 1.6em;
+  font-weight: 900;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0.05em 0.5em;
+  border-radius: 0.3em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+  min-width: 1.6em;
+  text-align: center;
+`
+
+const finalScoreEliminatedCss = css`
+  color: #ff7b6b;
+  text-decoration: line-through;
+`
+
 // --- Body ---
 
 const bodyCss = css`
@@ -399,40 +451,37 @@ const countCss = (hasTokens: boolean) => css`
   text-shadow: ${hasTokens ? '0 1px 2px rgba(0, 0, 0, 0.4)' : 'none'};
 `
 
-// --- Footer ---
+// --- Score row ---
 
-const footCss = css`
-  display: flex;
-  gap: 0.35em;
+const gridScoresCss = css`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.15em;
+  padding: 0.05em 0.15em 0.15em;
 `
 
-const footBadgeCss = css`
+const scoreCellCss = css`
   display: flex;
   align-items: center;
-  gap: 0.2em;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 0.35em;
-  padding: 0.1em 0.35em;
+  justify-content: center;
+  min-height: 1.4em;
 `
 
-const cardIconCss = css`
-  width: 1.4em;
-  height: auto;
-  border-radius: 0.15em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-`
-
-const bookIconCss = css`
-  width: 1.5em;
-  height: 2em;
-  border-radius: 0.2em;
-  object-fit: cover;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-`
-
-const footCountCss = css`
-  font-size: 1.2em;
+const scoreNumberCss = (n: number) => css`
+  font-size: 1.3em;
   font-weight: 900;
-  color: #ddd;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  color: ${n > 0 ? '#a8e063' : n < 0 ? '#ff7b6b' : 'rgba(255, 255, 255, 0.45)'};
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+`
+
+const poisonAliveIconCss = css`
+  font-size: 1.4em;
+  color: #ff6b9a;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+`
+
+const poisonDeadIconCss = css`
+  font-size: 1.4em;
+  color: #b0b0b0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
 `
