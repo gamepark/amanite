@@ -66,6 +66,10 @@ const AntidoteScoring: FC = () => {
         <span css={[vpBadgeCss, positiveBadgeCss]}><VP>+5</VP></span>
         <span>{t('scoring.antidote.pair')}</span>
       </div>
+      <div css={scoringRowCss}>
+        <span css={[vpBadgeCss, negativeBadgeCss]}><VP>-3</VP></span>
+        <span>{t('scoring.antidote.elixir.pair')}</span>
+      </div>
       <div css={hintCss}>{t('scoring.antidote.hint')}</div>
     </div>
   )
@@ -94,8 +98,9 @@ const PotionScoring: FC = () => {
       </div>
       <div css={scoringRowCss}>
         <span css={[vpBadgeCss, negativeBadgeCss]}><VP>-3</VP></span>
-        <span>{t('scoring.potion.leftover')}</span>
+        <span>{t('scoring.potion.antidote.pair')}</span>
       </div>
+      <div css={hintCss}>{t('scoring.potion.hint')}</div>
     </div>
   )
 }

@@ -71,7 +71,7 @@ Piocher du sac vers chaque tuile : 4 (manche 1), 5 (manche 2), 6 (manche 3)
 | Cochon | 3 PV chacun |
 | Poison + Antidote (paire) | 5 PV |
 | Poison + Elixir (paire) | 5 PV |
-| Antidote + Elixir non appairés (paire) | -3 PV |
+| Antidote + Elixir (paire) | -3 PV par paire `min(antidote, elixir)`, **indépendant** du pairage Poison |
 | MushroomLimit | 0→-5, 1→0, 2→3, 3→12, 4+→éliminé |
 | MushroomPair | exactement 2 = 8 PV |
 | MushroomMajority | 1er=10, 2ème=4, égalité 1er=7 chacun, égalité 2ème=2 chacun |

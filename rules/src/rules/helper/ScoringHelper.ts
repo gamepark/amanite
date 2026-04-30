@@ -2,7 +2,7 @@ import { MaterialRulesPart } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { MushroomColor, mushroomColors } from '../../material/MushroomColor'
-import { isPig, isMushroomToken } from '../../material/RoundTokenId'
+import { isMushroomToken, isPig } from '../../material/RoundTokenId'
 import { ValueType } from '../../material/ValueType'
 import { PlayerAnimal } from '../../PlayerAnimal'
 
@@ -128,30 +128,21 @@ export class ScoringHelper extends MaterialRulesPart {
     return Math.min(poisonCount, antidoteCount + elixirCount) * 5
   }
 
-  /** Antidote + Elixir penalty: each leftover pair = -3 VP */
+  /** Antidote + Elixir penalty: -3 VP per Antidote+Elixir pair, independent of Poison pairing */
   get antidoteElixirPenaltyScore(): number {
     const mapping = this.mushroomValueMapping
     const counts = this.mushroomCounts
-    let poisonCount = 0
     let antidoteCount = 0
     let elixirCount = 0
 
     for (const color of mushroomColors) {
       const count = counts[color] ?? 0
-      if (mapping[color] === ValueType.Poison) poisonCount += count
       if (mapping[color] === ValueType.Antidote) antidoteCount += count
       if (mapping[color] === ValueType.Potion) elixirCount += count
     }
 
-    let remainingPoison = poisonCount
-    const usedAntidote = Math.min(antidoteCount, remainingPoison)
-    remainingPoison -= usedAntidote
-    const usedElixir = Math.min(elixirCount, remainingPoison)
-
-    const leftoverAntidote = antidoteCount - usedAntidote
-    const leftoverElixir = elixirCount - usedElixir
-
-    return Math.min(leftoverAntidote, leftoverElixir) * -3
+    const pairs = Math.min(antidoteCount, elixirCount)
+    return pairs > 0 ? pairs * -3 : 0
   }
 
   /** MushroomLimit: 0→-5, 1→0, 2→3, 3→12 */

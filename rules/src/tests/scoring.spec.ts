@@ -162,7 +162,7 @@ describe('Scoring', () => {
       expect(helper.poisonPairingScore).toBe(10)
     })
 
-    it('should penalize leftover Antidote+Elixir pairs at -3 VP', () => {
+    it('should penalize each Antidote+Elixir pair at -3 VP, independent of Poison pairing', () => {
       const rules = createScoringGame(
         {
           [MushroomColor.Blue]: ValueType.Poison,
@@ -173,10 +173,40 @@ describe('Scoring', () => {
       )
       const helper = new ScoringHelper(rules.game, Fox)
       // 1 poison, 2 antidotes, 2 elixirs
-      // Pairing: 1 poison paired with 1 antidote = 5 VP
-      // Leftover: 1 antidote + 2 elixirs → 1 pair = -3 VP
+      // Poison pairing: min(1, 2+2) = 1 pair → 5 VP
+      // Antidote+Elixir penalty: min(2, 2) = 2 pairs → -6 VP (independent of Poison usage)
       expect(helper.poisonPairingScore).toBe(5)
+      expect(helper.antidoteElixirPenaltyScore).toBe(-6)
+    })
+
+    it('should match the rulebook Sabrina example (2 Poison, 1 Antidote, 1 Elixir → 7 VP net)', () => {
+      const rules = createScoringGame(
+        {
+          [MushroomColor.Blue]: ValueType.Poison,
+          [MushroomColor.Green]: ValueType.Antidote,
+          [MushroomColor.Red]: ValueType.Potion
+        },
+        { [Fox]: [MushroomColor.Blue, MushroomColor.Blue, MushroomColor.Green, MushroomColor.Red] } as any
+      )
+      const helper = new ScoringHelper(rules.game, Fox)
+      // 2 Poison + 1 Antidote + 1 Elixir
+      // Poison pairs: min(2, 1+1) = 2 → 10 VP
+      // Antidote+Elixir pairs: min(1, 1) = 1 → -3 VP
+      expect(helper.poisonPairingScore).toBe(10)
       expect(helper.antidoteElixirPenaltyScore).toBe(-3)
+      expect(helper.score).toBe(7)
+    })
+
+    it('should not penalize when only Antidote (no Elixir) is collected', () => {
+      const rules = createScoringGame(
+        {
+          [MushroomColor.Blue]: ValueType.Poison,
+          [MushroomColor.Green]: ValueType.Antidote
+        },
+        { [Fox]: [MushroomColor.Green, MushroomColor.Green, MushroomColor.Green] } as any
+      )
+      const helper = new ScoringHelper(rules.game, Fox)
+      expect(helper.antidoteElixirPenaltyScore).toBe(0)
     })
 
     it('should eliminate player if poison > antidote + elixir', () => {
