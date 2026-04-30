@@ -1,4 +1,4 @@
-import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isShuffleItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
 import { LotZone } from '../material/LotZone'
 import { MaterialType } from '../material/MaterialType'
@@ -8,11 +8,19 @@ import { RuleId } from './RuleId'
 
 export class PlaceNewTokensRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
+    // Reshuffle the bag: tokens returned during the previous round were appended
+    // in a deterministic order, so we randomize before drawing. The deal moves are
+    // built in afterItemMove, after the shuffle has actually been applied.
+    return [this.material(MaterialType.RoundToken).location(LocationType.Bag).shuffle()]
+  }
+
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    if (!isShuffleItemType(MaterialType.RoundToken)(move)) return []
+
     const moves: MaterialMove[] = []
     const round = this.remind<number>(Memory.Round)
     const tokensPerTile = TOKENS_PER_TILE_PER_ROUND[round] ?? 4
 
-    // Get all forest tiles
     const forestTiles = this.material(MaterialType.ForestTile)
       .location(LocationType.ForestTileRow)
       .sort(item => item.location.x!)
