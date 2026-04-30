@@ -71,6 +71,15 @@ export class PlaceNotebookRule extends PlayerTurnRule {
 
     if (clueDeck.length > 0) {
       const topCard = clueDeck.maxBy(item => item.location.x!)
+      const cardIndex = topCard.getIndex()
+
+      // Remember which clue card came from which placed notebook so the player
+      // can later view the corresponding card in hand. The mapping is public:
+      // the notebook placement and the resulting draw are already visible in
+      // the move log; storing it here only avoids reconstructing it client-side.
+      const map = this.remind<Record<number, number>>(Memory.NotebookCardMap) ?? {}
+      this.memorize(Memory.NotebookCardMap, { ...map, [move.itemIndex]: cardIndex })
+
       moves.push(
         ...topCard.moveItems({
           type: LocationType.PlayerClueCards,

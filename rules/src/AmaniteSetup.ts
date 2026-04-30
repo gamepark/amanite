@@ -6,7 +6,7 @@ import { AmaniteRules } from './AmaniteRules'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { mushroomColors } from './material/MushroomColor'
-import { Pig, MUSHROOM_TOKENS_PER_COLOR, PIG_TOKEN_COUNT } from './material/RoundTokenId'
+import { MUSHROOM_TOKENS_PER_COLOR, Pig, PIG_TOKEN_COUNT } from './material/RoundTokenId'
 import { getStartCardMushrooms } from './material/StartCard'
 import { defaultValueCards, mandatoryValueCards, ValueType } from './material/ValueType'
 import { PlayerAnimal } from './PlayerAnimal'
@@ -17,11 +17,10 @@ export class AmaniteSetup extends MaterialGameSetup<PlayerAnimal, MaterialType, 
   Rules = AmaniteRules
 
   setupMaterial(options: AmaniteOptions) {
-    const beginner = options.beginner !== false
     this.setupForestTiles()
     this.setupMushroomCards()
     this.setupPlayers()
-    this.setupValueCardsAndClues(beginner)
+    this.setupValueCardsAndClues(options.beginner)
     this.setupTokenBag()
     this.memorize(Memory.Round, 1)
     this.memorize(Memory.FirstPlayer, this.players[0])

@@ -8,5 +8,6 @@ export enum Memory {
   NextPigPlayer,
   NextPigsToDiscard,
   PigsPicked,
-  PickedTokenIds
+  PickedTokenIds,
+  NotebookCardMap
 }
