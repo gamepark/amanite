@@ -46,8 +46,7 @@ export class AmaniteRules
     [MaterialType.RoundToken]: {
       [LocationType.Bag]: new PositiveSequenceStrategy(),
       [LocationType.ForestTileTokens]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerTokens]: new PositiveSequenceStrategy(),
-      [LocationType.TokenDiscard]: new PositiveSequenceStrategy()
+      [LocationType.PlayerTokens]: new PositiveSequenceStrategy()
     },
     [MaterialType.ClueCard]: {
       [LocationType.ClueDeck]: new PositiveSequenceStrategy(),

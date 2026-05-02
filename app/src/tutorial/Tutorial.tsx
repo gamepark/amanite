@@ -386,14 +386,14 @@ export class Tutorial extends MaterialTutorial<PlayerAnimal, MaterialType, Locat
           this.material(game, MaterialType.RoundToken).location(LocationType.PlayerTokens).player(me)
         ],
         locations: [
-          { type: LocationType.TokenDiscard }
+          { type: LocationType.Bag }
         ],
         margin: { top: 5, bottom: 5, left: 5, right: 5 }
       }),
       move: {
         player: me,
         filter: (move: MaterialMove) =>
-          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.TokenDiscard
+          isMoveItemType(MaterialType.RoundToken)(move) && move.location.type === LocationType.Bag
       }
     },
 

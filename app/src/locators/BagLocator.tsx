@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { DropAreaDescription, ItemContext, MaterialContext, PileLocator } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { RuleId } from '@gamepark/amanite/rules/RuleId'
-import { DropAreaDescription, MaterialContext, PileLocator } from '@gamepark/react-game'
+import { Location, MaterialItem } from '@gamepark/rules-api'
 import { useTranslation } from 'react-i18next'
 
 const DiscardContent = () => {
@@ -21,29 +22,30 @@ const discardDropArea = new DropAreaDescription({
 })
 discardDropArea.content = DiscardContent
 
-export class TokenDiscardLocator extends PileLocator {
-  radius = 1.5
+export class BagLocator extends PileLocator {
   coordinates = { x: 0, y: -30 }
+  radius = 1.5
 
   locationDescription = discardDropArea
 
   getLocations(context: MaterialContext) {
-    if (context.rules.game.rule?.id === RuleId.DiscardForPig && context.player === context.rules.game.rule?.player) {
-      return [{ type: LocationType.TokenDiscard }]
+    if (context.rules.game.rule?.id === RuleId.DiscardForPig
+      && context.player === context.rules.game.rule?.player) {
+      return [{ type: LocationType.Bag }]
     }
     return []
   }
 
-  hide() {
-    return true
+  getLocationCoordinates(_location: Location) {
+    return { x: 0, y: -17, z: 1 }
   }
 
-  getLocationCoordinates() {
-    return { x: 0, y: -17, z: 1 }
+  placeItem(item: MaterialItem<number, number>, context: ItemContext<number, number, number, number, number>): string[] {
+    return super.placeItem(item, context).concat('scale(0.001)')
   }
 }
 
-export const tokenDiscardLocator = new TokenDiscardLocator()
+export const bagLocator = new BagLocator()
 
 const discardTextCss = css`
   position: absolute;

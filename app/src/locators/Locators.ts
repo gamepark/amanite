@@ -16,7 +16,6 @@ import { playerNotebookStockLocator } from './PlayerNotebookStockLocator'
 import { playerStartCardLocator } from './PlayerStartCardLocator'
 import { playerTokensLocator } from './PlayerTokensLocator'
 import { startCardClueZoneLocator } from './StartCardClueZoneLocator'
-import { tokenDiscardLocator } from './TokenDiscardLocator'
 import { valueCardSlotLocator } from './ValueCardSlotLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<PlayerAnimal, MaterialType, LocationType>>> = {
@@ -34,6 +33,5 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerAnimal, Materi
   [LocationType.PlayerMeepleStock]: playerMeepleStockLocator,
   [LocationType.PlayerNotebookStock]: playerNotebookStockLocator,
   [LocationType.FirstPlayerArea]: firstPlayerAreaLocator,
-  [LocationType.TokenDiscard]: tokenDiscardLocator,
   [LocationType.StartCardClueZone]: startCardClueZoneLocator
 }

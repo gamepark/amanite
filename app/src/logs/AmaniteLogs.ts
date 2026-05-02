@@ -82,7 +82,7 @@ export class AmaniteLogs implements LogDescription<MaterialMove, PlayerAnimal, M
 
     // DiscardForPig
     if (rule === RuleId.DiscardForPig && isMoveItemType(MaterialType.RoundToken)(move)
-      && move.location.type === LocationType.TokenDiscard) {
+      && move.location.type === LocationType.Bag) {
       return { Component: DiscardForPigLog, player, css: logCss(player) }
     }
 

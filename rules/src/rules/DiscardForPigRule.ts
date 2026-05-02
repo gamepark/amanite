@@ -26,7 +26,7 @@ export class DiscardForPigRule extends PlayerTurnRule {
     const player = this.player as PlayerAnimal
     return this.helper.getPlayerTokens(player)
       .filter(item => isMushroomToken(item.id))
-      .moveItems({ type: LocationType.TokenDiscard })
+      .moveItems({ type: LocationType.Bag })
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {

@@ -35,7 +35,7 @@ export const RoundTokenHelp: FC<MaterialHelpProps> = ({ item, itemIndex, closeDi
   )
   const discardMove = useLegalMoves<MoveItem>(move =>
     isTokenMove(move) && move.itemIndex === itemIndex
-    && move.location.type === LocationType.TokenDiscard
+    && move.location.type === LocationType.Bag
   )
 
   const allMoves = [...moveDown, ...moveUp, ...takeMove, ...discardMove]

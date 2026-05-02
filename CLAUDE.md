@@ -42,7 +42,7 @@ Piocher du sac vers chaque tuile : 4 (manche 1), 5 (manche 2), 6 (manche 3)
 - **2 meeples sur tuile** : joueur spot gauche choisit un lot, l'autre prend le reste
 - **1 meeple sur tuile** : joueur choisit exactement 2 jetons, le reste retourne au sac
 - **0 meeple** : tous les jetons retournent au sac
-- **Cochon** : pour chaque cochon collecté, défausser immédiatement 1 jeton champignon (de ce lot OU des manches précédentes)
+- **Cochon** : pour chaque cochon collecté, remettre immédiatement 1 jeton champignon dans le sac (de ce lot OU des manches précédentes)
 - Meeples récupérés après chaque tuile
 
 #### Phase 4 : Récupération d'indices (carnets)
@@ -84,7 +84,7 @@ Piocher du sac vers chaque tuile : 4 (manche 1), 5 (manche 2), 6 (manche 3)
 
 ### Enums clés
 - `MaterialType` : ForestTile, MushroomCard, StartCard, ValueCard, ClueCard, RoundToken, NotebookToken, Meeple, FirstPlayerToken
-- `LocationType` : ForestTileRow, MushroomCardRow, ValueCardSlot, ClueDeck, NotebookSlot, Bag, ForestTileTokens (id=LotZone.Top/Bottom), ForestTileMeepleSpot, PlayerStartCard, PlayerClueCards, PlayerTokens, PlayerMeepleStock, PlayerNotebookStock, FirstPlayerArea, TokenDiscard
+- `LocationType` : ForestTileRow, MushroomCardRow, ValueCardSlot, ClueDeck, NotebookSlot, Bag, ForestTileTokens (id=LotZone.Top/Bottom), ForestTileMeepleSpot, PlayerStartCard, PlayerClueCards, PlayerTokens, PlayerMeepleStock, PlayerNotebookStock, FirstPlayerArea
 - `RuleId` : PlaceNewTokens, PlaceMeeple, SplitTokens, Harvest, ChooseLot, ChooseTokens, DiscardForPig, PlaceNotebook, EndRound, FinalScoring
 
 ### Points d'attention

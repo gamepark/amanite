@@ -24,7 +24,6 @@ export enum LocationType {
 
   // Other
   FirstPlayerArea,
-  TokenDiscard,
 
   // Card zones (tutorial)
   StartCardClueZone = 30
