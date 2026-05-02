@@ -9,6 +9,7 @@ import { getStartCardMushrooms } from '@gamepark/amanite/material/StartCard'
 import { ValueType } from '@gamepark/amanite/material/ValueType'
 import { Memory } from '@gamepark/amanite/rules/Memory'
 import { RuleId } from '@gamepark/amanite/rules/RuleId'
+import { shuffle } from 'es-toolkit/compat'
 
 
 export const me = PlayerAnimal.Fox
@@ -16,29 +17,38 @@ export const opponent = PlayerAnimal.Squirrel
 
 export class TutorialSetup extends AmaniteSetup {
 
-  /** Fixed value mapping for deterministic tutorial */
+  /**
+   * Tutorial-friendly mapping: fox always sees the same 3 values (+3, +2, -1)
+   * matching the i18n text, but the assignment among fox's 3 visible colors
+   * is shuffled — and the same for the 3 other colors (with +1, Antidote, Poison).
+   * This way the player still has to deduce which color has which value.
+   */
   setupValueCardsAndClues() {
-    const fixedMapping: [MushroomColor, ValueType][] = [
-      [MushroomColor.Blue, ValueType.Value3],      // +3 per token
-      [MushroomColor.Yellow, ValueType.Value2],     // +2 per token
-      [MushroomColor.Purple, ValueType.Value1],     // +1 per token
-      [MushroomColor.Red, ValueType.Minus1],        // -1 per token
-      [MushroomColor.White, ValueType.Antidote],
-      [MushroomColor.Green, ValueType.Poison],
-    ]
-
-    const foxClues = getStartCardMushrooms(me, 0)         // [Blue, Yellow, Red]
+    const foxClues = getStartCardMushrooms(me, 0)            // [Blue, Yellow, Red]
     const squirrelClues = getStartCardMushrooms(opponent, 0) // [Blue, Purple, White]
 
-    for (let i = 0; i < fixedMapping.length; i++) {
-      const [color, value] = fixedMapping[i]
+    const otherColors = mushroomColors.filter(c => !foxClues.includes(c))
+    const foxVisibleValues = shuffle([ValueType.Value3, ValueType.Value2, ValueType.Minus1])
+    const otherValues = shuffle([ValueType.Value1, ValueType.Antidote, ValueType.Poison])
 
+    const colorToValue = {} as Record<MushroomColor, ValueType>
+    foxClues.forEach((color, i) => colorToValue[color] = foxVisibleValues[i])
+    otherColors.forEach((color, i) => colorToValue[color] = otherValues[i])
+
+    const valueSlotOrder: ValueType[] = [
+      ValueType.Value3, ValueType.Value2, ValueType.Value1,
+      ValueType.Minus1, ValueType.Antidote, ValueType.Poison
+    ]
+    valueSlotOrder.forEach((value, i) => {
       this.material(MaterialType.ValueCard).createItem({
         id: value,
         location: { type: LocationType.ValueCardSlot, x: i }
       })
+    })
 
-      // Deal clues directly to players' hands, rest to deck
+    for (const color of mushroomColors) {
+      const value = colorToValue[color]
+
       let dealt = 0
       if (foxClues.includes(color)) dealt++
       if (squirrelClues.includes(color)) dealt++
@@ -112,6 +122,28 @@ export class TutorialSetup extends AmaniteSetup {
 
     // Shuffle remaining tokens in bag
     this.material(MaterialType.RoundToken).location(LocationType.Bag).shuffle()
+  }
+
+  /** Force start cards on side 0 (recto) so they match getStartCardMushrooms(player, 0) */
+  setupPlayers() {
+    for (const player of this.players) {
+      this.material(MaterialType.StartCard).createItem({
+        id: player,
+        location: { type: LocationType.PlayerStartCard, player, rotation: 0 }
+      })
+      for (let i = 0; i < 2; i++) {
+        this.material(MaterialType.Meeple).createItem({
+          id: player,
+          location: { type: LocationType.PlayerMeepleStock, player, x: i }
+        })
+      }
+      for (let i = 0; i < 2; i++) {
+        this.material(MaterialType.NotebookToken).createItem({
+          id: player,
+          location: { type: LocationType.PlayerNotebookStock, player, x: i }
+        })
+      }
+    }
   }
 
   /** Skip PlaceNewTokens — tokens are pre-placed for a deterministic tutorial */
