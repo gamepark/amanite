@@ -11,10 +11,10 @@ import JayMeeple from '../images/tokens/meeple/JayMeeple.png'
 
 const onTileOutlineCss = css`
   filter:
-    drop-shadow(0.06em 0 0 black)
-    drop-shadow(-0.06em 0 0 black)
-    drop-shadow(0 0.06em 0 black)
-    drop-shadow(0 -0.06em 0 black);
+    drop-shadow(0.04em 0 0 rgba(0, 0, 0, 0.7))
+    drop-shadow(-0.04em 0 0 rgba(0, 0, 0, 0.7))
+    drop-shadow(0 0.04em 0 rgba(0, 0, 0, 0.7))
+    drop-shadow(0 -0.04em 0 rgba(0, 0, 0, 0.7));
 `
 
 class MeepleDescription extends TokenDescription {
