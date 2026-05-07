@@ -83,6 +83,8 @@ export const PlayerPanels = () => {
               colorScores.push({ kind: 'hidden' })
             } else if (value === ValueType.Poison) {
               colorScores.push({ kind: helper.isPoisonSurvived ? 'poison-alive' : 'poison-dead' })
+            } else if (value === ValueType.MushroomLimit && (helper.mushroomCounts[color] ?? 0) >= 4) {
+              colorScores.push({ kind: 'limit-dead' })
             } else {
               colorScores.push({ kind: 'value', score: helper.getColorPanelScore(color) })
             }
@@ -124,6 +126,7 @@ type ColorScore =
   | { kind: 'value', score: number }
   | { kind: 'poison-alive' }
   | { kind: 'poison-dead' }
+  | { kind: 'limit-dead' }
 
 type PlayerPanelProps = {
   playerId: PlayerAnimal
@@ -210,6 +213,13 @@ const ScoreCell: FC<{ score: ColorScore }> = ({ score }) => {
     )
   }
   if (score.kind === 'poison-dead') {
+    return (
+      <div css={scoreCellCss}>
+        <FontAwesomeIcon icon={faSkull} css={poisonDeadIconCss} />
+      </div>
+    )
+  }
+  if (score.kind === 'limit-dead') {
     return (
       <div css={scoreCellCss}>
         <FontAwesomeIcon icon={faSkull} css={poisonDeadIconCss} />
