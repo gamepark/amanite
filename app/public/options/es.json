@@ -1,0 +1,9 @@
+{
+  "identities": "Animal",
+  "identities.1": "Zorro",
+  "identities.2": "Ardilla",
+  "identities.3": "Lechuza",
+  "identities.4": "Arrendajo",
+  "option.beginner": "Modo principiante",
+  "option.beginner.help": "Usa cartas de Valor fijas (-1, +1, +2, +3, Antídoto, Veneno). Desmarca para cartas de Valor aleatorias en cada partida."
+}

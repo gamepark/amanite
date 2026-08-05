@@ -1,0 +1,9 @@
+{
+  "identities": "Animal",
+  "identities.1": "Renard",
+  "identities.2": "Écureuil",
+  "identities.3": "Chouette",
+  "identities.4": "Geai",
+  "option.beginner": "Mode débutant",
+  "option.beginner.help": "Utilise les cartes Valeur fixes (-1, +1, +2, +3, Antidote, Poison). Décochez pour des cartes Valeur aléatoires à chaque partie."
+}

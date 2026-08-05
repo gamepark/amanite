@@ -1,0 +1,9 @@
+{
+  "identities": "Tier",
+  "identities.1": "Fuchs",
+  "identities.2": "Eichhörnchen",
+  "identities.3": "Eule",
+  "identities.4": "Eichelhäher",
+  "option.beginner": "Anfängermodus",
+  "option.beginner.help": "Verwendet feste Wertkarten (-1, +1, +2, +3, Gegengift, Gift). Deaktivieren für zufällige Wertkarten in jedem Spiel."
+}

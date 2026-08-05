@@ -1,0 +1,9 @@
+{
+  "identities": "Animal",
+  "identities.1": "Fox",
+  "identities.2": "Squirrel",
+  "identities.3": "Owl",
+  "identities.4": "Jay",
+  "option.beginner": "Beginner mode",
+  "option.beginner.help": "Uses fixed value cards (-1, +1, +2, +3, Antidote, Poison). Uncheck for random value cards each game."
+}

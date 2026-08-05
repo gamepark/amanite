@@ -1,0 +1,9 @@
+{
+  "identities": "Animale",
+  "identities.1": "Volpe",
+  "identities.2": "Scoiattolo",
+  "identities.3": "Civetta",
+  "identities.4": "Ghiandaia",
+  "option.beginner": "Modalità principiante",
+  "option.beginner.help": "Usa carte Valore fisse (-1, +1, +2, +3, Antidoto, Veleno). Deseleziona per carte Valore casuali in ogni partita."
+}
