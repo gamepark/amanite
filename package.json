@@ -6,28 +6,29 @@
   ],
   "author": "Romain Fromi <romain@game-park.com> (https://game-park.com/)",
   "license": "ISC",
-  "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.2.1",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
-    "globals": "^17.5.0",
-    "lerna": "^9.0.7",
-    "prettier": "^3.8.2",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.59.0",
-    "vitest": "^4.1.5"
-  },
   "scripts": {
     "dev": "yarn workspace @gamepark/amanite-app run dev",
     "test": "yarn workspace @gamepark/amanite run test && yarn workspace @gamepark/amanite-app run test",
     "preview": "yarn workspace @gamepark/amanite-app run preview",
     "build": "yarn workspace @gamepark/amanite-app run build",
     "deploy": "yarn workspace @gamepark/amanite-app run deploy",
-    "publish": "lerna publish",
+    "publish": "yarn workspace @gamepark/amanite run publish",
     "lint": "yarn workspace @gamepark/amanite run lint && yarn workspace @gamepark/amanite-app run lint",
     "linkgp": "yarn link ../rules-api ../react-client ../react-game -r && git update-index --skip-worktree package.json yarn.lock",
     "unlinkgp": "git update-index --no-skip-worktree package.json yarn.lock && yarn unlink ../react-game ../react-client ../rules-api"
   },
-  "packageManager": "yarn@4.9.4"
+  "packageManager": "yarn@4.18.0",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "globals": "^17.9.0",
+    "lerna": "^9.0.7",
+    "prettier": "^3.9.6",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "typescript-eslint": "^8.66.0",
+    "vitest": "^4.1.10"
+  }
 }

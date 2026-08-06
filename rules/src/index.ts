@@ -1,5 +1,5 @@
 export { AmaniteRules } from './AmaniteRules'
-export { AmaniteOptionsSpec } from './AmaniteOptions'
+export { AmaniteOptionsSpecV2 } from './AmaniteOptions'
 export { AmaniteSetup } from './AmaniteSetup'
 export { PlayerAnimal } from './PlayerAnimal'
 export { MaterialType } from './material/MaterialType'

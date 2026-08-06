@@ -1,4 +1,4 @@
-import { AmaniteOptionsSpec } from '@gamepark/amanite/AmaniteOptions'
+import { AmaniteOptionsSpecV2 } from '@gamepark/amanite/AmaniteOptions'
 import { AmaniteRules } from '@gamepark/amanite/AmaniteRules'
 import { AmaniteSetup } from '@gamepark/amanite/AmaniteSetup'
 import { GameProvider } from '@gamepark/react-game'
@@ -19,7 +19,7 @@ createRoot(document.getElementById('root')!).render(
     <GameProvider
       game="amanite"
       Rules={AmaniteRules}
-      optionsSpec={AmaniteOptionsSpec}
+      optionsSpec={AmaniteOptionsSpecV2}
       GameSetup={AmaniteSetup}
       material={Material}
       locators={Locators}
