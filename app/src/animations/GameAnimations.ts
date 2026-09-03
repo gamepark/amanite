@@ -1,5 +1,5 @@
 import { MaterialGameAnimations } from '@gamepark/react-game'
-import { isMoveItemType, isMoveItemTypeAtOnce, LocalMoveType, MaterialMove, MoveKind } from '@gamepark/rules-api'
+import { isMoveItemType, isMoveItemTypeAtOnce, isShuffle, LocalMoveType, MaterialMove, MoveKind } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/amanite/material/LocationType'
 import { MaterialType } from '@gamepark/amanite/material/MaterialType'
 import { PlayerAnimal } from '@gamepark/amanite/PlayerAnimal'
@@ -8,6 +8,10 @@ import { besidePanelLocator, fromPanelLocator, onPlayerPanelLocator } from '../l
 import { getViewPlayer } from '../locators/ViewHelper'
 
 export const gameAnimations = new MaterialGameAnimations()
+
+// Tokens are shuffled inside the bag so that nobody can track one from one draw to the next.
+// Pure protection, nothing for the players to watch: no animation, and no shuffle sound either.
+gameAnimations.configure(isShuffle).skip()
 
 const isTokenMove = isMoveItemType(MaterialType.RoundToken)
 const isMeepleMove = isMoveItemType(MaterialType.Meeple)
