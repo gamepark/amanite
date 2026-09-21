@@ -9,11 +9,11 @@ import { mushroomColors, MushroomColor } from '@gamepark/amanite/material/Mushro
 import { ValueType } from '@gamepark/amanite/material/ValueType'
 import { isPig } from '@gamepark/amanite/material/RoundTokenId'
 import { ScoringHelper } from '@gamepark/amanite/rules/helper/ScoringHelper'
-import { Avatar, PlayerTimer, SpeechBubbleDirection, useMaterialContext, usePlayerName, usePlayers, usePlay, useRules, getRelativePlayerIndex } from '@gamepark/react-game'
+import { Avatar, PlayerTimer, useMaterialContext, usePlayerName, usePlayers, usePlay, useRules, getRelativePlayerIndex } from '@gamepark/react-game'
 import { LocalMoveType, MoveKind } from '@gamepark/rules-api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faHeart, faSkull } from '@fortawesome/free-solid-svg-icons'
-import { FC, useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { FC, useCallback } from 'react'
 import BlueToken from '../images/tokens/round/BlueMushroomToken.jpg'
 import GreenToken from '../images/tokens/round/GreenMushroomToken.jpg'
 import PurpleToken from '../images/tokens/round/PurpleMushroomToken.jpg'
@@ -149,20 +149,13 @@ const PlayerPanel: FC<PlayerPanelProps> = ({
 }) => {
   const playerName = usePlayerName(playerId)
   const colors = playerColors[playerId]
-  const panelRef = useRef<HTMLDivElement>(null)
-  const [speechDirection, setSpeechDirection] = useState<SpeechBubbleDirection>(SpeechBubbleDirection.BOTTOM_RIGHT)
-
-  useLayoutEffect(() => {
-    setSpeechDirection(getSpeechDirection(panelRef.current))
-  }, [index])
-
   return (
-    <div ref={panelRef} css={[panelCss, positionCss(index), isTurnToPlay && turnBorderCss, isViewActive && !isTurnToPlay && activeGlowCss(colors.main)]} onClick={onClick}>
+    <div css={[panelCss, positionCss(index), isTurnToPlay && turnBorderCss, isViewActive && !isTurnToPlay && activeGlowCss(colors.main)]} onClick={onClick}>
       {/* Banner: color gradient + avatar + name + timer */}
       <div css={bannerCss}>
         <div css={bannerBgCss(colors.main, colors.dark)} />
         <div css={avatarWrapperCss}>
-          <Avatar playerId={playerId} css={avatarCss} speechBubbleProps={{ direction: speechDirection }} />
+          <Avatar playerId={playerId} css={avatarCss} speechBubble />
         </div>
         <span css={nameCss}>{playerName}</span>
         {isViewActive && <FontAwesomeIcon icon={faEye} css={eyeIconCss} />}
@@ -231,13 +224,6 @@ const ScoreCell: FC<{ score: ColorScore }> = ({ score }) => {
       <span css={scoreNumberCss(score.score)}>{formatScore(score.score)}</span>
     </div>
   )
-}
-
-const getSpeechDirection = (el: HTMLDivElement | null): SpeechBubbleDirection => {
-  if (!el) return SpeechBubbleDirection.BOTTOM_RIGHT
-  const rect = el.getBoundingClientRect()
-  const top = rect.top / window.innerHeight
-  return top > 0.5 ? SpeechBubbleDirection.TOP_LEFT : SpeechBubbleDirection.BOTTOM_LEFT
 }
 
 // ============ CSS ============
